@@ -8,9 +8,9 @@ import 'package:my_patients_sql/controllers/patient_controller.dart';
 
 class SetExerciseDurationPage extends StatefulWidget {
   const SetExerciseDurationPage(
-      {super.key, required this.exerciseId, required this.patientId});
-  final int exerciseId;
-  final int patientId;
+      {super.key, required this.exerciseIndex, required this.patientIndex});
+  final int exerciseIndex;
+  final int patientIndex;
   @override
   State<SetExerciseDurationPage> createState() =>
       _SetExerciseDurationPageState();
@@ -18,7 +18,8 @@ class SetExerciseDurationPage extends StatefulWidget {
 
 class _SetExerciseDurationPageState extends State<SetExerciseDurationPage> {
   final TextEditingController _durationController = TextEditingController();
-
+  ExerciseController exerciseController = Get.put(ExerciseController());
+  PatientController patientController = Get.put(PatientController());
   Future pickTime(DateTime? initialTime, int duration) async {
     final TimeOfDay? pickedTime = await showTimePicker(
       context: context,
@@ -38,18 +39,13 @@ class _SetExerciseDurationPageState extends State<SetExerciseDurationPage> {
     }
   }
 
-  ExerciseController exerciseController = Get.put(ExerciseController());
-  PatientController patientController = Get.put(PatientController());
-
-  Future setDuration(DateTime? pcikedDateTime, exerciseId, patientId) {
-    final Map<String, dynamic> completedExerciseData = {
-      'patient_id': patientId,
-      'exercise_id': exerciseId,
-      'duration': _durationController.text,
-      'start_time': pcikedDateTime.toString(),
-    };
-    developer.log("THE COMPLETED EXERCISE DATA IS $completedExerciseData");
-    return patientController.insertPatientsExercises(patientId, exerciseId);
+  @override
+  void initState() {
+    super.initState();
+    exerciseController.getExercises();
+    patientController.getPatientExercises(
+        patientController.activePatientsList[widget.patientIndex],
+        patientController.activePatientsList[widget.patientIndex].id);
   }
 
   @override
@@ -91,12 +87,30 @@ class _SetExerciseDurationPageState extends State<SetExerciseDurationPage> {
                         //TODO WHILE CREATING THE PATIENTS OR MODIFIYING THEM ADD THE POSSIBILITY TO ADD THE EXISTING EXERCISES TO THEM
                         //TODO FETCH THE ONLY SELECTED EXERCISES FOR THE PATIENT IN THE ACTIVE PATIENTS PAGE
                         //TODO ADD THE POSSIBILITY TO STOP THE TIMER AND MODIFY IT
+
                         Alarm.set(
-                            alarmSettings: AlarmSettings(
-                          id: widget.patientId,
-                          dateTime: value,
-                          assetAudioPath: 'assets/alarm.mp3',
-                        ));
+                                alarmSettings: AlarmSettings(
+                                    id: 0,
+                                    dateTime: value,
+                                    assetAudioPath: 'assets/alarm.mp3',
+                                    notificationBody: exerciseController
+                                            .exercises[widget.exerciseIndex]
+                                            .name +
+                                        ' est terminé pour ' +
+                                        patientController
+                                            .activePatientsList[
+                                                widget.patientIndex]
+                                            .name,
+                                    notificationTitle: 'Exercise terminé!'))
+                            .then((value) {
+                          developer.log('THE VALUE IS ' + value.toString());
+                          if (value) {
+                            exerciseController.setExerciseProgrammed(
+                                exerciseController
+                                    .exercises[widget.exerciseIndex].id,
+                                1);
+                          }
+                        });
                         Navigator.of(context).pop();
                         developer.log("THE VALUE IS $value");
                       },

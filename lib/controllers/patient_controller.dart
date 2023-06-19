@@ -2,11 +2,11 @@ import 'package:get/state_manager.dart';
 import 'package:my_patients_sql/db/db_helper.dart';
 import 'package:my_patients_sql/models/exercise.dart';
 import 'package:my_patients_sql/models/patient.dart';
+import 'dart:developer' as developer show log;
 
 class PatientController extends GetxController {
   RxList patientsList = <Patient>[].obs;
   RxList activePatientsList = <Patient>[].obs;
-  RxList patientsExercisesList = <Exercise>[].obs;
 
   Future insertPatient(Patient? patient) async {
     await DbHelper.insert('patients', patient!.toMap());
@@ -14,9 +14,20 @@ class PatientController extends GetxController {
     getPatients();
   }
 
-  Future getPatientExercises(patientId) async {
+  Future insertExercisesToPatient(Patient? patient, Exercise? exercise) async {
+    final Map<String, dynamic> patientExerciseData = {
+      'patient_id': patient!.id,
+      'exercise_id': exercise!.id,
+    };
+    await DbHelper.insert('patient_exercise', patientExerciseData);
+  }
+
+  Future getPatientExercises(Patient? patient, int patientId) async {
     final List<Map<String, dynamic>> patientExercisesData =
         await DbHelper.getPatientExercises(patientId);
+    for (var element in patientExercisesData) {
+      developer.log(element.toString());
+    }
     final List<Exercise> patientExercises = [];
     for (var patientExerciseData in patientExercisesData) {
       patientExercises.add(Exercise(
@@ -25,17 +36,7 @@ class PatientController extends GetxController {
         description: patientExerciseData['description'],
       ));
     }
-    patientsExercisesList.value = patientExercises;
-    return patientsExercisesList;
-  }
-
-  Future insertPatientsExercises(int patientId, int exerciseId) async {
-    final Map<String, dynamic> patientExerciseData = {
-      'patient_id': patientId,
-      'exercise_id': exerciseId,
-    };
-    await DbHelper.insert('patient_exercise', patientExerciseData);
-    getPatientExercises(patientId);
+    return patientExercises;
   }
 
   Future getPatients() async {

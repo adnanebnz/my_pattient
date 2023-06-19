@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:my_patients_sql/controllers/exercise_controller.dart';
 import 'package:my_patients_sql/controllers/patient_controller.dart';
 import 'package:my_patients_sql/models/exercise.dart';
 import '../models/patient.dart';
@@ -83,8 +84,32 @@ class _AddPersonFormState extends State<UpdatePersonForm> {
             controller: _diseaseController,
             validator: _fieldValidator,
           ),
-          const SizedBox(
-            height: 24.0,
+          Expanded(
+            child: GetX<ExerciseController>(builder: ((controller) {
+              return ListView.builder(
+                itemCount: controller.exercises.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                      title: Text(controller.exercises[index].name),
+                      subtitle: Text(controller.exercises[index].description),
+                      trailing: Checkbox(
+                        value: selectedExercises
+                            .contains(controller.exercises[index]),
+                        onChanged: (value) {
+                          setState(() {
+                            if (value == true) {
+                              selectedExercises
+                                  .add(controller.exercises[index]);
+                            } else {
+                              selectedExercises
+                                  .remove(controller.exercises[index]);
+                            }
+                          });
+                        },
+                      ));
+                },
+              );
+            })),
           ),
           const Spacer(),
           Padding(

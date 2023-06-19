@@ -73,8 +73,9 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                                 "${controller.activePatientsList[index].age} ans"),
                             onTap: () {
                               showModalBottomSheet(
-                                  barrierColor: Colors.white70,
-                                  backgroundColor: Colors.white30,
+                                  barrierColor: Colors.transparent,
+                                  backgroundColor:
+                                      const Color.fromRGBO(245, 220, 220, 1),
                                   isScrollControlled: true,
                                   elevation: 1,
                                   shape: const RoundedRectangleBorder(
@@ -111,7 +112,8 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                                               return ListView.builder(
                                                 itemCount: exerciseController
                                                     .exercises.length,
-                                                itemBuilder: (context, index) {
+                                                itemBuilder:
+                                                    (context, indexExo) {
                                                   return Padding(
                                                     padding:
                                                         const EdgeInsets.only(
@@ -126,11 +128,13 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                                                       tileColor: Colors.white70,
                                                       title: Text(
                                                           exerciseController
-                                                              .exercises[index]
+                                                              .exercises[
+                                                                  indexExo]
                                                               .name),
                                                       subtitle: Text(
                                                           exerciseController
-                                                              .exercises[index]
+                                                              .exercises[
+                                                                  indexExo]
                                                               .description),
                                                       trailing: IconButton(
                                                         icon: const Icon(
@@ -145,15 +149,10 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                                                                       builder:
                                                                           (_) {
                                                             return SetExerciseDurationPage(
-                                                                exerciseId:
-                                                                    exerciseController
-                                                                        .exercises[
-                                                                            index]
-                                                                        .id,
-                                                                patientId: controller
-                                                                    .patientsList[
-                                                                        index]
-                                                                    .id);
+                                                                exerciseIndex:
+                                                                    indexExo,
+                                                                patientIndex:
+                                                                    index);
                                                           }));
                                                         },
                                                       ),

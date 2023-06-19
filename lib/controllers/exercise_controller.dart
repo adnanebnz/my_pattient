@@ -13,6 +13,11 @@ class ExerciseController extends GetxController {
     getExercises();
   }
 
+  Future setExerciseProgrammed(int id, int isPorgrammed) async {
+    DbHelper.setExerciseIsProgrammed(id, isPorgrammed);
+    getExercises();
+  }
+
   Future getExercises() async {
     final List<Map<String, dynamic>> exercisesData =
         await DbHelper.getData('exercises');
