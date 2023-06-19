@@ -1,9 +1,11 @@
+import 'package:alarm/alarm.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:my_patients_sql/views/splash_screen.dart';
 
 void main() async {
   runApp(const MyApp());
+  await Alarm.init();
   await GetStorage.init();
 }
 

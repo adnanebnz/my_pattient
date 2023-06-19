@@ -1,3 +1,4 @@
+import 'package:alarm/alarm.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:developer' as developer show log;
@@ -85,7 +86,17 @@ class _SetExerciseDurationPageState extends State<SetExerciseDurationPage> {
                         .then(
                       (value) {
                         //setDuration(value, widget.exerciseId, widget.patientId);
-                        // SET ALARM HERE
+                        //TODO FETCH EXERCISE DATA FOR THE ALARM NOTIFICATION BODY AND TITLE
+                        //TODO SAVE IT TO DATABASE
+                        //TODO WHILE CREATING THE PATIENTS OR MODIFIYING THEM ADD THE POSSIBILITY TO ADD THE EXISTING EXERCISES TO THEM
+                        //TODO FETCH THE ONLY SELECTED EXERCISES FOR THE PATIENT IN THE ACTIVE PATIENTS PAGE
+                        //TODO ADD THE POSSIBILITY TO STOP THE TIMER AND MODIFY IT
+                        Alarm.set(
+                            alarmSettings: AlarmSettings(
+                          id: widget.patientId,
+                          dateTime: value,
+                          assetAudioPath: 'assets/alarm.mp3',
+                        ));
                         Navigator.of(context).pop();
                         developer.log("THE VALUE IS $value");
                       },
