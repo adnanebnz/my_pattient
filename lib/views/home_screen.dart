@@ -215,115 +215,119 @@ class _HomePageState extends State<HomePage> {
                                           ),
                                         ),
                                         key: UniqueKey(),
-                                        child: Card(
-                                          surfaceTintColor: Colors.green,
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10)),
-                                          elevation: 4,
-                                          child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: Column(
-                                                children: [
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Text(
-                                                        controller
-                                                                .patientsList[
-                                                                    index]
-                                                                .name +
-                                                            " / " +
-                                                            controller
-                                                                .patientsList[
-                                                                    index]
-                                                                .age
-                                                                .toString() +
-                                                            " ans",
-                                                        style: const TextStyle(
-                                                            fontSize: 15,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w500),
-                                                      ),
-                                                      Column(
-                                                        children: [
-                                                          const Padding(
-                                                            padding:
-                                                                EdgeInsets.only(
-                                                                    top: 8.0),
-                                                            child: Text(
-                                                              "Présent?",
-                                                              style: TextStyle(
-                                                                  fontSize: 14,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w400),
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              top: 5.0, left: 1, right: 1),
+                                          child: Card(
+                                            surfaceTintColor: Colors.green,
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10)),
+                                            elevation: 4,
+                                            child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Column(
+                                                  children: [
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Text(
+                                                          controller
+                                                                  .patientsList[
+                                                                      index]
+                                                                  .name +
+                                                              " / " +
+                                                              controller
+                                                                  .patientsList[
+                                                                      index]
+                                                                  .age
+                                                                  .toString() +
+                                                              " ans",
+                                                          style: const TextStyle(
+                                                              fontSize: 15,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
+                                                        ),
+                                                        Column(
+                                                          children: [
+                                                            const Padding(
+                                                              padding: EdgeInsets
+                                                                  .only(
+                                                                      top: 8.0),
+                                                              child: Text(
+                                                                "Présent?",
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        14,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w400),
+                                                              ),
                                                             ),
-                                                          ),
-                                                          Switch.adaptive(
-                                                            activeColor:
-                                                                Colors.green,
-                                                            value: controller
-                                                                    .patientsList[
-                                                                        index]
-                                                                    .isActive ==
-                                                                1,
-                                                            onChanged: (value) {
-                                                              setState(() {
-                                                                controller
-                                                                        .patientsList[
-                                                                            index]
-                                                                        .isActive =
-                                                                    value
-                                                                        ? 1
-                                                                        : 0;
-                                                                if (controller
-                                                                        .patientsList[
-                                                                            index]
-                                                                        .isActive ==
-                                                                    1) {
-                                                                  controller.setPatientActive(
-                                                                      controller
+                                                            Switch.adaptive(
+                                                              activeColor:
+                                                                  Colors.green,
+                                                              value: controller
+                                                                      .patientsList[
+                                                                          index]
+                                                                      .isActive ==
+                                                                  1,
+                                                              onChanged:
+                                                                  (value) {
+                                                                setState(() {
+                                                                  controller
                                                                           .patientsList[
                                                                               index]
-                                                                          .id,
-                                                                      1);
-                                                                } else {
-                                                                  controller.setPatientActive(
-                                                                      controller
+                                                                          .isActive =
+                                                                      value
+                                                                          ? 1
+                                                                          : 0;
+                                                                  if (controller
                                                                           .patientsList[
                                                                               index]
-                                                                          .id,
-                                                                      0);
-                                                                }
-                                                              });
-                                                            },
-                                                          )
-                                                        ],
-                                                      )
-                                                    ],
-                                                  ),
-                                                  const Divider(
-                                                    height: 0,
-                                                    thickness: 1,
-                                                  ),
-                                                  Padding(
-                                                    padding: const EdgeInsets
-                                                            .fromLTRB(
-                                                        0.0, 12.0, 0.0, 12.0),
-                                                    child: Text(
-                                                        "Maladie: ${controller.patientsList[index].disease}",
-                                                        style: const TextStyle(
-                                                            fontSize: 16,
-                                                            color: Colors
-                                                                .black87)),
-                                                  ),
-                                                ],
-                                              )),
+                                                                          .isActive ==
+                                                                      1) {
+                                                                    controller.setPatientActive(
+                                                                        controller
+                                                                            .patientsList[index]
+                                                                            .id,
+                                                                        1);
+                                                                  } else {
+                                                                    controller.setPatientActive(
+                                                                        controller
+                                                                            .patientsList[index]
+                                                                            .id,
+                                                                        0);
+                                                                  }
+                                                                });
+                                                              },
+                                                            )
+                                                          ],
+                                                        )
+                                                      ],
+                                                    ),
+                                                    const Divider(
+                                                      height: 0,
+                                                      thickness: 1,
+                                                    ),
+                                                    Padding(
+                                                      padding: const EdgeInsets
+                                                              .fromLTRB(
+                                                          0.0, 12.0, 0.0, 12.0),
+                                                      child: Text(
+                                                          "Maladie: ${controller.patientsList[index].disease}",
+                                                          style: const TextStyle(
+                                                              fontSize: 16,
+                                                              color: Colors
+                                                                  .black87)),
+                                                    ),
+                                                  ],
+                                                )),
+                                          ),
                                         ),
                                       );
                                     }
