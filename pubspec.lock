@@ -5,18 +5,18 @@ packages:
     dependency: "direct main"
     description:
       name: alarm
-      sha256: "089a472472433b286cbd49648f4e6ac4ebef4578747ccc718d258aac196662e7"
+      sha256: "79de30696532c1c6923e73db9f6dad1ca1e727eda4e6d292ebc8a94ce598565a"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.5"
+    version: "1.1.4"
   android_alarm_manager_plus:
     dependency: transitive
     description:
       name: android_alarm_manager_plus
-      sha256: "88a8001851fdc9bd54fa4e30d0277bb900a50f3d86ff244da7f027400bf23ac0"
+      sha256: "80f963d47cb7ab0818144c7b0668aea4c038f9cb8626626e89a4ea77375defb7"
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.4"
+    version: "3.0.1"
   archive:
     dependency: transitive
     description:
@@ -133,10 +133,10 @@ packages:
     dependency: transitive
     description:
       name: dots_indicator
-      sha256: f1599baa429936ba87f06ae5f2adc920a367b16d08f74db58c3d0f6e93bcdb5c
+      sha256: "58b6a365744aa62aa1b70c4ea29e5106fbe064f5edaf7e9652e9b856edbfd9bb"
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.2"
+    version: "3.0.0"
   fake_async:
     dependency: transitive
     description:
@@ -288,14 +288,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.6.5"
-  get_storage:
-    dependency: "direct main"
-    description:
-      name: get_storage
-      sha256: "39db1fffe779d0c22b3a744376e86febe4ade43bf65e06eab5af707dc84185a2"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.1.1"
   image:
     dependency: transitive
     description:
@@ -308,10 +300,10 @@ packages:
     dependency: "direct main"
     description:
       name: introduction_screen
-      sha256: f194ae655a84b945a2aedb7961d09948d789fc91088efb032666112923bcbc1e
+      sha256: f39be426026785b8fea4ed93e226e7fc28ef49a4c78c3f86c958bae26dabef00
       url: "https://pub.dev"
     source: hosted
-    version: "3.1.8"
+    version: "3.1.9"
   js:
     dependency: transitive
     description:
