@@ -79,8 +79,8 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                                   elevation: 1,
                                   shape: const RoundedRectangleBorder(
                                     borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(25),
-                                      topRight: Radius.circular(25),
+                                      topLeft: Radius.circular(20),
+                                      topRight: Radius.circular(20),
                                     ),
                                   ),
                                   showDragHandle: true,
@@ -117,6 +117,12 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                                                         const EdgeInsets.only(
                                                             top: 13.0),
                                                     child: ListTile(
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10)),
                                                       tileColor: Colors.white70,
                                                       title: Text(
                                                           exerciseController
