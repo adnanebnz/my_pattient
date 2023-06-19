@@ -3,8 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:my_patients_sql/controllers/exercise_controller.dart';
 import 'package:my_patients_sql/controllers/patient_controller.dart';
-import 'package:my_patients_sql/models/exercise.dart';
+import 'package:my_patients_sql/views/add_exercises_to_patients_screen.dart';
 import '../models/patient.dart';
+import "dart:developer" as developer show log;
 
 class UpdatePersonForm extends StatefulWidget {
   const UpdatePersonForm(
@@ -16,15 +17,12 @@ class UpdatePersonForm extends StatefulWidget {
 }
 
 class _AddPersonFormState extends State<UpdatePersonForm> {
-  // ignore: prefer_typing_uninitialized_variables
-  late final _nameController;
-  // ignore: prefer_typing_uninitialized_variables
-  late final _ageController;
-  // ignore: prefer_typing_uninitialized_variables
-  late final _diseaseController;
-  final _patientFormKey = GlobalKey<FormState>();
+  late final TextEditingController _nameController;
+  late final TextEditingController _ageController;
+  late final TextEditingController _diseaseController;
+  late final GlobalKey<FormState> _patientFormKey = GlobalKey<FormState>();
 
-  List<Exercise> selectedExercises = [];
+  ExerciseController exerciseController = Get.put(ExerciseController());
   PatientController patientController = Get.put(PatientController());
 
   String? _fieldValidator(String? value) {
@@ -39,7 +37,6 @@ class _AddPersonFormState extends State<UpdatePersonForm> {
     super.initState();
     _nameController = TextEditingController(text: widget.patient.name);
     _ageController = TextEditingController(text: widget.patient.age.toString());
-
     _diseaseController = TextEditingController(text: widget.patient.disease);
   }
 
@@ -84,32 +81,28 @@ class _AddPersonFormState extends State<UpdatePersonForm> {
             controller: _diseaseController,
             validator: _fieldValidator,
           ),
-          Expanded(
-            child: GetX<ExerciseController>(builder: ((controller) {
-              return ListView.builder(
-                itemCount: controller.exercises.length,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                      title: Text(controller.exercises[index].name),
-                      subtitle: Text(controller.exercises[index].description),
-                      trailing: Checkbox(
-                        value: selectedExercises
-                            .contains(controller.exercises[index]),
-                        onChanged: (value) {
-                          setState(() {
-                            if (value == true) {
-                              selectedExercises
-                                  .add(controller.exercises[index]);
-                            } else {
-                              selectedExercises
-                                  .remove(controller.exercises[index]);
-                            }
-                          });
-                        },
-                      ));
+          Padding(
+            padding: const EdgeInsets.only(top: 28),
+            child: SizedBox(
+              width: double.maxFinite,
+              height: 50,
+              child: ElevatedButton(
+                onPressed: () {
+                  if (_patientFormKey.currentState!.validate()) {
+                    try {
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (_) {
+                        return AddExercisesToPatientPage(
+                            patient: widget.patient);
+                      }));
+                    } catch (e) {
+                      developer.log(e.toString(), name: "ERROR");
+                    }
+                  }
                 },
-              );
-            })),
+                child: const Text('Ajouter des exercices'),
+              ),
+            ),
           ),
           const Spacer(),
           Padding(
@@ -120,22 +113,27 @@ class _AddPersonFormState extends State<UpdatePersonForm> {
               child: ElevatedButton(
                 onPressed: () {
                   if (_patientFormKey.currentState!.validate()) {
-                    Patient editedPatient = Patient(
-                        id: widget.patient.id,
-                        name: _nameController.text,
-                        age: int.parse(_ageController.text),
-                        disease: _diseaseController.text,
-                        isActive: widget.patient.isActive);
-                    patientController.updatePatient(
-                        widget.patient.id, editedPatient);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        behavior: SnackBarBehavior.floating,
-                        closeIconColor: Colors.white,
-                        showCloseIcon: true,
-                        content: Text('Patient modifié avec succès'),
-                      ),
-                    );
+                    try {
+                      Patient editedPatient = Patient(
+                          id: widget.patient.id,
+                          name: _nameController.text,
+                          age: int.parse(_ageController.text),
+                          disease: _diseaseController.text,
+                          isActive: widget.patient.isActive);
+                      patientController.updatePatient(
+                          widget.patient.id, editedPatient);
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          behavior: SnackBarBehavior.floating,
+                          closeIconColor: Colors.white,
+                          showCloseIcon: true,
+                          content: Text('Patient modifié avec succès'),
+                        ),
+                      );
+                    } catch (e) {
+                      developer.log(e.toString(), name: "ERROR");
+                    }
                   }
                 },
                 child: const Text('Modifier'),

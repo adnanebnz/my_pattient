@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:my_patients_sql/controllers/exercise_controller.dart';
 import 'package:my_patients_sql/controllers/patient_controller.dart';
 import 'package:my_patients_sql/models/exercise.dart';
 import 'package:my_patients_sql/models/patient.dart';
+import "dart:developer" as developer show log;
 
 class AddPersonForm extends StatefulWidget {
   const AddPersonForm({super.key});
@@ -74,35 +74,6 @@ class _AddPersonFormState extends State<AddPersonForm> {
             controller: _diseaseController,
             validator: _fieldValidator,
           ),
-          // fetch exercises from hive and display them as options
-          Expanded(
-            child: GetX<ExerciseController>(builder: ((controller) {
-              return ListView.builder(
-                itemCount: controller.exercises.length,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                      title: Text(controller.exercises[index].name),
-                      subtitle: Text(controller.exercises[index].description),
-                      trailing: Checkbox(
-                        value: selectedExercises
-                            .contains(controller.exercises[index]),
-                        onChanged: (value) {
-                          setState(() {
-                            if (value == true) {
-                              selectedExercises
-                                  .add(controller.exercises[index]);
-                            } else {
-                              selectedExercises
-                                  .remove(controller.exercises[index]);
-                            }
-                          });
-                        },
-                      ));
-                },
-              );
-            })),
-          ),
-
           const Spacer(),
           Padding(
             padding: const EdgeInsets.fromLTRB(0.0, 0.0, 8.0, 24.0),
@@ -112,24 +83,29 @@ class _AddPersonFormState extends State<AddPersonForm> {
               child: ElevatedButton(
                 onPressed: () {
                   if (_patientFormKey.currentState!.validate()) {
-                    final patient = Patient(
-                      id: null,
-                      isActive: 0,
-                      name: _nameController.text,
-                      age: int.parse(_ageController.text),
-                      disease: _diseaseController.text,
-                      exercises: selectedExercises,
-                    );
-                    patientController.insertPatient(patient);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        behavior: SnackBarBehavior.floating,
-                        showCloseIcon: true,
-                        closeIconColor: Colors.white,
-                        content: Text('Patient ajoutée avec succès'),
-                      ),
-                    );
-                    Navigator.of(context).pop();
+                    try {
+                      final patient = Patient(
+                        id: null,
+                        isActive: 0,
+                        name: _nameController.text,
+                        age: int.parse(_ageController.text),
+                        disease: _diseaseController.text,
+                        exercises: selectedExercises,
+                      );
+
+                      patientController.insertPatient(patient);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          behavior: SnackBarBehavior.floating,
+                          showCloseIcon: true,
+                          closeIconColor: Colors.white,
+                          content: Text('Patient ajoutée avec succès'),
+                        ),
+                      );
+                      Navigator.of(context).pop();
+                    } catch (e) {
+                      developer.log(e.toString());
+                    }
                   }
                 },
                 child: const Text('Sauvgarder'),

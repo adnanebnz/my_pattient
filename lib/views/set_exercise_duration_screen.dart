@@ -44,8 +44,8 @@ class _SetExerciseDurationPageState extends State<SetExerciseDurationPage> {
     super.initState();
     exerciseController.getExercises();
     patientController.getPatientExercises(
-        patientController.activePatientsList[widget.patientIndex],
-        patientController.activePatientsList[widget.patientIndex].id);
+      patientController.activePatientsList[widget.patientIndex],
+    );
   }
 
   @override
@@ -103,7 +103,7 @@ class _SetExerciseDurationPageState extends State<SetExerciseDurationPage> {
                                             .name,
                                     notificationTitle: 'Exercise terminé!'))
                             .then((value) {
-                          developer.log('THE VALUE IS ' + value.toString());
+                          developer.log('THE VALUE IS $value');
                           if (value) {
                             exerciseController.setExerciseProgrammed(
                                 exerciseController

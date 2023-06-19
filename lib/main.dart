@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:my_patients_sql/views/splash_screen.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
   await Alarm.init();
 }

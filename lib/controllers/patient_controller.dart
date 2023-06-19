@@ -12,31 +12,32 @@ class PatientController extends GetxController {
     await DbHelper.insert('patients', patient!.toMap());
     getActivePatients();
     getPatients();
+    getPatientExercises(patient);
   }
 
-  Future insertExercisesToPatient(Patient? patient, Exercise? exercise) async {
+  Future insertExercisesToPatient(int? patientId, Exercise? exercise) async {
     final Map<String, dynamic> patientExerciseData = {
-      'patient_id': patient!.id,
+      'patient_id': patientId,
       'exercise_id': exercise!.id,
     };
     await DbHelper.insert('patient_exercise', patientExerciseData);
+    getActivePatients();
+    getPatients();
   }
 
-  Future getPatientExercises(Patient? patient, int patientId) async {
+  Future getPatientExercises(Patient? patient) async {
     final List<Map<String, dynamic>> patientExercisesData =
-        await DbHelper.getPatientExercises(patientId);
-    for (var element in patientExercisesData) {
-      developer.log(element.toString());
-    }
-    final List<Exercise> patientExercises = [];
+        await DbHelper.getPatientExercises(patient!.id!);
+
+    final List<Exercise> patientExercisesFinal = [];
     for (var patientExerciseData in patientExercisesData) {
-      patientExercises.add(Exercise(
+      patientExercisesFinal.add(Exercise(
         id: patientExerciseData['id'],
         name: patientExerciseData['name'],
         description: patientExerciseData['description'],
       ));
     }
-    return patientExercises;
+    return patientExercisesFinal;
   }
 
   Future getPatients() async {
