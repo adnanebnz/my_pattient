@@ -4,17 +4,14 @@ class DbHelper {
   static const String _patientsTable = 'patients';
   static const String _exercisesTable = 'exercises';
   static const String _patientExerciseTable = 'patient_exercise';
+
   static Future<void> createTables(sql.Database database) async {
     await database.execute('''
   CREATE TABLE IF NOT EXISTS $_exercisesTable (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
     description TEXT NOT NULL,
-    isProgrammed INTEGER DEFAULT 0,
-    isDone INTEGER DEFAULT 0,
-    duration TEXT,
-    startTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    endTime TIMESTAMP
+    startTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP
   )
 ''');
 
@@ -22,6 +19,8 @@ class DbHelper {
   CREATE TABLE IF NOT EXISTS $_patientExerciseTable (
     patient_id INTEGER NOT NULL,
     exercise_id INTEGER NOT NULL,
+    isProgrammed INTEGER NOT NULL DEFAULT 0,
+    isDone INTEGER NOT NULL DEFAULT 0,
     FOREIGN KEY (patient_id) REFERENCES $_patientsTable (id),
     FOREIGN KEY (exercise_id) REFERENCES $_exercisesTable (id),
     PRIMARY KEY (patient_id, exercise_id)
@@ -99,7 +98,7 @@ class DbHelper {
   static Future setExerciseIsDone(int id, int isDone) async {
     final sql.Database database = await db();
     return database.rawUpdate('''
-      UPDATE $_exercisesTable
+      UPDATE $_patientExerciseTable
       SET isDone = $isDone
       WHERE id = $id
     ''');
@@ -108,7 +107,7 @@ class DbHelper {
   static Future setExerciseIsProgrammed(int id, int isProgrammed) async {
     final sql.Database database = await db();
     return database.rawUpdate('''
-      UPDATE $_exercisesTable
+      UPDATE $_patientExerciseTable
       SET isProgrammed = $isProgrammed
       WHERE id = $id
     ''');
@@ -145,7 +144,6 @@ class DbHelper {
       INNER JOIN $_patientExerciseTable
       ON $_exercisesTable.id = $_patientExerciseTable.exercise_id
       WHERE $_patientExerciseTable.patient_id = $patientId
-      AND $_exercisesTable.endTime IS NULL
     ''');
   }
 

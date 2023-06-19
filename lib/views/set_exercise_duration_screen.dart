@@ -5,6 +5,7 @@ import 'dart:developer' as developer show log;
 
 import 'package:my_patients_sql/controllers/exercise_controller.dart';
 import 'package:my_patients_sql/controllers/patient_controller.dart';
+import 'package:my_patients_sql/models/exercise.dart';
 
 class SetExerciseDurationPage extends StatefulWidget {
   const SetExerciseDurationPage(
@@ -39,15 +40,22 @@ class _SetExerciseDurationPageState extends State<SetExerciseDurationPage> {
     }
   }
 
+  late final Exercise exercise;
   @override
   void initState() {
     super.initState();
     exerciseController.getExercises();
-    patientController.getPatientExercises(
-      patientController.activePatientsList[widget.patientIndex],
-    );
+    patientController
+        .getPatientExercises(
+            patientController.activePatientsList[widget.patientIndex])
+        .then((value) => {
+              setState(() {
+                exercise = value[widget.exerciseIndex];
+              })
+            });
   }
 
+//TODO SHOW MORE FEEDBACK
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -59,14 +67,37 @@ class _SetExerciseDurationPageState extends State<SetExerciseDurationPage> {
       home: Scaffold(
         body: Padding(
           padding: const EdgeInsets.only(top: 28.0, left: 10.0, right: 10.0),
-          child: Column(children: [
-            const Text(
-              'Définir la durée de l\'exercice',
-              style: TextStyle(
-                fontSize: 18.0,
-                fontWeight: FontWeight.w500,
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            const Center(
+              child: Text(
+                'Définir la durée de l\'exercice',
+                style: TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ),
+            const SizedBox(height: 50.0),
+            Container(
+              padding: const EdgeInsets.only(
+                bottom: 5, // Space between underline and text
+              ),
+              decoration: const BoxDecoration(
+                  border: Border(
+                      bottom: BorderSide(
+                color: Colors.green,
+                width: 1.0, // Underline thickness
+              ))),
+              child: Text(
+                exercise.name,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 15.0,
+                ),
+              ),
+            ),
+            const SizedBox(height: 10.0),
             TextField(
               controller: _durationController,
               decoration: const InputDecoration(
@@ -75,48 +106,50 @@ class _SetExerciseDurationPageState extends State<SetExerciseDurationPage> {
             ),
             Padding(
               padding: const EdgeInsets.only(top: 28.0),
-              child: ElevatedButton(
-                  onPressed: () {
-                    pickTime(
-                            DateTime.now(), int.parse(_durationController.text))
-                        .then(
-                      (value) {
-                        //setDuration(value, widget.exerciseId, widget.patientId);
-                        //TODO FETCH EXERCISE DATA FOR THE ALARM NOTIFICATION BODY AND TITLE
-                        //TODO SAVE IT TO DATABASE
-                        //TODO WHILE CREATING THE PATIENTS OR MODIFIYING THEM ADD THE POSSIBILITY TO ADD THE EXISTING EXERCISES TO THEM
-                        //TODO FETCH THE ONLY SELECTED EXERCISES FOR THE PATIENT IN THE ACTIVE PATIENTS PAGE
-                        //TODO ADD THE POSSIBILITY TO STOP THE TIMER AND MODIFY IT
+              child: Center(
+                child: ElevatedButton(
+                    onPressed: () {
+                      pickTime(DateTime.now(),
+                              int.parse(_durationController.text))
+                          .then(
+                        (value) {
+                          //setDuration(value, widget.exerciseId, widget.patientId);
+                          //TODO FETCH EXERCISE DATA FOR THE ALARM NOTIFICATION BODY AND TITLE
+                          //TODO SAVE IT TO DATABASE
+                          //TODO WHILE CREATING THE PATIENTS OR MODIFIYING THEM ADD THE POSSIBILITY TO ADD THE EXISTING EXERCISES TO THEM
+                          //TODO FETCH THE ONLY SELECTED EXERCISES FOR THE PATIENT IN THE ACTIVE PATIENTS PAGE
+                          //TODO ADD THE POSSIBILITY TO STOP THE TIMER AND MODIFY IT
 
-                        Alarm.set(
-                                alarmSettings: AlarmSettings(
-                                    id: 0,
-                                    dateTime: value,
-                                    assetAudioPath: 'assets/alarm.mp3',
-                                    notificationBody: exerciseController
-                                            .exercises[widget.exerciseIndex]
-                                            .name +
-                                        ' est terminé pour ' +
-                                        patientController
-                                            .activePatientsList[
-                                                widget.patientIndex]
-                                            .name,
-                                    notificationTitle: 'Exercise terminé!'))
-                            .then((value) {
-                          developer.log('THE VALUE IS $value');
-                          if (value) {
-                            exerciseController.setExerciseProgrammed(
-                                exerciseController
-                                    .exercises[widget.exerciseIndex].id,
-                                1);
-                          }
-                        });
-                        Navigator.of(context).pop();
-                        developer.log("THE VALUE IS $value");
-                      },
-                    );
-                  },
-                  child: const Text('Définir l\'heure de début')),
+                          Alarm.set(
+                                  alarmSettings: AlarmSettings(
+                                      id: 0,
+                                      dateTime: value,
+                                      assetAudioPath: 'assets/alarm.mp3',
+                                      notificationBody: exerciseController
+                                              .exercises[widget.exerciseIndex]
+                                              .name +
+                                          ' est terminé pour ' +
+                                          patientController
+                                              .activePatientsList[
+                                                  widget.patientIndex]
+                                              .name,
+                                      notificationTitle: 'Exercise terminé!'))
+                              .then((value) {
+                            developer.log('THE VALUE IS $value');
+                            if (value) {
+                              exerciseController.setExerciseProgrammed(
+                                  exerciseController
+                                      .exercises[widget.exerciseIndex].id,
+                                  1);
+                            }
+                          });
+                          Navigator.of(context).pop();
+                          developer.log("THE VALUE IS $value");
+                        },
+                      );
+                    },
+                    child: const Text('Définir l\'heure de début')),
+              ),
             )
           ]),
         ),

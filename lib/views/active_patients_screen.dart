@@ -73,9 +73,9 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                                 "${controller.activePatientsList[index].age} ans"),
                             onTap: () {
                               showModalBottomSheet(
-                                  barrierColor: Colors.transparent,
+                                  barrierColor: Colors.white12,
                                   backgroundColor:
-                                      const Color.fromRGBO(245, 220, 220, 1),
+                                      const Color.fromRGBO(209, 213, 219, 1),
                                   isScrollControlled: true,
                                   elevation: 1,
                                   shape: const RoundedRectangleBorder(
@@ -105,62 +105,76 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                                                 fontWeight: FontWeight.w500,
                                               ),
                                             ),
-                                            Expanded(child:
-                                                GetX<ExerciseController>(
-                                                    builder:
-                                                        (exerciseController) {
-                                              return ListView.builder(
-                                                itemCount: exerciseController
-                                                    .exercises.length,
-                                                itemBuilder:
-                                                    (context, indexExo) {
-                                                  return Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            top: 13.0),
-                                                    child: ListTile(
-                                                      shape:
-                                                          RoundedRectangleBorder(
+                                            //TODO HERE SHOW ONLY THE SELECTED PATIENT EXERCISES FROM THE UPDATE FORM PAGE
+                                            Expanded(
+                                                child: FutureBuilder(
+                                              future: patientController
+                                                  .getPatientExercises(controller
+                                                          .activePatientsList[
+                                                      index]),
+                                              builder: (context, snapshot) {
+                                                if (snapshot.hasData) {
+                                                  return ListView.builder(
+                                                    itemCount:
+                                                        snapshot.data.length,
+                                                    itemBuilder:
+                                                        (context, exoIndex) {
+                                                      return Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                top: 12.0),
+                                                        child: ListTile(
+                                                          shape: RoundedRectangleBorder(
                                                               borderRadius:
                                                                   BorderRadius
                                                                       .circular(
                                                                           10)),
-                                                      tileColor: Colors.white70,
-                                                      title: Text(
-                                                          exerciseController
-                                                              .exercises[
-                                                                  indexExo]
+                                                          tileColor:
+                                                              Colors.white70,
+                                                          title: Text(snapshot
+                                                              .data[exoIndex]
                                                               .name),
-                                                      subtitle: Text(
-                                                          exerciseController
-                                                              .exercises[
-                                                                  indexExo]
-                                                              .description),
-                                                      trailing: IconButton(
-                                                        icon: const Icon(
-                                                          Icons.add,
-                                                          color: Colors.green,
-                                                          size: 25,
+                                                          subtitle: Text(
+                                                              snapshot
+                                                                  .data[
+                                                                      exoIndex]
+                                                                  .description),
+                                                          trailing: IconButton(
+                                                            onPressed: () {
+                                                              Navigator.push(
+                                                                context,
+                                                                MaterialPageRoute(
+                                                                  builder:
+                                                                      (context) =>
+                                                                          SetExerciseDurationPage(
+                                                                    exerciseIndex:
+                                                                        exoIndex,
+                                                                    patientIndex:
+                                                                        index,
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            },
+                                                            icon: const Icon(
+                                                              Icons.add,
+                                                              size: 28,
+                                                              color:
+                                                                  Colors.green,
+                                                            ),
+                                                          ),
                                                         ),
-                                                        onPressed: () {
-                                                          Navigator.of(context)
-                                                              .push(
-                                                                  MaterialPageRoute(
-                                                                      builder:
-                                                                          (_) {
-                                                            return SetExerciseDurationPage(
-                                                                exerciseIndex:
-                                                                    indexExo,
-                                                                patientIndex:
-                                                                    index);
-                                                          }));
-                                                        },
-                                                      ),
-                                                    ),
+                                                      );
+                                                    },
                                                   );
-                                                },
-                                              );
-                                            }))
+                                                } else {
+                                                  return const Center(
+                                                    child:
+                                                        CircularProgressIndicator(),
+                                                  );
+                                                }
+                                              },
+                                            )),
                                           ],
                                         ),
                                       ),

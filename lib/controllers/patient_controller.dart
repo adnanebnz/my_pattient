@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'package:get/state_manager.dart';
 import 'package:my_patients_sql/db/db_helper.dart';
 import 'package:my_patients_sql/models/exercise.dart';
@@ -38,6 +40,14 @@ class PatientController extends GetxController {
       ));
     }
     return patientExercisesFinal;
+  }
+
+  Future deletePatientExercise(
+      int? patientId, int? exerciseId, Patient? patient) async {
+    await DbHelper.deletePatientExercise(patientId!, exerciseId!);
+    getActivePatients();
+    getPatients();
+    getPatientExercises(patient);
   }
 
   Future getPatients() async {

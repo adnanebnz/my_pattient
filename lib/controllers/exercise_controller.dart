@@ -1,7 +1,10 @@
+import 'dart:developer' as developer show log;
+
 import 'package:get/state_manager.dart';
 import 'package:my_patients_sql/db/db_helper.dart';
 import 'package:my_patients_sql/models/exercise.dart';
-import 'dart:developer' as developer show log;
+
+import '../models/patient.dart';
 
 class ExerciseController extends GetxController {
   RxList exercises = <Exercise>[].obs;
@@ -31,6 +34,10 @@ class ExerciseController extends GetxController {
     }
     exercises.value = fetchedExercises;
     return exercises;
+  }
+
+  Future getSelectedExercisesByPatient(Patient? patient) async {
+    await DbHelper.getPatientSelectedExercises(patient!.id!);
   }
 
   Future deleteExercise(int? id) async {
