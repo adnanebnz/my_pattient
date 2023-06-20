@@ -5,6 +5,7 @@ import 'dart:developer' as developer show log;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_patients_sql/controllers/exercise_controller.dart';
+import 'package:my_patients_sql/controllers/patientExercise_controller.dart';
 import 'package:my_patients_sql/controllers/patient_controller.dart';
 import 'package:my_patients_sql/models/exercise.dart';
 import 'package:my_patients_sql/models/patient.dart';
@@ -23,25 +24,32 @@ class _AddExercisesToPatientPageState extends State<AddExercisesToPatientPage> {
   List<Exercise> selectedExercises = [];
   ExerciseController exerciseController = Get.put(ExerciseController());
   PatientController patientController = Get.put(PatientController());
+  PatientExerciseController patientExerciseController =
+      Get.put(PatientExerciseController());
 
   @override
   void initState() {
     super.initState();
     exerciseController.getExercises();
     getPatientExercises();
-    exerciseController
+    patientExerciseController
         .getSelectedExercisesByPatient(widget.patient)
         .then((value) => {
-              setState(() {
-                selectedExercises = value;
-              })
+              if (value.isNotEmpty)
+                {
+                  setState(() {
+                    selectedExercises = value;
+                  })
+                }
             });
   }
 
   Future saveExercises() async {
     for (var exercise in selectedExercises) {
-      await patientController.insertExercisesToPatient(
+      await patientExerciseController.insertExercisesToPatient(
           widget.patient.id, exercise);
+
+      //TODO SET EXERCISE IS PROGRAMMED
     }
   }
 
@@ -49,13 +57,13 @@ class _AddExercisesToPatientPageState extends State<AddExercisesToPatientPage> {
     await patientController
         .getPatientExercises(widget.patient)
         .then((value) => {
+              developer.log("getPatientExercises: $value",
+                  name: "patient_exercises"),
               setState(() {
                 selectedExercises = value;
               })
             });
   }
-
-  //TODO APPLY THE STYLE TO THE LISTTILE IF THE EXERCISE IS ALREADY ASSIGNED TO THE PATIENT
 
   @override
   Widget build(BuildContext context) {
@@ -106,6 +114,12 @@ class _AddExercisesToPatientPageState extends State<AddExercisesToPatientPage> {
               child: const Text("Enregistrer"),
               onPressed: () async {
                 await saveExercises();
+                // ignore: use_build_context_synchronously
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text("Exercices enregistrés"),
+                  ),
+                );
               },
             ),
           )

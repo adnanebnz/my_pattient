@@ -40,7 +40,7 @@ class DbHelper {
 
   static Future<sql.Database> db() async {
     return sql.openDatabase(
-      'mypatients.db',
+      'mypatientsapp.db',
       version: 1,
       onCreate: (sql.Database database, int version) async {
         await createTables(database);
@@ -136,14 +136,11 @@ class DbHelper {
     ''');
   }
 
-  static Future<List<Map<String, dynamic>>> getPatientSelectedExercises(
-      int patientId) async {
+  static Future getPatientExerciseId(int patientId, int exerciseId) async {
     final sql.Database database = await db();
     return database.rawQuery('''
-      SELECT * FROM $_exercisesTable
-      INNER JOIN $_patientExerciseTable
-      ON $_exercisesTable.id = $_patientExerciseTable.exercise_id
-      WHERE $_patientExerciseTable.patient_id = $patientId
+      SELECT * FROM $_patientExerciseTable
+      WHERE patient_id = $patientId AND exercise_id = $exerciseId
     ''');
   }
 
@@ -157,15 +154,6 @@ class DbHelper {
       WHERE $_patientExerciseTable.patient_id = $patientId
       AND $_exercisesTable.endTime IS NOT NULL
       AND $_exercisesTable.endTime LIKE '$date%'
-    ''');
-  }
-
-  static Future<int> insertPatientExercise(
-      int patientId, int exerciseId) async {
-    final sql.Database database = await db();
-    return database.rawInsert('''
-      INSERT INTO $_patientExerciseTable (patient_id, exercise_id)
-      VALUES ($patientId, $exerciseId)
     ''');
   }
 
@@ -185,6 +173,17 @@ class DbHelper {
       UPDATE $_exercisesTable
       SET $column = '$value'
       WHERE id = $exerciseId
+    ''');
+  }
+
+  static Future getPatientProgrammedExercises(int patientId) async {
+    final sql.Database database = await db();
+    return database.rawQuery('''
+      SELECT * FROM $_exercisesTable
+      INNER JOIN $_patientExerciseTable
+      ON $_exercisesTable.id = $_patientExerciseTable.exercise_id
+      WHERE $_patientExerciseTable.patient_id = $patientId
+      AND $_patientExerciseTable.isProgrammed = 1
     ''');
   }
 }

@@ -83,17 +83,13 @@ class _SetExerciseDurationPageState extends State<SetExerciseDurationPage> {
               padding: const EdgeInsets.only(
                 bottom: 5, // Space between underline and text
               ),
-              decoration: const BoxDecoration(
-                  border: Border(
-                      bottom: BorderSide(
-                color: Colors.green,
-                width: 1.0, // Underline thickness
-              ))),
-              child: Text(
-                exercise.name,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 15.0,
+              child: Center(
+                child: Text(
+                  "Nom de l'exercice: ${exercise.name}",
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 15.0,
+                  ),
                 ),
               ),
             ),
@@ -114,11 +110,6 @@ class _SetExerciseDurationPageState extends State<SetExerciseDurationPage> {
                           .then(
                         (value) {
                           //setDuration(value, widget.exerciseId, widget.patientId);
-                          //TODO FETCH EXERCISE DATA FOR THE ALARM NOTIFICATION BODY AND TITLE
-                          //TODO SAVE IT TO DATABASE
-                          //TODO WHILE CREATING THE PATIENTS OR MODIFIYING THEM ADD THE POSSIBILITY TO ADD THE EXISTING EXERCISES TO THEM
-                          //TODO FETCH THE ONLY SELECTED EXERCISES FOR THE PATIENT IN THE ACTIVE PATIENTS PAGE
-                          //TODO ADD THE POSSIBILITY TO STOP THE TIMER AND MODIFY IT
 
                           Alarm.set(
                                   alarmSettings: AlarmSettings(
@@ -137,14 +128,14 @@ class _SetExerciseDurationPageState extends State<SetExerciseDurationPage> {
                               .then((value) {
                             developer.log('THE VALUE IS $value');
                             if (value) {
-                              exerciseController.setExerciseProgrammed(
-                                  exerciseController
-                                      .exercises[widget.exerciseIndex].id,
-                                  1);
+                              // exerciseController.setExerciseProgrammed(
+                              //     exerciseController
+                              //         .exercises[widget.exerciseIndex].id,
+                              //     1);
+                              //TODO SET EXERCISE IS PROGRAMMED
                             }
                           });
                           Navigator.of(context).pop();
-                          developer.log("THE VALUE IS $value");
                         },
                       );
                     },

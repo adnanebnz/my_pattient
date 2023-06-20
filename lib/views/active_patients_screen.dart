@@ -105,7 +105,6 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                                                 fontWeight: FontWeight.w500,
                                               ),
                                             ),
-                                            //TODO HERE SHOW ONLY THE SELECTED PATIENT EXERCISES FROM THE UPDATE FORM PAGE
                                             Expanded(
                                                 child: FutureBuilder(
                                               future: patientController
