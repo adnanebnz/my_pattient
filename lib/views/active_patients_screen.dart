@@ -77,9 +77,9 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                                 "${controller.activePatientsList[index].age} ans"),
                             onTap: () {
                               showModalBottomSheet(
-                                  barrierColor: Colors.white12,
+                                  barrierColor: Colors.white70,
                                   backgroundColor:
-                                      const Color.fromRGBO(209, 213, 219, 1),
+                                      const Color.fromRGBO(226, 232, 240, 1),
                                   isScrollControlled: true,
                                   elevation: 1,
                                   shape: const RoundedRectangleBorder(

@@ -67,23 +67,19 @@ class _AddExercisesToPatientPageState extends State<AddExercisesToPatientPage> {
                         controller.exercises[index].name,
                       ),
                       subtitle: Text(controller.exercises[index].description),
-                      selected: selectedExercises
-                          .contains(controller.exercises[index]),
-                      selectedColor: Colors.green,
-                      selectedTileColor: Colors.white38,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10)),
-                      onTap: () {
-                        setState(() {
-                          if (selectedExercises
-                              .contains(controller.exercises[index])) {
-                            selectedExercises
-                                .remove(controller.exercises[index]);
-                          } else {
+                      trailing: IconButton(
+                        icon: const Icon(
+                          Icons.add,
+                          color: Colors.green,
+                        ),
+                        onPressed: () {
+                          setState(() {
                             selectedExercises.add(controller.exercises[index]);
-                          }
-                        });
-                      },
+                          });
+                        },
+                      ),
                     ),
                   ),
                 );

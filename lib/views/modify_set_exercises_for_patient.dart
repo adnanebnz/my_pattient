@@ -19,7 +19,7 @@ class _ModifySetExercisesForPatientState
   @override
 
   //TODO FIX ADD EXERCISE STYE TO HAVE TRAILLING AND DELETE ENREGISTER BUTTON
-
+  //TODO ADD THE POSSIBILITY TO STOP THE ALARM
   //TODO USE ENDTIME AND STARTTIME TO SAVE THEM IN DB WHILE SETTING THE DURATION
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,6 +42,12 @@ class _ModifySetExercisesForPatientState
                     onPressed: () {
                       patientExerciseController.deletePatientExercise(
                           widget.patient, snapshot.data[index].id);
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Exercice supprimé'),
+                        ),
+                      );
                     },
                   ),
                 );

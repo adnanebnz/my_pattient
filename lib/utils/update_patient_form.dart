@@ -87,7 +87,8 @@ class _AddPersonFormState extends State<UpdatePersonForm> {
             child: SizedBox(
               width: double.maxFinite,
               height: 50,
-              child: ElevatedButton(
+              child: ElevatedButton.icon(
+                icon: const Icon(Icons.add),
                 onPressed: () {
                   if (_patientFormKey.currentState!.validate()) {
                     try {
@@ -101,7 +102,9 @@ class _AddPersonFormState extends State<UpdatePersonForm> {
                     }
                   }
                 },
-                child: const Text('Ajouter des exercices'),
+                label: const Text(
+                  "Ajouter des exercices",
+                ),
               ),
             ),
           ),
@@ -111,7 +114,8 @@ class _AddPersonFormState extends State<UpdatePersonForm> {
           SizedBox(
             width: double.maxFinite,
             height: 50,
-            child: ElevatedButton(
+            child: ElevatedButton.icon(
+              icon: const Icon(Icons.delete),
               onPressed: () {
                 if (_patientFormKey.currentState!.validate()) {
                   try {
@@ -124,7 +128,7 @@ class _AddPersonFormState extends State<UpdatePersonForm> {
                   }
                 }
               },
-              child: const Text('Supprimer les exercices'),
+              label: const Text('Supprimer les exercices'),
             ),
           ),
           const Spacer(),
