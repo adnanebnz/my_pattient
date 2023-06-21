@@ -21,7 +21,7 @@ class AddExercisesToPatientPage extends StatefulWidget {
 }
 
 class _AddExercisesToPatientPageState extends State<AddExercisesToPatientPage> {
-  List<Exercise> selectedExercises = [];
+  List selectedExercises = [];
   ExerciseController exerciseController = Get.put(ExerciseController());
   PatientController patientController = Get.put(PatientController());
   PatientExerciseController patientExerciseController =
@@ -31,38 +31,21 @@ class _AddExercisesToPatientPageState extends State<AddExercisesToPatientPage> {
   void initState() {
     super.initState();
     exerciseController.getExercises();
-    getPatientExercises();
-    patientExerciseController
-        .getSelectedExercisesByPatient(widget.patient)
-        .then((value) => {
-              if (value.isNotEmpty)
-                {
-                  setState(() {
-                    selectedExercises = value;
-                  })
-                }
-            });
+  }
+
+  Future fillExercises() async {
+    await exerciseController.getExercises().then((value) => {
+          setState(() {
+            selectedExercises = value;
+          })
+        });
   }
 
   Future saveExercises() async {
     for (var exercise in selectedExercises) {
       await patientExerciseController.insertExercisesToPatient(
           widget.patient.id, exercise);
-
-      //TODO SET EXERCISE IS PROGRAMMED
     }
-  }
-
-  Future getPatientExercises() async {
-    await patientController
-        .getPatientExercises(widget.patient)
-        .then((value) => {
-              developer.log("getPatientExercises: $value",
-                  name: "patient_exercises"),
-              setState(() {
-                selectedExercises = value;
-              })
-            });
   }
 
   @override

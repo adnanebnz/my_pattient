@@ -58,7 +58,6 @@ class _SetExerciseDurationPageState extends State<SetExerciseDurationPage> {
             });
   }
 
-//TODO SHOW MORE FEEDBACK
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -131,11 +130,6 @@ class _SetExerciseDurationPageState extends State<SetExerciseDurationPage> {
                               .then((value) {
                             developer.log('THE VALUE IS $value');
                             if (value) {
-                              // exerciseController.setExerciseProgrammed(
-                              //     exerciseController
-                              //         .exercises[widget.exerciseIndex].id,
-                              //     1);
-                              //TODO SET EXERCISE IS PROGRAMMED
                               patientExerciseController.setExerciseProgrammed(
                                   patientController
                                       .activePatientsList[widget.patientIndex]
