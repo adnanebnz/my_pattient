@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'dart:developer' as developer show log;
 
 import 'package:my_patients_sql/controllers/exercise_controller.dart';
+import 'package:my_patients_sql/controllers/patientExercise_controller.dart';
 import 'package:my_patients_sql/controllers/patient_controller.dart';
 import 'package:my_patients_sql/models/exercise.dart';
 
@@ -21,6 +22,8 @@ class _SetExerciseDurationPageState extends State<SetExerciseDurationPage> {
   final TextEditingController _durationController = TextEditingController();
   ExerciseController exerciseController = Get.put(ExerciseController());
   PatientController patientController = Get.put(PatientController());
+  PatientExerciseController patientExerciseController =
+      Get.put(PatientExerciseController());
   Future pickTime(DateTime? initialTime, int duration) async {
     final TimeOfDay? pickedTime = await showTimePicker(
       context: context,
@@ -133,6 +136,12 @@ class _SetExerciseDurationPageState extends State<SetExerciseDurationPage> {
                               //         .exercises[widget.exerciseIndex].id,
                               //     1);
                               //TODO SET EXERCISE IS PROGRAMMED
+                              patientExerciseController.setExerciseProgrammed(
+                                  patientController
+                                      .activePatientsList[widget.patientIndex]
+                                      .id,
+                                  exercise.id,
+                                  1);
                             }
                           });
                           Navigator.of(context).pop();

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_patients_sql/controllers/exercise_controller.dart';
+import 'package:my_patients_sql/controllers/patientExercise_controller.dart';
 import 'package:my_patients_sql/controllers/patient_controller.dart';
-
+import 'package:my_patients_sql/models/exercise.dart';
+import 'dart:developer' as developer show log;
 import 'set_exercise_duration_screen.dart';
 
 class ActivePatientsPage extends StatefulWidget {
@@ -15,7 +17,10 @@ class ActivePatientsPage extends StatefulWidget {
 class _ActivePatientsPageState extends State<ActivePatientsPage> {
   PatientController patientController = Get.put(PatientController());
   ExerciseController exerciseController = Get.put(ExerciseController());
-
+  PatientExerciseController patientExerciseController =
+      Get.put(PatientExerciseController());
+  List<Exercise> programmedExercises = [];
+  List<Exercise> patientExercises = [];
   @override
   void initState() {
     super.initState();
@@ -99,20 +104,37 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             const Text(
-                                              "Ajouter des exercises pour ce patient",
+                                              "Programmer des exercises pour ce patient",
                                               style: TextStyle(
                                                 fontSize: 18,
                                                 fontWeight: FontWeight.w500,
                                               ),
                                             ),
+                                            const SizedBox(height: 3),
+                                            const Text(
+                                              "les exercises en vert sont déjà programmés pour ce patient",
+                                              style: TextStyle(
+                                                  fontSize: 13,
+                                                  color: Colors.black54),
+                                            ),
+                                            const SizedBox(height: 10),
                                             Expanded(
                                                 child: FutureBuilder(
-                                              future: patientController
+                                              future: patientExerciseController
                                                   .getPatientExercises(controller
                                                           .activePatientsList[
                                                       index]),
                                               builder: (context, snapshot) {
-                                                if (snapshot.hasData) {
+                                                if (snapshot.hasError) {
+                                                  developer.log(
+                                                      "snapshot error: ${snapshot.error}",
+                                                      name:
+                                                          "ActivePatientsPage");
+                                                  return const Center(
+                                                    child: Text(
+                                                        "Une erreur est survenue!"),
+                                                  );
+                                                } else if (snapshot.hasData) {
                                                   return ListView.builder(
                                                     itemCount:
                                                         snapshot.data.length,
@@ -129,8 +151,14 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                                                                   BorderRadius
                                                                       .circular(
                                                                           10)),
-                                                          tileColor:
-                                                              Colors.white70,
+                                                          tileColor: snapshot
+                                                                      .data[
+                                                                          exoIndex]
+                                                                      .isProgrammed ==
+                                                                  1
+                                                              ? Colors
+                                                                  .green[100]
+                                                              : Colors.white70,
                                                           title: Text(snapshot
                                                               .data[exoIndex]
                                                               .name),

@@ -4,23 +4,27 @@ import 'package:get/get.dart';
 import 'package:my_patients_sql/db/db_helper.dart';
 import 'package:my_patients_sql/models/exercise.dart';
 import 'package:my_patients_sql/models/patient.dart';
+import 'dart:developer' as developer show log;
 
 class PatientExerciseController extends GetxController {
   Future getSelectedExercisesByPatient(Patient? patient) async {
     await DbHelper.getPatientProgrammedExercises(patient!.id!);
   }
 
-  Future getPatientExercises(int? patientId) async {
+  Future getPatientExercises(Patient? patient) async {
     final List<Map<String, dynamic>> patientExercisesData =
-        await DbHelper.getPatientExercises(patientId!);
+        await DbHelper.getPatientExercises(patient!.id!);
     final List<Exercise> patientExercisesFinal = [];
     for (var patientExerciseData in patientExercisesData) {
       patientExercisesFinal.add(Exercise(
         id: patientExerciseData['id'],
         name: patientExerciseData['name'],
         description: patientExerciseData['description'],
+        isDone: patientExerciseData['isDone'],
+        isProgrammed: patientExerciseData['isProgrammed'],
       ));
     }
+    developer.log('patientExercisesFinal: $patientExercisesFinal');
     return patientExercisesFinal;
   }
 
@@ -52,8 +56,10 @@ class PatientExerciseController extends GetxController {
     await DbHelper.setExerciseIsDone(patientId!, exerciseId!);
   }
 
-  Future setExerciseProgrammed(int? patientId, int? exerciseId) async {
-    await DbHelper.setExerciseIsProgrammed(patientId!, exerciseId!);
+  Future setExerciseProgrammed(
+      int? patientId, int? exerciseId, int? isProgrammed) async {
+    await DbHelper.setExerciseIsProgrammed(
+        patientId!, exerciseId!, isProgrammed!);
   }
 
   Future getProgrammedExercises(int? patientId) async {
@@ -65,6 +71,8 @@ class PatientExerciseController extends GetxController {
         id: programmedExerciseData['id'],
         name: programmedExerciseData['name'],
         description: programmedExerciseData['description'],
+        isProgrammed: programmedExerciseData['isProgrammed'],
+        isDone: programmedExerciseData['isDone'],
       ));
     }
     return programmedExercisesFinal;
@@ -79,6 +87,8 @@ class PatientExerciseController extends GetxController {
         id: doneExerciseData['id'],
         name: doneExerciseData['name'],
         description: doneExerciseData['description'],
+        isProgrammed: doneExerciseData['isProgrammed'],
+        isDone: doneExerciseData['isDone'],
       ));
     }
     return doneExercisesFinal;

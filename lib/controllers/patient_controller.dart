@@ -21,7 +21,7 @@ class PatientController extends GetxController {
     final List<Map<String, dynamic>> patientExercisesData =
         await DbHelper.getPatientExercises(patient!.id!);
 
-    final List<Exercise> patientExercisesFinal = [];
+    final List patientExercisesFinal = [];
     for (var patientExerciseData in patientExercisesData) {
       patientExercisesFinal.add(Exercise(
         id: patientExerciseData['id'],
