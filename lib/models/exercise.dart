@@ -2,7 +2,6 @@ class Exercise {
   int? id;
   String name;
   String description;
-  int? duration;
   int? isProgrammed;
   int? isDone;
 
@@ -12,7 +11,6 @@ class Exercise {
     required this.description,
     this.isProgrammed,
     this.isDone,
-    this.duration,
   });
   Map<String, dynamic> toMap() {
     return {

@@ -42,8 +42,9 @@ class PatientExerciseController extends GetxController {
     await DbHelper.insert('patient_exercise', patientExerciseData);
   }
 
-  Future deletePatientExercise(int? patientId, int? exerciseId) async {
-    await DbHelper.deletePatientExercise(patientId!, exerciseId!);
+  Future deletePatientExercise(Patient? patient, int? exerciseId) async {
+    await DbHelper.deletePatientExercise(patient!.id!, exerciseId!);
+    getPatientExercises(patient);
   }
 
   Future updatePatientExercise(
