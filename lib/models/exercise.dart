@@ -5,8 +5,6 @@ class Exercise {
   int? duration;
   int? isProgrammed;
   int? isDone;
-  DateTime? startTime;
-  DateTime? endTime;
 
   Exercise({
     required this.id,
@@ -15,8 +13,6 @@ class Exercise {
     this.isProgrammed,
     this.isDone,
     this.duration,
-    this.startTime,
-    this.endTime,
   });
   Map<String, dynamic> toMap() {
     return {

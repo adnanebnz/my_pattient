@@ -11,7 +11,6 @@ class DbHelper {
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
     description TEXT NOT NULL,
-    startTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP
   )
 ''');
 
@@ -21,6 +20,8 @@ class DbHelper {
     exercise_id INTEGER NOT NULL,
     isProgrammed INTEGER NOT NULL DEFAULT 0,
     isDone INTEGER NOT NULL DEFAULT 0,
+    startTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    endTime TIMESTAMP,
     FOREIGN KEY (patient_id) REFERENCES $_patientsTable (id),
     FOREIGN KEY (exercise_id) REFERENCES $_exercisesTable (id),
     PRIMARY KEY (patient_id, exercise_id)
@@ -133,7 +134,7 @@ class DbHelper {
       INNER JOIN $_patientExerciseTable
       ON $_exercisesTable.id = $_patientExerciseTable.exercise_id
       WHERE $_patientExerciseTable.patient_id = $patientId
-      AND $_exercisesTable.endTime IS NOT NULL
+      AND $_patientExerciseTable.isDone = 1
     ''');
   }
 
@@ -142,19 +143,6 @@ class DbHelper {
     return database.rawQuery('''
       SELECT * FROM $_patientExerciseTable
       WHERE patient_id = $patientId AND exercise_id = $exerciseId
-    ''');
-  }
-
-  static Future<List<Map<String, dynamic>>> getPatientExercisesByDate(
-      int patientId, String date) async {
-    final sql.Database database = await db();
-    return database.rawQuery('''
-      SELECT * FROM $_exercisesTable
-      INNER JOIN $_patientExerciseTable
-      ON $_exercisesTable.id = $_patientExerciseTable.exercise_id
-      WHERE $_patientExerciseTable.patient_id = $patientId
-      AND $_exercisesTable.endTime IS NOT NULL
-      AND $_exercisesTable.endTime LIKE '$date%'
     ''');
   }
 
