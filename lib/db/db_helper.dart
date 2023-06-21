@@ -10,7 +10,7 @@ class DbHelper {
   CREATE TABLE IF NOT EXISTS $_exercisesTable (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
-    description TEXT NOT NULL,
+    description TEXT NOT NULL
   )
 ''');
 
