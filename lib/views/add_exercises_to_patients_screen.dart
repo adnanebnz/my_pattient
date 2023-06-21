@@ -63,6 +63,7 @@ class _AddExercisesToPatientPageState extends State<AddExercisesToPatientPage> {
                   child: Card(
                     elevation: 4,
                     child: ListTile(
+                      tileColor: Colors.white,
                       title: Text(
                         controller.exercises[index].name,
                       ),

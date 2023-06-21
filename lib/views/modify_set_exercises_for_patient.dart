@@ -31,24 +31,34 @@ class _ModifySetExercisesForPatientState
           return ListView.builder(
               itemCount: snapshot.data.length,
               itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(snapshot.data[index].name),
-                  subtitle: Text(snapshot.data[index].description),
-                  trailing: IconButton(
-                    icon: const Icon(
-                      Icons.delete,
-                      color: Colors.red,
-                    ),
-                    onPressed: () {
-                      patientExerciseController.deletePatientExercise(
-                          widget.patient, snapshot.data[index].id);
-
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Exercice supprimé'),
+                return Padding(
+                  padding: const EdgeInsets.only(
+                      top: 8.0, left: 4, right: 4, bottom: 1),
+                  child: Card(
+                    elevation: 4,
+                    child: ListTile(
+                      tileColor: Colors.white,
+                      title: Text(snapshot.data[index].name),
+                      subtitle: Text(snapshot.data[index].description),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      trailing: IconButton(
+                        icon: const Icon(
+                          Icons.delete,
+                          color: Colors.red,
                         ),
-                      );
-                    },
+                        onPressed: () {
+                          patientExerciseController.deletePatientExercise(
+                              widget.patient, snapshot.data[index].id);
+
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Exercice supprimé'),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
                   ),
                 );
               });
