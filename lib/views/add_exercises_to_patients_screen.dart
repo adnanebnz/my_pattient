@@ -52,7 +52,33 @@ class _AddExercisesToPatientPageState extends State<AddExercisesToPatientPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 12.0, left: 1),
+            child: Row(
+              children: [
+                IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: const Icon(
+                    Icons.arrow_back,
+                    size: 25,
+                  ),
+                ),
+                const Center(
+                  child: Text(
+                    "Ajouter des exercices a ce patient",
+                    style: TextStyle(fontSize: 18),
+                  ),
+                )
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 1.0,
+          ),
           Expanded(child: GetX<ExerciseController>(builder: (controller) {
             return ListView.builder(
               itemCount: controller.exercises.length,
@@ -88,19 +114,21 @@ class _AddExercisesToPatientPageState extends State<AddExercisesToPatientPage> {
             );
           })),
           const Spacer(),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 36.0),
-            child: ElevatedButton(
-              child: const Text("Enregistrer"),
-              onPressed: () async {
-                await saveExercises();
-                // ignore: use_build_context_synchronously
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text("Exercices enregistrés"),
-                  ),
-                );
-              },
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 36.0),
+              child: ElevatedButton(
+                child: const Text("Enregistrer"),
+                onPressed: () async {
+                  await saveExercises();
+                  // ignore: use_build_context_synchronously
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Exercices enregistrés"),
+                    ),
+                  );
+                },
+              ),
             ),
           )
         ],
