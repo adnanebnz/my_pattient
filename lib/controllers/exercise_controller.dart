@@ -1,5 +1,3 @@
-import 'dart:developer' as developer show log;
-
 import 'package:get/state_manager.dart';
 import 'package:my_patients_sql/db/db_helper.dart';
 import 'package:my_patients_sql/models/exercise.dart';
@@ -9,7 +7,6 @@ class ExerciseController extends GetxController {
 
   Future insertExercise(Exercise? exercise) async {
     final data = exercise!.toMap();
-    developer.log('insertExercise: $data', name: 'ExerciseController');
     await DbHelper.insert('exercises', data);
     getExercises();
   }

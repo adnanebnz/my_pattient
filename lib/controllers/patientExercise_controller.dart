@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:my_patients_sql/db/db_helper.dart';
 import 'package:my_patients_sql/models/exercise.dart';
 import 'package:my_patients_sql/models/patient.dart';
-import 'dart:developer' as developer show log;
 
 class PatientExerciseController extends GetxController {
   Future getSelectedExercisesByPatient(Patient? patient) async {
@@ -24,7 +23,6 @@ class PatientExerciseController extends GetxController {
         isProgrammed: patientExerciseData['isProgrammed'],
       ));
     }
-    developer.log('patientExercisesFinal: $patientExercisesFinal');
     return patientExercisesFinal;
   }
 

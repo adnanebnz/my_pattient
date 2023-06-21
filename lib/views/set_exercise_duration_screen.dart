@@ -37,8 +37,6 @@ class _SetExerciseDurationPageState extends State<SetExerciseDurationPage> {
         pickedTime.hour,
         pickedTime.minute + duration,
       );
-      developer.log("THE PCIKED TIME IS $pickedTime");
-      developer.log("THE PCIKED DATE TIME IS $pickedDateTime");
       return pickedDateTime;
     }
   }

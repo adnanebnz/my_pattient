@@ -4,7 +4,6 @@ import 'package:my_patients_sql/controllers/exercise_controller.dart';
 import 'package:my_patients_sql/controllers/patientExercise_controller.dart';
 import 'package:my_patients_sql/controllers/patient_controller.dart';
 import 'package:my_patients_sql/models/exercise.dart';
-import 'dart:developer' as developer show log;
 import 'set_exercise_duration_screen.dart';
 
 class ActivePatientsPage extends StatefulWidget {
@@ -126,10 +125,6 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                                                       index]),
                                               builder: (context, snapshot) {
                                                 if (snapshot.hasError) {
-                                                  developer.log(
-                                                      "snapshot error: ${snapshot.error}",
-                                                      name:
-                                                          "ActivePatientsPage");
                                                   return const Center(
                                                     child: Text(
                                                         "Une erreur est survenue!"),
