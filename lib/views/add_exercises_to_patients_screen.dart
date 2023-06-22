@@ -101,10 +101,16 @@ class _AddExercisesToPatientPageState extends State<AddExercisesToPatientPage> {
                           Icons.add,
                           color: Colors.green,
                         ),
-                        onPressed: () {
-                          setState(() {
-                            selectedExercises.add(controller.exercises[index]);
-                          });
+                        onPressed: () async {
+                          await patientExerciseController
+                              .insertExercisesToPatient(widget.patient.id,
+                                  controller.exercises[index]);
+                          // ignore: use_build_context_synchronously
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text("Exercice enregistré"),
+                            ),
+                          );
                         },
                       ),
                     ),
@@ -114,23 +120,6 @@ class _AddExercisesToPatientPageState extends State<AddExercisesToPatientPage> {
             );
           })),
           const Spacer(),
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 36.0),
-              child: ElevatedButton(
-                child: const Text("Enregistrer"),
-                onPressed: () async {
-                  await saveExercises();
-                  // ignore: use_build_context_synchronously
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text("Exercices enregistrés"),
-                    ),
-                  );
-                },
-              ),
-            ),
-          )
         ],
       ),
     );
