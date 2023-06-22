@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:my_patients_sql/controllers/exercise_controller.dart';
 import 'package:my_patients_sql/controllers/patientExercise_controller.dart';
 import 'package:my_patients_sql/controllers/patient_controller.dart';
-import 'package:my_patients_sql/models/exercise.dart';
 import 'set_exercise_duration_screen.dart';
 
 class ActivePatientsPage extends StatefulWidget {
@@ -18,8 +17,6 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
   ExerciseController exerciseController = Get.put(ExerciseController());
   PatientExerciseController patientExerciseController =
       Get.put(PatientExerciseController());
-  List<Exercise> programmedExercises = [];
-  List<Exercise> patientExercises = [];
   @override
   void initState() {
     super.initState();
@@ -54,19 +51,22 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                           ListTile(
                             trailing: Switch.adaptive(
                               activeColor: Colors.green,
-                              value:
-                                  controller.patientsList[index].isActive == 1,
+                              value: controller
+                                      .activePatientsList[index].isActive ==
+                                  1,
                               onChanged: (value) {
                                 setState(() {
-                                  controller.patientsList[index].isActive =
-                                      value ? 1 : 0;
-                                  if (controller.patientsList[index].isActive ==
+                                  controller.activePatientsList[index]
+                                      .isActive = value ? 1 : 0;
+                                  if (controller
+                                          .activePatientsList[index].isActive ==
                                       1) {
                                     controller.setPatientActive(
                                         controller.patientsList[index].id, 1);
                                   } else {
                                     controller.setPatientActive(
-                                        controller.patientsList[index].id, 0);
+                                        controller.activePatientsList[index].id,
+                                        0);
                                   }
                                 });
                               },

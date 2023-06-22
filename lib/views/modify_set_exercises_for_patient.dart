@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_patients_sql/controllers/patientExercise_controller.dart';
+import 'package:my_patients_sql/models/exercise.dart';
 import 'package:my_patients_sql/models/patient.dart';
 import 'dart:developer' as developer show log;
 
@@ -14,11 +15,12 @@ class ModifySetExercisesForPatient extends StatefulWidget {
 
 class _ModifySetExercisesForPatientState
     extends State<ModifySetExercisesForPatient> {
+  RxList patientExercises = <Exercise>[].obs;
   PatientExerciseController patientExerciseController =
       Get.put(PatientExerciseController());
   @override
-  //TODO FIX BUGS RELATED TO ACTIVE PATIENT
-  //TODO ADD THE POSSIBILITY TO STOP THE ALARM
+  //TODO UPDATE THE UI ON EXERCISE DELETION
+  //TODO ADD THE POSSIBILITY TO STOP THE ALARM IN THE BOTTOM SHEET WHILE LONG PRESSING THE TILE
   //TODO USE ENDTIME AND STARTTIME TO SAVE THEM IN DB WHILE SETTING THE DURATION
   Widget build(BuildContext context) {
     return Scaffold(
