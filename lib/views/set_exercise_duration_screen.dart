@@ -65,6 +65,7 @@ class _SetExerciseDurationPageState extends State<SetExerciseDurationPage> {
         useMaterial3: true,
       ),
       home: Scaffold(
+        resizeToAvoidBottomInset: false,
         body: Padding(
           padding: const EdgeInsets.only(top: 28.0, left: 10.0, right: 10.0),
           child:
@@ -125,15 +126,20 @@ class _SetExerciseDurationPageState extends State<SetExerciseDurationPage> {
                                                   widget.patientIndex]
                                               .name,
                                       notificationTitle: 'Exercise terminé!'))
-                              .then((value) {
-                            developer.log('THE VALUE IS $value');
-                            if (value) {
+                              .then((valueFuture) {
+                            developer.log('THE VALUE IS $valueFuture');
+                            if (valueFuture) {
                               patientExerciseController.setExerciseProgrammed(
                                   patientController
                                       .activePatientsList[widget.patientIndex]
                                       .id,
                                   exercise.id,
                                   1);
+                              patientExerciseController.setExerciseEndTime(
+                                  exercise,
+                                  patientController
+                                      .activePatientsList[widget.patientIndex],
+                                  value);
                             }
                           });
                           Navigator.of(context).pop();

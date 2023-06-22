@@ -61,6 +61,11 @@ class PatientExerciseController extends GetxController {
         patientId!, exerciseId!, isProgrammed!);
   }
 
+  Future setExerciseEndTime(
+      Exercise? exercise, Patient? patient, DateTime? endTime) async {
+    await DbHelper.setExerciseEndTime(exercise!.id!, patient!.id!, endTime!);
+  }
+
   Future getProgrammedExercises(int? patientId) async {
     final List<Map<String, dynamic>> programmedExercisesData =
         await DbHelper.getPatientProgrammedExercises(patientId!);

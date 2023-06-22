@@ -17,7 +17,6 @@ class _ModifySetExercisesForPatientState
   PatientExerciseController patientExerciseController =
       Get.put(PatientExerciseController());
   //TODO ADD THE POSSIBILITY TO STOP THE ALARM IN THE BOTTOM SHEET WHILE LONG PRESSING THE TILE
-  //TODO USE ENDTIME AND STARTTIME TO SAVE THEM IN DB WHILE SETTING THE DURATION
   @override
   Widget build(BuildContext context) {
     return Scaffold(
