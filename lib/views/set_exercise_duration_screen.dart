@@ -114,7 +114,8 @@ class _SetExerciseDurationPageState extends State<SetExerciseDurationPage> {
 
                           Alarm.set(
                                   alarmSettings: AlarmSettings(
-                                      id: 0,
+                                      id: exerciseController
+                                          .exercises[widget.exerciseIndex].id,
                                       dateTime: value,
                                       assetAudioPath: 'assets/alarm.mp3',
                                       notificationBody: exerciseController

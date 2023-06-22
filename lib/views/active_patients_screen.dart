@@ -1,3 +1,4 @@
+import 'package:alarm/alarm.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_patients_sql/controllers/exercise_controller.dart';
@@ -141,8 +142,24 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                                                                     .only(
                                                                 top: 12.0),
                                                         child: ListTile(
-                                                          onLongPress: () {
-                                                            //TODO cancel the alarm
+                                                          onLongPress:
+                                                              () async {
+                                                            //TODO cancel the alarm maybe id problem
+                                                            Alarm.stop(snapshot
+                                                                .data[exoIndex]
+                                                                .id);
+                                                            await patientExerciseController
+                                                                .setExerciseProgrammed(
+                                                                    controller
+                                                                        .activePatientsList[
+                                                                            index]
+                                                                        .id,
+                                                                    snapshot
+                                                                        .data[
+                                                                            exoIndex]
+                                                                        .id,
+                                                                    0);
+                                                            //TODO UPDATE THE UI
                                                           },
                                                           shape: RoundedRectangleBorder(
                                                               borderRadius:
