@@ -18,10 +18,9 @@ class _ModifySetExercisesForPatientState
   RxList patientExercises = <Exercise>[].obs;
   PatientExerciseController patientExerciseController =
       Get.put(PatientExerciseController());
-  @override
-  //TODO UPDATE THE UI ON EXERCISE DELETION
   //TODO ADD THE POSSIBILITY TO STOP THE ALARM IN THE BOTTOM SHEET WHILE LONG PRESSING THE TILE
   //TODO USE ENDTIME AND STARTTIME TO SAVE THEM IN DB WHILE SETTING THE DURATION
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Column(
@@ -81,7 +80,7 @@ class _ModifySetExercisesForPatientState
                               onPressed: () {
                                 patientExerciseController.deletePatientExercise(
                                     widget.patient, snapshot.data[index].id);
-
+                                setState(() {});
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
                                     content: Text('Exercice supprimé'),
