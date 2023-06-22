@@ -141,6 +141,9 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                                                                     .only(
                                                                 top: 12.0),
                                                         child: ListTile(
+                                                          onLongPress: () {
+                                                            //TODO cancel the alarm
+                                                          },
                                                           shape: RoundedRectangleBorder(
                                                               borderRadius:
                                                                   BorderRadius

@@ -16,7 +16,7 @@ class _ModifySetExercisesForPatientState
     extends State<ModifySetExercisesForPatient> {
   PatientExerciseController patientExerciseController =
       Get.put(PatientExerciseController());
-  //TODO ADD THE POSSIBILITY TO STOP THE ALARM IN THE BOTTOM SHEET WHILE LONG PRESSING THE TILE
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
