@@ -125,7 +125,15 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                                                           .activePatientsList[
                                                       index]),
                                               builder: (context, snapshot) {
-                                                if (snapshot.hasError) {
+                                                if (snapshot.connectionState ==
+                                                    ConnectionState.waiting) {
+                                                  return const Center(
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                            color:
+                                                                Colors.green),
+                                                  );
+                                                } else if (snapshot.hasError) {
                                                   return const Center(
                                                     child: Text(
                                                         "Une erreur est survenue!"),
@@ -159,7 +167,19 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                                                                             exoIndex]
                                                                         .id,
                                                                     0);
-                                                            //TODO UPDATE THE UI
+                                                            await patientExerciseController
+                                                                .getPatientExercises(
+                                                                    controller
+                                                                            .activePatientsList[
+                                                                        index]);
+                                                            //TODO refresh the list
+                                                            setState(() {
+                                                              patientExerciseController
+                                                                  .getPatientExercises(
+                                                                      controller
+                                                                              .activePatientsList[
+                                                                          index]);
+                                                            });
                                                           },
                                                           shape: RoundedRectangleBorder(
                                                               borderRadius:
