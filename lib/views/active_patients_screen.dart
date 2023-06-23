@@ -153,6 +153,7 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                                                           onLongPress:
                                                               () async {
                                                             //TODO cancel the alarm maybe id problem
+                                                            //TODO ADD CHIPS TO SHOW WETHER THE EXERCISES ARE PROGRAMMED AND FINISHED 2 SHIPS
                                                             Alarm.stop(snapshot
                                                                 .data[exoIndex]
                                                                 .id);
