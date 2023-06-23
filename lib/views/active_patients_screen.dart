@@ -210,10 +210,12 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                                                                   builder:
                                                                       (context) =>
                                                                           SetExerciseDurationPage(
-                                                                    exerciseIndex:
-                                                                        exoIndex,
-                                                                    patientIndex:
-                                                                        index,
+                                                                    exercise: snapshot
+                                                                            .data[
+                                                                        exoIndex],
+                                                                    patient: controller
+                                                                            .activePatientsList[
+                                                                        index],
                                                                   ),
                                                                 ),
                                                               );
@@ -232,7 +234,9 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                                                 } else {
                                                   return const Center(
                                                     child:
-                                                        CircularProgressIndicator(),
+                                                        CircularProgressIndicator(
+                                                      color: Colors.green,
+                                                    ),
                                                   );
                                                 }
                                               },

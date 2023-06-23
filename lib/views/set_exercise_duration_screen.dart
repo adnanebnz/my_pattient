@@ -7,12 +7,13 @@ import 'package:my_patients_sql/controllers/exercise_controller.dart';
 import 'package:my_patients_sql/controllers/patientExercise_controller.dart';
 import 'package:my_patients_sql/controllers/patient_controller.dart';
 import 'package:my_patients_sql/models/exercise.dart';
+import 'package:my_patients_sql/models/patient.dart';
 
 class SetExerciseDurationPage extends StatefulWidget {
   const SetExerciseDurationPage(
-      {super.key, required this.exerciseIndex, required this.patientIndex});
-  final int exerciseIndex;
-  final int patientIndex;
+      {super.key, required this.exercise, required this.patient});
+  final Exercise exercise;
+  final Patient patient;
   @override
   State<SetExerciseDurationPage> createState() =>
       _SetExerciseDurationPageState();
@@ -39,21 +40,6 @@ class _SetExerciseDurationPageState extends State<SetExerciseDurationPage> {
       );
       return pickedDateTime;
     }
-  }
-
-  late final Exercise exercise;
-  @override
-  void initState() {
-    super.initState();
-    exerciseController.getExercises();
-    patientController
-        .getPatientExercises(
-            patientController.activePatientsList[widget.patientIndex])
-        .then((value) => {
-              setState(() {
-                exercise = value[widget.exerciseIndex];
-              })
-            });
   }
 
   @override
@@ -86,7 +72,7 @@ class _SetExerciseDurationPageState extends State<SetExerciseDurationPage> {
               ),
               child: Center(
                 child: Text(
-                  "Nom de l'exercice: ${exercise.name}",
+                  "Nom de l'exercice: ${widget.exercise.name}",
                   style: const TextStyle(
                     color: Colors.black,
                     fontSize: 15.0,
@@ -114,33 +100,19 @@ class _SetExerciseDurationPageState extends State<SetExerciseDurationPage> {
 
                           Alarm.set(
                                   alarmSettings: AlarmSettings(
-                                      id: exerciseController
-                                          .exercises[widget.exerciseIndex].id,
+                                      id: widget.exercise.id as int,
                                       dateTime: value,
                                       assetAudioPath: 'assets/alarm.mp3',
-                                      notificationBody: exerciseController
-                                              .exercises[widget.exerciseIndex]
-                                              .name +
-                                          ' est terminé pour ' +
-                                          patientController
-                                              .activePatientsList[
-                                                  widget.patientIndex]
-                                              .name,
+                                      notificationBody:
+                                          '${widget.exercise.name} est terminé pour ${widget.patient.name}',
                                       notificationTitle: 'Exercise terminé!'))
                               .then((valueFuture) {
                             developer.log('THE VALUE IS $valueFuture');
                             if (valueFuture) {
                               patientExerciseController.setExerciseProgrammed(
-                                  patientController
-                                      .activePatientsList[widget.patientIndex]
-                                      .id,
-                                  exercise.id,
-                                  1);
+                                  widget.patient.id, widget.exercise.id, 1);
                               patientExerciseController.setExerciseEndTime(
-                                  exercise,
-                                  patientController
-                                      .activePatientsList[widget.patientIndex],
-                                  value);
+                                  widget.exercise, widget.patient, value);
                             }
                           });
                           Navigator.of(context).pop();
