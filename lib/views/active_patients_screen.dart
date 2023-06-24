@@ -103,6 +103,30 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
+                                            const Center(
+                                              child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceEvenly,
+                                                  children: [
+                                                    Chip(
+                                                      backgroundColor:
+                                                          Colors.greenAccent,
+                                                      avatar: Icon(Icons
+                                                          .medical_services_outlined),
+                                                      label: Text(
+                                                        "Exercise programmables",
+                                                      ),
+                                                    ),
+                                                    Chip(
+                                                        backgroundColor:
+                                                            Colors.greenAccent,
+                                                        avatar: Icon(Icons
+                                                            .timer_outlined),
+                                                        label: Text(
+                                                            "Exercises térimés"))
+                                                  ]),
+                                            ),
                                             const Text(
                                               "Programmer des exercises pour ce patient",
                                               style: TextStyle(
