@@ -109,10 +109,7 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                                                       MainAxisAlignment
                                                           .spaceEvenly,
                                                   children: [
-                                                    Chip(
-                                                      onDeleted: () {
-                                                        //TODO implement it
-                                                      },
+                                                    FilterChip(
                                                       backgroundColor:
                                                           Colors.greenAccent,
                                                       avatar: const Icon(Icons
@@ -120,14 +117,19 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                                                       label: const Text(
                                                         "Exercise programmables",
                                                       ),
+                                                      onSelected:
+                                                          (bool value) {},
                                                     ),
-                                                    const Chip(
-                                                        backgroundColor:
-                                                            Colors.greenAccent,
-                                                        avatar: Icon(Icons
-                                                            .timer_outlined),
-                                                        label: Text(
-                                                            "Exercises térimés"))
+                                                    FilterChip(
+                                                      backgroundColor:
+                                                          Colors.greenAccent,
+                                                      avatar: const Icon(
+                                                          Icons.timer_outlined),
+                                                      label: const Text(
+                                                          "Exercises térimés"),
+                                                      onSelected:
+                                                          (bool value) {},
+                                                    )
                                                   ]),
                                             ),
                                             const Text(
