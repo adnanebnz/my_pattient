@@ -103,22 +103,25 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            const Center(
+                                            Center(
                                               child: Row(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment
                                                           .spaceEvenly,
                                                   children: [
                                                     Chip(
+                                                      onDeleted: () {
+                                                        //TODO implement it
+                                                      },
                                                       backgroundColor:
                                                           Colors.greenAccent,
-                                                      avatar: Icon(Icons
+                                                      avatar: const Icon(Icons
                                                           .medical_services_outlined),
-                                                      label: Text(
+                                                      label: const Text(
                                                         "Exercise programmables",
                                                       ),
                                                     ),
-                                                    Chip(
+                                                    const Chip(
                                                         backgroundColor:
                                                             Colors.greenAccent,
                                                         avatar: Icon(Icons
