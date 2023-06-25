@@ -18,6 +18,8 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
   ExerciseController exerciseController = Get.put(ExerciseController());
   PatientExerciseController patientExerciseController =
       Get.put(PatientExerciseController());
+  bool showProgrammableExercises = false;
+  bool showDoneExercises = false;
   @override
   void initState() {
     super.initState();
@@ -117,8 +119,12 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                                                       label: const Text(
                                                         "Exercise programmables",
                                                       ),
-                                                      onSelected:
-                                                          (bool value) {},
+                                                      onSelected: (bool value) {
+                                                        setState(() {
+                                                          showProgrammableExercises =
+                                                              value;
+                                                        });
+                                                      },
                                                     ),
                                                     FilterChip(
                                                       backgroundColor:
@@ -127,8 +133,12 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                                                           Icons.timer_outlined),
                                                       label: const Text(
                                                           "Exercises térimés"),
-                                                      onSelected:
-                                                          (bool value) {},
+                                                      onSelected: (bool value) {
+                                                        setState(() {
+                                                          showDoneExercises =
+                                                              value;
+                                                        });
+                                                      },
                                                     )
                                                   ]),
                                             ),
