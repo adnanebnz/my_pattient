@@ -29,6 +29,7 @@ class PatientController extends GetxController {
         description: patientExerciseData['description'],
       ));
     }
+
     return patientExercisesFinal;
   }
 

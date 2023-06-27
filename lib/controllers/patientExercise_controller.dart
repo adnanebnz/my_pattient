@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:my_patients_sql/db/db_helper.dart';
 import 'package:my_patients_sql/models/exercise.dart';
 import 'package:my_patients_sql/models/patient.dart';
+import "dart:developer" as developer show log;
 
 class PatientExerciseController extends GetxController {
   Future getSelectedExercisesByPatient(Patient? patient) async {
@@ -13,7 +14,8 @@ class PatientExerciseController extends GetxController {
   Future getPatientExercises(Patient? patient) async {
     final List<Map<String, dynamic>> patientExercisesData =
         await DbHelper.getPatientExercises(patient!.id!);
-    final List<Exercise> patientExercisesFinal = [];
+    developer.log('patientExercisesData: $patientExercisesData');
+    final List patientExercisesFinal = [];
     for (var patientExerciseData in patientExercisesData) {
       patientExercisesFinal.add(Exercise(
         id: patientExerciseData['id'],
@@ -21,6 +23,7 @@ class PatientExerciseController extends GetxController {
         description: patientExerciseData['description'],
         isDone: patientExerciseData['isDone'],
         isProgrammed: patientExerciseData['isProgrammed'],
+        //TODO DO SOME WORK HERE
       ));
     }
     return patientExercisesFinal;

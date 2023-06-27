@@ -41,7 +41,7 @@ class DbHelper {
 
   static Future<sql.Database> db() async {
     return sql.openDatabase(
-      'mypatientsapp.db',
+      'mypatientsappfinal.db',
       version: 1,
       onCreate: (sql.Database database, int version) async {
         await createTables(database);
@@ -125,17 +125,6 @@ class DbHelper {
     ''');
   }
 
-  static Future<List<Map<String, dynamic>>> getPatientExercises(
-      int patientId) async {
-    final sql.Database database = await db();
-    return database.rawQuery('''
-      SELECT * FROM $_exercisesTable
-      INNER JOIN $_patientExerciseTable
-      ON $_exercisesTable.id = $_patientExerciseTable.exercise_id
-      WHERE $_patientExerciseTable.patient_id = $patientId
-    ''');
-  }
-
   static Future<List<Map<String, dynamic>>> getPatientCompletedExercises(
       int patientId) async {
     final sql.Database database = await db();
@@ -183,6 +172,23 @@ class DbHelper {
       ON $_exercisesTable.id = $_patientExerciseTable.exercise_id
       WHERE $_patientExerciseTable.patient_id = $patientId
       AND $_patientExerciseTable.isProgrammed = 1
+    ''');
+  }
+
+  static Future getPatientExercises(int patientId) async {
+    final sql.Database database = await db();
+    //double join the patients table and the exercise table and the patient_exercise table
+
+    //rename the columns
+    return database.rawQuery('''
+      SELECT  $_patientsTable.id AS patientId, $_patientsTable.name AS patientName, $_patientsTable
+      .age AS patientAge, $_patientsTable.disease as patientDisease,$_exercisesTable.id AS exerciseId,  $_exercisesTable.name AS exerciseName, 
+      $_exercisesTable.description AS exerciseDescription, $_patientExerciseTable.isProgrammed, $_patientExerciseTable.isDone, $_patientExerciseTable.startTime, $_patientExerciseTable.endTime FROM $_patientsTable
+      INNER JOIN $_patientExerciseTable
+      ON $_patientsTable.id = $_patientExerciseTable.patient_id
+      INNER JOIN $_exercisesTable
+      ON $_exercisesTable.id = $_patientExerciseTable.exercise_id
+      WHERE $_patientExerciseTable.patient_id = $patientId
     ''');
   }
 }
