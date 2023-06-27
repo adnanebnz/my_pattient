@@ -19,9 +19,4 @@ class Exercise {
       'description': description,
     };
   }
-
-  Exercise.fromMap(Map<String, dynamic> map)
-      : id = map['id'],
-        name = map['name'],
-        description = map['description'];
 }

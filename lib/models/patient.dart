@@ -29,11 +29,4 @@ class Patient {
       'isActive': isActive,
     };
   }
-
-  Patient.fromMap(Map<String, dynamic> map)
-      : id = map['id'],
-        name = map['name'],
-        age = map['age'],
-        disease = map['disease'],
-        isActive = map['isActive'];
 }

@@ -6,6 +6,8 @@ import 'package:my_patients_sql/models/exercise.dart';
 import 'package:my_patients_sql/models/patient.dart';
 import "dart:developer" as developer show log;
 
+import 'package:my_patients_sql/models/patient_exercise.dart';
+
 class PatientExerciseController extends GetxController {
   Future getSelectedExercisesByPatient(Patient? patient) async {
     await DbHelper.getPatientProgrammedExercises(patient!.id!);
@@ -14,19 +16,25 @@ class PatientExerciseController extends GetxController {
   Future getPatientExercises(Patient? patient) async {
     final List<Map<String, dynamic>> patientExercisesData =
         await DbHelper.getPatientExercises(patient!.id!);
-    developer.log('patientExercisesData: $patientExercisesData');
-    final List patientExercisesFinal = [];
+    developer.log(patientExercisesData.toString());
+    final List<PatientExercise> data = [];
     for (var patientExerciseData in patientExercisesData) {
-      patientExercisesFinal.add(Exercise(
-        id: patientExerciseData['id'],
-        name: patientExerciseData['name'],
-        description: patientExerciseData['description'],
-        isDone: patientExerciseData['isDone'],
+      final PatientExercise patientExercise = PatientExercise(
+        patientId: patientExerciseData['patientId'],
+        exerciseId: patientExerciseData['exerciseId'],
+        patientName: patientExerciseData['patientName'],
+        patientAge: patientExerciseData['patientAge'],
+        patientDisease: patientExerciseData['patientDisease'],
+        exerciseName: patientExerciseData['exerciseName'],
+        exerciseDescription: patientExerciseData['exerciseDescription'],
         isProgrammed: patientExerciseData['isProgrammed'],
-        //TODO DO SOME WORK HERE
-      ));
+        isDone: patientExerciseData['isDone'],
+        startTime: patientExerciseData['startTime'],
+        endTime: patientExerciseData['endTime'],
+      );
+      data.add(patientExercise);
     }
-    return patientExercisesFinal;
+    return data;
   }
 
   Future getPatientExerciseId(int? patientId, int? exerciseId) async {
@@ -65,8 +73,8 @@ class PatientExerciseController extends GetxController {
   }
 
   Future setExerciseEndTime(
-      Exercise? exercise, Patient? patient, DateTime? endTime) async {
-    await DbHelper.setExerciseEndTime(exercise!.id!, patient!.id!, endTime!);
+      int? exerciseId, int? patientId, DateTime? endTime) async {
+    await DbHelper.setExerciseEndTime(exerciseId!, patientId!, endTime!);
   }
 
   Future getProgrammedExercises(int? patientId) async {

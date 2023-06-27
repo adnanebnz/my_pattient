@@ -6,14 +6,11 @@ import 'dart:developer' as developer show log;
 import 'package:my_patients_sql/controllers/exercise_controller.dart';
 import 'package:my_patients_sql/controllers/patientExercise_controller.dart';
 import 'package:my_patients_sql/controllers/patient_controller.dart';
-import 'package:my_patients_sql/models/exercise.dart';
-import 'package:my_patients_sql/models/patient.dart';
+import 'package:my_patients_sql/models/patient_exercise.dart';
 
 class SetExerciseDurationPage extends StatefulWidget {
-  const SetExerciseDurationPage(
-      {super.key, required this.exercise, required this.patient});
-  final Exercise exercise;
-  final Patient patient;
+  const SetExerciseDurationPage({super.key, required this.data});
+  final PatientExercise data;
   @override
   State<SetExerciseDurationPage> createState() =>
       _SetExerciseDurationPageState();
@@ -72,7 +69,7 @@ class _SetExerciseDurationPageState extends State<SetExerciseDurationPage> {
               ),
               child: Center(
                 child: Text(
-                  "Nom de l'exercice: ${widget.exercise.name}",
+                  "Nom de l'exercice: ${widget.data.exerciseName}",
                   style: const TextStyle(
                     color: Colors.black,
                     fontSize: 15.0,
@@ -100,19 +97,23 @@ class _SetExerciseDurationPageState extends State<SetExerciseDurationPage> {
 
                           Alarm.set(
                                   alarmSettings: AlarmSettings(
-                                      id: widget.exercise.id as int,
+                                      id: widget.data.patientId as int,
                                       dateTime: value,
                                       assetAudioPath: 'assets/alarm.mp3',
                                       notificationBody:
-                                          '${widget.exercise.name} est terminé pour ${widget.patient.name}',
+                                          '${widget.data.exerciseName} est terminé pour ${widget.data.patientName}',
                                       notificationTitle: 'Exercise terminé!'))
                               .then((valueFuture) {
                             developer.log('THE VALUE IS $valueFuture');
                             if (valueFuture) {
                               patientExerciseController.setExerciseProgrammed(
-                                  widget.patient.id, widget.exercise.id, 1);
+                                  widget.data.patientId,
+                                  widget.data.exerciseId,
+                                  1);
                               patientExerciseController.setExerciseEndTime(
-                                  widget.exercise, widget.patient, value);
+                                  widget.data.exerciseId,
+                                  widget.data.patientId,
+                                  value);
                             }
                           });
                           Navigator.of(context).pop();

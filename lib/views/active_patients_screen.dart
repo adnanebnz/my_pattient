@@ -5,6 +5,7 @@ import 'package:my_patients_sql/controllers/exercise_controller.dart';
 import 'package:my_patients_sql/controllers/patientExercise_controller.dart';
 import 'package:my_patients_sql/controllers/patient_controller.dart';
 import 'set_exercise_duration_screen.dart';
+import 'dart:developer' as developer show log;
 
 class ActivePatientsPage extends StatefulWidget {
   const ActivePatientsPage({super.key});
@@ -105,43 +106,43 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Center(
-                                              child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceEvenly,
-                                                  children: [
-                                                    FilterChip(
-                                                      backgroundColor:
-                                                          Colors.greenAccent,
-                                                      avatar: const Icon(Icons
-                                                          .medical_services_outlined),
-                                                      label: const Text(
-                                                        "Exercise programmables",
-                                                      ),
-                                                      onSelected: (bool value) {
-                                                        setState(() {
-                                                          showProgrammableExercises =
-                                                              value;
-                                                        });
-                                                      },
-                                                    ),
-                                                    FilterChip(
-                                                      backgroundColor:
-                                                          Colors.greenAccent,
-                                                      avatar: const Icon(
-                                                          Icons.timer_outlined),
-                                                      label: const Text(
-                                                          "Exercises térimés"),
-                                                      onSelected: (bool value) {
-                                                        setState(() {
-                                                          showDoneExercises =
-                                                              value;
-                                                        });
-                                                      },
-                                                    )
-                                                  ]),
-                                            ),
+                                            // Center(
+                                            //   child: Row(
+                                            //       mainAxisAlignment:
+                                            //           MainAxisAlignment
+                                            //               .spaceEvenly,
+                                            //       children: [
+                                            //         FilterChip(
+                                            //           backgroundColor:
+                                            //               Colors.greenAccent,
+                                            //           avatar: const Icon(Icons
+                                            //               .medical_services_outlined),
+                                            //           label: const Text(
+                                            //             "Exercise programmables",
+                                            //           ),
+                                            //           onSelected: (bool value) {
+                                            //             setState(() {
+                                            //               showProgrammableExercises =
+                                            //                   value;
+                                            //             });
+                                            //           },
+                                            //         ),
+                                            //         FilterChip(
+                                            //           backgroundColor:
+                                            //               Colors.greenAccent,
+                                            //           avatar: const Icon(
+                                            //               Icons.timer_outlined),
+                                            //           label: const Text(
+                                            //               "Exercises térimés"),
+                                            //           onSelected: (bool value) {
+                                            //             setState(() {
+                                            //               showDoneExercises =
+                                            //                   value;
+                                            //             });
+                                            //           },
+                                            //         )
+                                            //       ]),
+                                            // ),
                                             const Text(
                                               "Programmer des exercises pour ce patient",
                                               style: TextStyle(
@@ -173,11 +174,15 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                                                                 Colors.green),
                                                   );
                                                 } else if (snapshot.hasError) {
+                                                  developer.log(
+                                                      "error: ${snapshot.error}");
                                                   return const Center(
                                                     child: Text(
                                                         "Une erreur est survenue!"),
                                                   );
                                                 } else if (snapshot.hasData) {
+                                                  developer.log(
+                                                      "snapshot: ${snapshot.data}");
                                                   return ListView.builder(
                                                     itemCount:
                                                         snapshot.data.length,
@@ -195,7 +200,7 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                                                             //TODO ADD CHIPS TO SHOW WETHER THE EXERCISES ARE PROGRAMMED AND FINISHED 2 SHIPS
                                                             Alarm.stop(snapshot
                                                                 .data[exoIndex]
-                                                                .id);
+                                                                .patientId);
                                                             await patientExerciseController
                                                                 .setExerciseProgrammed(
                                                                     controller
@@ -205,7 +210,7 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                                                                     snapshot
                                                                         .data[
                                                                             exoIndex]
-                                                                        .id,
+                                                                        .patientId,
                                                                     0);
                                                             await patientExerciseController
                                                                 .getPatientExercises(
@@ -236,27 +241,20 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                                                               : Colors.white70,
                                                           title: Text(snapshot
                                                               .data[exoIndex]
-                                                              .name),
-                                                          subtitle: Text(
-                                                              snapshot
-                                                                  .data[
-                                                                      exoIndex]
-                                                                  .description),
+                                                              .exerciseName),
+                                                          subtitle: Text(snapshot
+                                                              .data[exoIndex]
+                                                              .exerciseDescription),
+                                                          //TODO SET A CARD HERE
                                                           trailing: IconButton(
                                                             onPressed: () {
                                                               Navigator.push(
                                                                 context,
                                                                 MaterialPageRoute(
-                                                                  builder:
-                                                                      (context) =>
-                                                                          SetExerciseDurationPage(
-                                                                    exercise: snapshot
-                                                                            .data[
-                                                                        exoIndex],
-                                                                    patient: controller
-                                                                            .activePatientsList[
-                                                                        index],
-                                                                  ),
+                                                                  builder: (context) =>
+                                                                      SetExerciseDurationPage(
+                                                                          data:
+                                                                              snapshot.data[exoIndex]),
                                                                 ),
                                                               );
                                                             },

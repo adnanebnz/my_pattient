@@ -177,9 +177,7 @@ class DbHelper {
 
   static Future getPatientExercises(int patientId) async {
     final sql.Database database = await db();
-    //double join the patients table and the exercise table and the patient_exercise table
 
-    //rename the columns
     return database.rawQuery('''
       SELECT  $_patientsTable.id AS patientId, $_patientsTable.name AS patientName, $_patientsTable
       .age AS patientAge, $_patientsTable.disease as patientDisease,$_exercisesTable.id AS exerciseId,  $_exercisesTable.name AS exerciseName, 
