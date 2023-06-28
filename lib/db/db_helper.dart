@@ -96,12 +96,13 @@ class DbHelper {
     ''');
   }
 
-  static Future setExerciseIsDone(int id, int isDone) async {
+  static Future setExerciseIsDone(
+      int patientId, int exercseId, int value) async {
     final sql.Database database = await db();
     return database.rawUpdate('''
       UPDATE $_patientExerciseTable
-      SET isDone = $isDone
-      WHERE id = $id
+      SET isDone = $value
+      WHERE patient_id = $patientId AND exercise_id = $exercseId
     ''');
   }
 

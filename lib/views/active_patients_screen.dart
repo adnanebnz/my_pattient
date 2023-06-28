@@ -104,43 +104,6 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                                         padding: const EdgeInsets.all(10),
                                         child: Column(
                                           children: [
-                                            // Center(
-                                            //   child: Row(
-                                            //       mainAxisAlignment:
-                                            //           MainAxisAlignment
-                                            //               .spaceEvenly,
-                                            //       children: [
-                                            //         FilterChip(
-                                            //           backgroundColor:
-                                            //               Colors.greenAccent,
-                                            //           avatar: const Icon(Icons
-                                            //               .medical_services_outlined),
-                                            //           label: const Text(
-                                            //             "Exercise programmables",
-                                            //           ),
-                                            //           onSelected: (bool value) {
-                                            //             setState(() {
-                                            //               showProgrammableExercises =
-                                            //                   value;
-                                            //             });
-                                            //           },
-                                            //         ),
-                                            //         FilterChip(
-                                            //           backgroundColor:
-                                            //               Colors.greenAccent,
-                                            //           avatar: const Icon(
-                                            //               Icons.timer_outlined),
-                                            //           label: const Text(
-                                            //               "Exercises térimés"),
-                                            //           onSelected: (bool value) {
-                                            //             setState(() {
-                                            //               showDoneExercises =
-                                            //                   value;
-                                            //             });
-                                            //           },
-                                            //         )
-                                            //       ]),
-                                            // ),
                                             const Text(
                                               "Programmer des exercises pour ce patient",
                                               style: TextStyle(
@@ -182,128 +145,158 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                                                 } else if (snapshot.hasData) {
                                                   //FILTER THE EXERCISES
 
-                                                  return ListView.builder(
-                                                    itemCount:
-                                                        snapshot.data.length,
-                                                    itemBuilder:
-                                                        (context, exoIndex) {
-                                                      return Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .only(
-                                                                top: 12.0),
-                                                        child: Card(
-                                                          shape: RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          10)),
-                                                          color: snapshot
-                                                                      .data[
-                                                                          exoIndex]
-                                                                      .isProgrammed ==
-                                                                  1
-                                                              ? Colors
-                                                                  .green[100]
-                                                              : Colors.white,
-                                                          elevation: 4,
-                                                          child: Column(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .center,
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .center,
-                                                            children: [
-                                                              ListTile(
-                                                                  shape: RoundedRectangleBorder(
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              10)),
-                                                                  title: Text(snapshot
-                                                                      .data[
-                                                                          exoIndex]
-                                                                      .exerciseName),
-                                                                  subtitle: Text(snapshot
-                                                                      .data[
-                                                                          exoIndex]
-                                                                      .exerciseDescription),
-                                                                  trailing: snapshot
-                                                                              .data[
-                                                                                  exoIndex]
-                                                                              .isDone ==
-                                                                          1
-                                                                      ? const Text(
-                                                                          "status : Terminé",
-                                                                          style:
-                                                                              TextStyle(
-                                                                            color:
-                                                                                Colors.green,
-                                                                            fontWeight:
-                                                                                FontWeight.bold,
-                                                                          ),
-                                                                        )
-                                                                      : //if its programmed display the time
-                                                                      snapshot.data[exoIndex].isProgrammed ==
-                                                                              1
-                                                                          ? const Text(
-                                                                              "status : Exercise programée ",
-                                                                              style: TextStyle(
-                                                                                color: Colors.green,
-                                                                                fontWeight: FontWeight.bold,
-                                                                              ),
-                                                                            )
-                                                                          : const Text(
-                                                                              "status : non programée")),
-                                                              const Divider(
-                                                                height: 0,
-                                                                thickness: 1,
-                                                              ),
-                                                              Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .all(
-                                                                        8.0),
-                                                                child: Row(
-                                                                    crossAxisAlignment:
-                                                                        CrossAxisAlignment
-                                                                            .center,
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .spaceEvenly,
-                                                                    children: [
-                                                                      Column(
-                                                                        children: [
-                                                                          IconButton(
-                                                                            tooltip:
-                                                                                "Programmer l'exercise",
-                                                                            onPressed:
-                                                                                () {
-                                                                              Navigator.push(
-                                                                                context,
-                                                                                MaterialPageRoute(
-                                                                                  builder: (context) => SetExerciseDurationPage(data: snapshot.data[exoIndex]),
-                                                                                ),
-                                                                              );
-                                                                            },
-                                                                            icon:
-                                                                                const Icon(
-                                                                              Icons.timer_outlined,
-                                                                              size: 28,
+                                                  return RefreshIndicator(
+                                                    onRefresh: () {
+                                                      //update the ui
+                                                      setState(() {
+                                                        patientExerciseController
+                                                            .getPatientExercises(
+                                                                controller
+                                                                        .activePatientsList[
+                                                                    index]);
+                                                      });
+                                                      return patientExerciseController
+                                                          .getPatientExercises(
+                                                              controller
+                                                                      .activePatientsList[
+                                                                  index]);
+                                                    },
+                                                    child: ListView.builder(
+                                                      itemCount:
+                                                          snapshot.data.length,
+                                                      itemBuilder:
+                                                          (context, exoIndex) {
+                                                        return Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  top: 12.0),
+                                                          child: Card(
+                                                            shape: RoundedRectangleBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            10)),
+                                                            color: snapshot
+                                                                        .data[
+                                                                            exoIndex]
+                                                                        .isProgrammed ==
+                                                                    1
+                                                                ? Colors
+                                                                    .green[100]
+                                                                : Colors.white,
+                                                            elevation: 4,
+                                                            child: Column(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .center,
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .center,
+                                                              children: [
+                                                                ListTile(
+                                                                    shape: RoundedRectangleBorder(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(
+                                                                                10)),
+                                                                    title: Text(snapshot
+                                                                        .data[
+                                                                            exoIndex]
+                                                                        .exerciseName),
+                                                                    subtitle: Text(snapshot
+                                                                        .data[
+                                                                            exoIndex]
+                                                                        .exerciseDescription),
+                                                                    trailing: snapshot.data[exoIndex].isDone ==
+                                                                            1
+                                                                        ? const Text(
+                                                                            "status : Terminé",
+                                                                            style:
+                                                                                TextStyle(
                                                                               color: Colors.green,
+                                                                              fontWeight: FontWeight.bold,
                                                                             ),
-                                                                          ),
-                                                                          const Text(
-                                                                              "Programmer l'exercise"),
-                                                                        ],
-                                                                      ),
-                                                                      Column(
-                                                                        children: [
-                                                                          IconButton(
-                                                                              tooltip: "Arrêter l'exercise",
+                                                                          )
+                                                                        : //if its programmed display the time
+                                                                        snapshot.data[exoIndex].isProgrammed ==
+                                                                                1
+                                                                            ? const Text(
+                                                                                "status : Exercise programée ",
+                                                                                style: TextStyle(
+                                                                                  color: Colors.green,
+                                                                                  fontWeight: FontWeight.bold,
+                                                                                ),
+                                                                              )
+                                                                            : const Text("status : non programée")),
+                                                                const Divider(
+                                                                  height: 0,
+                                                                  thickness: 1,
+                                                                ),
+                                                                Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                              .all(
+                                                                          8.0),
+                                                                  child: Row(
+                                                                      crossAxisAlignment:
+                                                                          CrossAxisAlignment
+                                                                              .center,
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .spaceEvenly,
+                                                                      children: [
+                                                                        Column(
+                                                                          children: [
+                                                                            IconButton(
+                                                                              tooltip: "Programmer l'exercise",
+                                                                              onPressed: () {
+                                                                                Navigator.push(
+                                                                                  context,
+                                                                                  MaterialPageRoute(
+                                                                                    builder: (context) => SetExerciseDurationPage(data: snapshot.data[exoIndex]),
+                                                                                  ),
+                                                                                );
+                                                                              },
+                                                                              icon: const Icon(
+                                                                                Icons.alarm,
+                                                                                size: 28,
+                                                                                color: Colors.green,
+                                                                              ),
+                                                                            ),
+                                                                            const Text("Programmer l'exercise",
+                                                                                style: TextStyle(fontSize: 11)),
+                                                                          ],
+                                                                        ),
+                                                                        Column(
+                                                                          children: [
+                                                                            IconButton(
+                                                                                tooltip: "Arrêter l'exercise",
+                                                                                onPressed: () async {
+                                                                                  Alarm.stop(snapshot.data[exoIndex]!.patientId!);
+                                                                                  await patientExerciseController.setExerciseProgrammed(controller.activePatientsList[index].id, snapshot.data[exoIndex].patientId, 0);
+
+                                                                                  await patientExerciseController.setExerciseDone(controller.activePatientsList[index].id, snapshot.data[exoIndex].patientId, 0);
+
+                                                                                  await patientExerciseController.getPatientExercises(controller.activePatientsList[index]);
+                                                                                  setState(() {
+                                                                                    patientExerciseController.getPatientExercises(controller.activePatientsList[index]);
+                                                                                  });
+                                                                                },
+                                                                                icon: const Icon(
+                                                                                  Icons.alarm_off,
+                                                                                  color: Colors.red,
+                                                                                  size: 28,
+                                                                                )),
+                                                                            const Text("Annuler l'exercise",
+                                                                                style: TextStyle(fontSize: 11)),
+                                                                          ],
+                                                                        ),
+                                                                        Column(
+                                                                          children: [
+                                                                            IconButton(
+                                                                              tooltip: "Marquer l'exercise comme terminé",
                                                                               onPressed: () async {
-                                                                                Alarm.stop(snapshot.data[exoIndex].patientId);
-                                                                                await patientExerciseController.setExerciseProgrammed(controller.activePatientsList[index].id, snapshot.data[exoIndex].patientId, 0);
+                                                                                await patientExerciseController.setExerciseDone(controller.activePatientsList[index].id, snapshot.data[exoIndex].patientId, 1);
                                                                                 await patientExerciseController.getPatientExercises(controller.activePatientsList[index]);
 
                                                                                 setState(() {
@@ -311,21 +304,23 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                                                                                 });
                                                                               },
                                                                               icon: const Icon(
-                                                                                Icons.timer_outlined,
-                                                                                color: Colors.red,
+                                                                                Icons.check_circle_outline,
+                                                                                color: Colors.green,
                                                                                 size: 28,
-                                                                              )),
-                                                                          const Text(
-                                                                              "Annuler l'exercise"),
-                                                                        ],
-                                                                      ),
-                                                                    ]),
-                                                              ),
-                                                            ],
+                                                                              ),
+                                                                            ),
+                                                                            const Text("Marquer comme terminé",
+                                                                                style: TextStyle(fontSize: 11)),
+                                                                          ],
+                                                                        )
+                                                                      ]),
+                                                                ),
+                                                              ],
+                                                            ),
                                                           ),
-                                                        ),
-                                                      );
-                                                    },
+                                                        );
+                                                      },
+                                                    ),
                                                   );
                                                 } else {
                                                   return const Center(

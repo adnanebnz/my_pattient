@@ -62,8 +62,8 @@ class PatientExerciseController extends GetxController {
         patientId!, exerciseId!, column, value);
   }
 
-  Future setExerciseDone(int? patientId, int? exerciseId) async {
-    await DbHelper.setExerciseIsDone(patientId!, exerciseId!);
+  Future setExerciseDone(int? patientId, int? exerciseId, int value) async {
+    await DbHelper.setExerciseIsDone(patientId!, exerciseId!, value);
   }
 
   Future setExerciseProgrammed(
