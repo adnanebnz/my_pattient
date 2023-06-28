@@ -142,18 +142,10 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                                                         "Une erreur est survenue!"),
                                                   );
                                                 } else if (snapshot.hasData) {
-                                                  //FILTER THE EXERCISES
-
                                                   return RefreshIndicator(
                                                     onRefresh: () {
-                                                      //update the ui
-                                                      setState(() {
-                                                        patientExerciseController
-                                                            .getPatientExercises(
-                                                                controller
-                                                                        .activePatientsList[
-                                                                    index]);
-                                                      });
+                                                      setState(() {});
+
                                                       return patientExerciseController
                                                           .getPatientExercises(
                                                               controller
@@ -271,6 +263,7 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                                                                             IconButton(
                                                                                 tooltip: "Arrêter l'exercise",
                                                                                 onPressed: () async {
+                                                                                  setState(() {});
                                                                                   Alarm.stop(snapshot.data[exoIndex]!.patientId!);
                                                                                   await patientExerciseController.setExerciseProgrammed(controller.activePatientsList[index].id, snapshot.data[exoIndex].patientId, 0);
 
@@ -295,12 +288,9 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                                                                             IconButton(
                                                                               tooltip: "Marquer l'exercise comme terminé",
                                                                               onPressed: () async {
+                                                                                setState(() {});
                                                                                 await patientExerciseController.setExerciseDone(controller.activePatientsList[index].id, snapshot.data[exoIndex].patientId, 1);
                                                                                 await patientExerciseController.getPatientExercises(controller.activePatientsList[index]);
-
-                                                                                setState(() {
-                                                                                  patientExerciseController.getPatientExercises(controller.activePatientsList[index]);
-                                                                                });
                                                                               },
                                                                               icon: const Icon(
                                                                                 Icons.check_circle_outline,
