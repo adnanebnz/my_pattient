@@ -14,23 +14,6 @@ class PatientController extends GetxController {
     await DbHelper.insert('patients', patient!.toMap());
     getActivePatients();
     getPatients();
-    getPatientExercises(patient);
-  }
-
-  Future getPatientExercises(Patient? patient) async {
-    final List<Map<String, dynamic>> patientExercisesData =
-        await DbHelper.getPatientExercises(patient!.id!);
-
-    final List patientExercisesFinal = [];
-    for (var patientExerciseData in patientExercisesData) {
-      patientExercisesFinal.add(Exercise(
-        id: patientExerciseData['id'],
-        name: patientExerciseData['name'],
-        description: patientExerciseData['description'],
-      ));
-    }
-
-    return patientExercisesFinal;
   }
 
   Future deletePatientExercise(
@@ -38,7 +21,6 @@ class PatientController extends GetxController {
     await DbHelper.deletePatientExercise(patientId!, exerciseId!);
     getActivePatients();
     getPatients();
-    getPatientExercises(patient);
   }
 
   Future getPatients() async {

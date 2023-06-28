@@ -1,4 +1,5 @@
 class PatientExercise {
+  int? id;
   int? patientId;
   int? exerciseId;
   String patientName;
@@ -12,6 +13,7 @@ class PatientExercise {
   String? endTime;
 
   PatientExercise({
+    required this.id,
     required this.patientId,
     required this.exerciseId,
     required this.patientName,
@@ -27,6 +29,7 @@ class PatientExercise {
 
   Map<String, dynamic> toMap() {
     return {
+      "id": id,
       "patientId": patientId,
       "exerciseId": exerciseId,
       "patientName": patientName,

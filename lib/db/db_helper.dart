@@ -16,6 +16,7 @@ class DbHelper {
 
     await database.execute('''
   CREATE TABLE IF NOT EXISTS $_patientExerciseTable (
+    id INTEGER AUTOINCREMENT,
     patient_id INTEGER NOT NULL,
     exercise_id INTEGER NOT NULL,
     isProgrammed INTEGER NOT NULL DEFAULT 0,
@@ -24,7 +25,7 @@ class DbHelper {
     endTime TIMESTAMP,
     FOREIGN KEY (patient_id) REFERENCES $_patientsTable (id),
     FOREIGN KEY (exercise_id) REFERENCES $_exercisesTable (id),
-    PRIMARY KEY (patient_id, exercise_id)
+    PRIMARY KEY (id, patient_id, exercise_id)
   )
 ''');
 
@@ -126,53 +127,12 @@ class DbHelper {
     ''');
   }
 
-  static Future<List<Map<String, dynamic>>> getPatientCompletedExercises(
-      int patientId) async {
-    final sql.Database database = await db();
-    return database.rawQuery('''
-      SELECT * FROM $_exercisesTable
-      INNER JOIN $_patientExerciseTable
-      ON $_exercisesTable.id = $_patientExerciseTable.exercise_id
-      WHERE $_patientExerciseTable.patient_id = $patientId
-      AND $_patientExerciseTable.isDone = 1
-    ''');
-  }
-
-  static Future getPatientExerciseId(int patientId, int exerciseId) async {
-    final sql.Database database = await db();
-    return database.rawQuery('''
-      SELECT * FROM $_patientExerciseTable
-      WHERE patient_id = $patientId AND exercise_id = $exerciseId
-    ''');
-  }
-
   static Future<int> deletePatientExercise(
       int patientId, int exerciseId) async {
     final sql.Database database = await db();
     return database.rawDelete('''
       DELETE FROM $_patientExerciseTable
       WHERE patient_id = $patientId AND exercise_id = $exerciseId
-    ''');
-  }
-
-  static Future<int> updatePatientExercise(
-      int patientId, int exerciseId, String column, String value) async {
-    final sql.Database database = await db();
-    return database.rawUpdate('''
-      UPDATE $_exercisesTable
-      SET $column = '$value'
-      WHERE id = $exerciseId
-    ''');
-  }
-
-  static Future getPatientProgrammedExercises(int patientId) async {
-    final sql.Database database = await db();
-    return database.rawQuery('''
-      SELECT * FROM $_exercisesTable
-      INNER JOIN $_patientExerciseTable
-      ON $_exercisesTable.id = $_patientExerciseTable.exercise_id
-      WHERE $_patientExerciseTable.patient_id = $patientId
-      AND $_patientExerciseTable.isProgrammed = 1
     ''');
   }
 

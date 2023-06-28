@@ -290,7 +290,7 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                                                                               tooltip: "Marquer l'exercise comme terminé",
                                                                               onPressed: () async {
                                                                                 setState(() {});
-                                                                                await patientExerciseController.setExerciseDone(controller.activePatientsList[index].id, snapshot.data[exoIndex].exerciseId, 1);
+                                                                                await patientExerciseController.setExerciseDone(controller.activePatientsList[index].id, snapshot.data[exoIndex].id, 1);
                                                                                 await patientExerciseController.getPatientExercises(controller.activePatientsList[index]);
                                                                               },
                                                                               icon: const Icon(
