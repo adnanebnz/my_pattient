@@ -268,7 +268,7 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                                                                                   Alarm.stop(snapshot.data[exoIndex]!.patientId!);
                                                                                   await patientExerciseController.setExerciseProgrammed(controller.activePatientsList[index].id, snapshot.data[exoIndex].patientId, 0);
 
-                                                                                  await patientExerciseController.setExerciseDone(controller.activePatientsList[index].id, snapshot.data[exoIndex].patientId, 0);
+                                                                                  await patientExerciseController.setExerciseDone(snapshot.data[exoIndex].id, 0);
 
                                                                                   await patientExerciseController.getPatientExercises(controller.activePatientsList[index]);
                                                                                   setState(() {
@@ -290,7 +290,7 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                                                                               tooltip: "Marquer l'exercise comme terminé",
                                                                               onPressed: () async {
                                                                                 setState(() {});
-                                                                                await patientExerciseController.setExerciseDone(controller.activePatientsList[index].id, snapshot.data[exoIndex].id, 1);
+                                                                                await patientExerciseController.setExerciseDone(snapshot.data[exoIndex].id, 1);
                                                                                 await patientExerciseController.getPatientExercises(controller.activePatientsList[index]);
                                                                               },
                                                                               icon: const Icon(
