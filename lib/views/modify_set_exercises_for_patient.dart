@@ -65,8 +65,9 @@ class _ModifySetExercisesForPatientState
                           elevation: 4,
                           child: ListTile(
                             tileColor: Colors.white,
-                            title: Text(snapshot.data[index].name),
-                            subtitle: Text(snapshot.data[index].description),
+                            title: Text(snapshot.data[index].exerciseName),
+                            subtitle:
+                                Text(snapshot.data[index].exerciseDescription),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10)),
                             trailing: IconButton(
@@ -76,7 +77,8 @@ class _ModifySetExercisesForPatientState
                               ),
                               onPressed: () {
                                 patientExerciseController.deletePatientExercise(
-                                    widget.patient, snapshot.data[index].id);
+                                    widget.patient,
+                                    snapshot.data[index].exerciseId);
                                 setState(() {});
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(

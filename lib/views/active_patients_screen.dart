@@ -218,7 +218,8 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                                                                                   fontWeight: FontWeight.bold,
                                                                                 ),
                                                                               )
-                                                                            : const Text("status : non programée")),
+                                                                            : const Text("status : non programée",
+                                                                                style: TextStyle(overflow: TextOverflow.ellipsis, fontSize: 14))),
                                                                 const Divider(
                                                                   height: 0,
                                                                   thickness: 1,
@@ -255,7 +256,7 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                                                                               ),
                                                                             ),
                                                                             const Text("Programmer l'exercise",
-                                                                                style: TextStyle(fontSize: 11)),
+                                                                                style: TextStyle(fontSize: 11, overflow: TextOverflow.ellipsis)),
                                                                           ],
                                                                         ),
                                                                         Column(
@@ -280,7 +281,7 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                                                                                   size: 28,
                                                                                 )),
                                                                             const Text("Annuler l'exercise",
-                                                                                style: TextStyle(fontSize: 11)),
+                                                                                style: TextStyle(fontSize: 11, overflow: TextOverflow.ellipsis)),
                                                                           ],
                                                                         ),
                                                                         Column(
@@ -289,7 +290,7 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                                                                               tooltip: "Marquer l'exercise comme terminé",
                                                                               onPressed: () async {
                                                                                 setState(() {});
-                                                                                await patientExerciseController.setExerciseDone(controller.activePatientsList[index].id, snapshot.data[exoIndex].patientId, 1);
+                                                                                await patientExerciseController.setExerciseDone(controller.activePatientsList[index].id, snapshot.data[exoIndex].exerciseId, 1);
                                                                                 await patientExerciseController.getPatientExercises(controller.activePatientsList[index]);
                                                                               },
                                                                               icon: const Icon(
@@ -299,7 +300,7 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                                                                               ),
                                                                             ),
                                                                             const Text("Marquer comme terminé",
-                                                                                style: TextStyle(fontSize: 11)),
+                                                                                style: TextStyle(fontSize: 11, overflow: TextOverflow.ellipsis)),
                                                                           ],
                                                                         )
                                                                       ]),
