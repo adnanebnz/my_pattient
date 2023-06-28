@@ -186,7 +186,7 @@ class DbHelper {
       ON $_patientsTable.id = $_patientExerciseTable.patient_id
       INNER JOIN $_exercisesTable
       ON $_exercisesTable.id = $_patientExerciseTable.exercise_id
-      WHERE $_patientExerciseTable.patient_id = $patientId
+      WHERE $_patientExerciseTable.patient_id = $patientId ORDER BY $_patientExerciseTable.startTime DESC
     ''');
   }
 }
