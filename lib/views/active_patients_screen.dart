@@ -125,8 +125,7 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                                                   .getPatientExercises(controller
                                                           .activePatientsList[
                                                       index]),
-                                              builder: (context,
-                                                  AsyncSnapshot snapshot) {
+                                              builder: (context, snapshot) {
                                                 if (snapshot.connectionState ==
                                                     ConnectionState.waiting) {
                                                   return const Center(
