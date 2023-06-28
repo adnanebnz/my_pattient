@@ -16,7 +16,7 @@ class DbHelper {
 
     await database.execute('''
   CREATE TABLE IF NOT EXISTS $_patientExerciseTable (
-    id INTEGER AUTOINCREMENT,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     patient_id INTEGER NOT NULL,
     exercise_id INTEGER NOT NULL,
     isProgrammed INTEGER NOT NULL DEFAULT 0,
@@ -24,8 +24,7 @@ class DbHelper {
     startTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     endTime TIMESTAMP,
     FOREIGN KEY (patient_id) REFERENCES $_patientsTable (id),
-    FOREIGN KEY (exercise_id) REFERENCES $_exercisesTable (id),
-    PRIMARY KEY (id, patient_id, exercise_id)
+    FOREIGN KEY (exercise_id) REFERENCES $_exercisesTable (id)
   )
 ''');
 
@@ -139,7 +138,7 @@ class DbHelper {
     final sql.Database database = await db();
 
     return database.rawQuery('''
-      SELECT  $_patientsTable.id AS patientId, $_patientsTable.name AS patientName, $_patientsTable
+      SELECT  $_patientExerciseTable.id as id,$_patientsTable.id AS patientId, $_patientsTable.name AS patientName, $_patientsTable
       .age AS patientAge, $_patientsTable.disease as patientDisease,$_exercisesTable.id AS exerciseId,  $_exercisesTable.name AS exerciseName, 
       $_exercisesTable.description AS exerciseDescription, $_patientExerciseTable.isProgrammed, $_patientExerciseTable.isDone, $_patientExerciseTable.startTime, $_patientExerciseTable.endTime FROM $_patientsTable
       INNER JOIN $_patientExerciseTable
