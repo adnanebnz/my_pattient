@@ -41,6 +41,7 @@ dependencies:
   flutter_speed_dial: ^7.0.0
   get: ^4.6.5
   rxdart:
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:

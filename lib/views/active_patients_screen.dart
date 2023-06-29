@@ -1,6 +1,7 @@
 import 'package:alarm/alarm.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:my_patients_sql/controllers/exercise_controller.dart';
 import 'package:my_patients_sql/controllers/patientExercise_controller.dart';
 import 'package:my_patients_sql/controllers/patient_controller.dart';
@@ -246,8 +247,8 @@ class _BottomSheetContentState extends State<_BottomSheetContent> {
                                         : Colors.white,
                                 elevation: 4,
                                 child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     ListTile(
                                       shape: RoundedRectangleBorder(
@@ -285,6 +286,33 @@ class _BottomSheetContentState extends State<_BottomSheetContent> {
                                                       fontSize: 14),
                                                 ),
                                     ),
+                                    snapshot.data[exoIndex].isProgrammed == 1
+                                        ? Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 8.0,
+                                                right: 8.0,
+                                                top: 12.0,
+                                                bottom: 12.0),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                const Divider(
+                                                  height: 0,
+                                                  thickness: 1,
+                                                ),
+                                                const SizedBox(height: 7),
+                                                Text(
+                                                    "Commencé à ${DateFormat('HH:mm:ss').format(DateTime.parse(snapshot.data[exoIndex].startTime))}"),
+                                                const SizedBox(height: 7),
+                                                Text(
+                                                    "Se termine à ${DateFormat('HH:mm:ss').format(DateTime.parse(snapshot.data[exoIndex].endTime))}"),
+                                              ],
+                                            ),
+                                          )
+                                        : const SizedBox(height: 0),
                                     const Divider(
                                       height: 0,
                                       thickness: 1,
@@ -300,8 +328,7 @@ class _BottomSheetContentState extends State<_BottomSheetContent> {
                                             Column(
                                               children: [
                                                 IconButton(
-                                                  tooltip:
-                                                      "Programmer l'exercise",
+                                                  tooltip: "Programmer",
                                                   onPressed: () {
                                                     Navigator.push(
                                                       context,
@@ -319,8 +346,7 @@ class _BottomSheetContentState extends State<_BottomSheetContent> {
                                                     color: Colors.green,
                                                   ),
                                                 ),
-                                                const Text(
-                                                    "Programmer l'exercise",
+                                                const Text("Programmer",
                                                     style: TextStyle(
                                                         fontSize: 11,
                                                         overflow: TextOverflow
@@ -355,7 +381,7 @@ class _BottomSheetContentState extends State<_BottomSheetContent> {
                                                       color: Colors.red,
                                                       size: 28,
                                                     )),
-                                                const Text("Annuler l'exercise",
+                                                const Text("Annuler",
                                                     style: TextStyle(
                                                         fontSize: 11,
                                                         overflow: TextOverflow
@@ -365,8 +391,7 @@ class _BottomSheetContentState extends State<_BottomSheetContent> {
                                             Column(
                                               children: [
                                                 IconButton(
-                                                  tooltip:
-                                                      "Marquer l'exercise comme terminé",
+                                                  tooltip: "Terminer",
                                                   onPressed: () async {
                                                     await patientExerciseController
                                                         .setExerciseDone(
@@ -383,8 +408,7 @@ class _BottomSheetContentState extends State<_BottomSheetContent> {
                                                     size: 28,
                                                   ),
                                                 ),
-                                                const Text(
-                                                    "Marquer comme terminé",
+                                                const Text("Terminer",
                                                     style: TextStyle(
                                                         fontSize: 11,
                                                         overflow: TextOverflow
