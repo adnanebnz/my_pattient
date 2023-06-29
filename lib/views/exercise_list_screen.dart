@@ -44,7 +44,7 @@ class _ExerciseListPageState extends State<ExerciseListPage> {
                 size: 20,
                 color: Colors.black54,
               ),
-              hintText: "Rechercher un patient",
+              hintText: "Rechercher un exercise",
               hintStyle: MaterialStateProperty.resolveWith<TextStyle?>(
                 (states) {
                   return const TextStyle(

@@ -1,10 +1,11 @@
+// ignore_for_file: empty_catches
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:my_patients_sql/controllers/patient_controller.dart';
 import 'package:my_patients_sql/models/exercise.dart';
 import 'package:my_patients_sql/models/patient.dart';
-import "dart:developer" as developer show log;
 
 class AddPersonForm extends StatefulWidget {
   const AddPersonForm({super.key});
@@ -103,9 +104,7 @@ class _AddPersonFormState extends State<AddPersonForm> {
                         ),
                       );
                       Navigator.of(context).pop();
-                    } catch (e) {
-                      developer.log(e.toString());
-                    }
+                    } catch (e) {}
                   }
                 },
                 child: const Text('Sauvgarder'),

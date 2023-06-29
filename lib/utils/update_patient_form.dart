@@ -6,7 +6,6 @@ import 'package:my_patients_sql/controllers/patient_controller.dart';
 import 'package:my_patients_sql/views/add_exercises_to_patients_screen.dart';
 import 'package:my_patients_sql/views/modify_set_exercises_for_patient.dart';
 import '../models/patient.dart';
-import "dart:developer" as developer show log;
 
 class UpdatePersonForm extends StatefulWidget {
   const UpdatePersonForm(
@@ -97,9 +96,8 @@ class _AddPersonFormState extends State<UpdatePersonForm> {
                         return AddExercisesToPatientPage(
                             patient: widget.patient);
                       }));
-                    } catch (e) {
-                      developer.log(e.toString(), name: "ERROR");
-                    }
+                      // ignore: empty_catches
+                    } catch (e) {}
                   }
                 },
                 label: const Text(
@@ -123,9 +121,8 @@ class _AddPersonFormState extends State<UpdatePersonForm> {
                       return ModifySetExercisesForPatient(
                           patient: widget.patient);
                     }));
-                  } catch (e) {
-                    developer.log(e.toString(), name: "ERROR");
-                  }
+                    // ignore: empty_catches
+                  } catch (e) {}
                 }
               },
               label: const Text('Supprimer les exercices'),
@@ -158,9 +155,8 @@ class _AddPersonFormState extends State<UpdatePersonForm> {
                           content: Text('Patient modifié avec succès'),
                         ),
                       );
-                    } catch (e) {
-                      developer.log(e.toString(), name: "ERROR");
-                    }
+                      // ignore: empty_catches
+                    } catch (e) {}
                   }
                 },
                 child: const Text('Modifier'),

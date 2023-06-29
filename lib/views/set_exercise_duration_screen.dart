@@ -1,7 +1,6 @@
 import 'package:alarm/alarm.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'dart:developer' as developer show log;
 
 import 'package:my_patients_sql/controllers/exercise_controller.dart';
 import 'package:my_patients_sql/controllers/patientExercise_controller.dart';
@@ -93,11 +92,11 @@ class _SetExerciseDurationPageState extends State<SetExerciseDurationPage> {
                               int.parse(_durationController.text))
                           .then(
                         (value) {
-                          //setDuration(value, widget.exerciseId, widget.patientId);
-
+                          patientExerciseController.setExerciseStartTime(
+                              widget.data.id, DateTime.now());
                           Alarm.set(
                                   alarmSettings: AlarmSettings(
-                                      id: widget.data.patientId as int,
+                                      id: widget.data.id as int,
                                       dateTime: value,
                                       assetAudioPath: 'assets/alarm.mp3',
                                       enableNotificationOnKill: true,
@@ -106,10 +105,10 @@ class _SetExerciseDurationPageState extends State<SetExerciseDurationPage> {
                                           '${widget.data.exerciseName} est terminé pour ${widget.data.patientName}',
                                       notificationTitle: 'Exercise terminé!'))
                               .then((valueFuture) {
-                            developer.log('THE VALUE IS $valueFuture');
                             if (valueFuture) {
                               patientExerciseController.setExerciseProgrammed(
                                   widget.data.id, 1);
+
                               patientExerciseController.setExerciseEndTime(
                                   widget.data.id, value);
                             }

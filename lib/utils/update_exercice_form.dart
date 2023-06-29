@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_patients_sql/controllers/exercise_controller.dart';
 import 'package:my_patients_sql/models/exercise.dart';
-import 'dart:developer' as developer show log;
 
 class UpdateExerciceForm extends StatefulWidget {
   const UpdateExerciceForm(
@@ -90,9 +89,8 @@ class _UpdateExerciceFormState extends State<UpdateExerciceForm> {
                           content: Text('Exercice modifié avec succès'),
                         ),
                       );
-                    } catch (e) {
-                      developer.log(e.toString());
-                    }
+                      // ignore: empty_catches
+                    } catch (e) {}
                   }
                 },
                 child: const Text('Modifier'),

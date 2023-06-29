@@ -6,7 +6,6 @@ import 'package:my_patients_sql/controllers/exercise_controller.dart';
 import 'package:my_patients_sql/controllers/patientExercise_controller.dart';
 import 'package:my_patients_sql/controllers/patient_controller.dart';
 import 'set_exercise_duration_screen.dart';
-import 'dart:developer' as developer show log;
 
 class ActivePatientsPage extends StatefulWidget {
   const ActivePatientsPage({super.key});
@@ -207,7 +206,6 @@ class _BottomSheetContentState extends State<_BottomSheetContent> {
                           child: CircularProgressIndicator(color: Colors.green),
                         );
                       } else if (snapshot.hasError) {
-                        developer.log("error: ${snapshot.error}");
                         return const Center(
                           child: Text("Une erreur est survenue!"),
                         );
@@ -299,16 +297,13 @@ class _BottomSheetContentState extends State<_BottomSheetContent> {
                                               mainAxisAlignment:
                                                   MainAxisAlignment.start,
                                               children: [
-                                                const Divider(
-                                                  height: 0,
-                                                  thickness: 1,
+                                                const SizedBox(height: 10),
+                                                Text(
+                                                  "Se termine à ${DateFormat('HH:mm:ss').format(DateTime.parse(snapshot.data[exoIndex].endTime))}",
+                                                  style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w500),
                                                 ),
-                                                const SizedBox(height: 7),
-                                                Text(
-                                                    "Commencé à ${DateFormat('HH:mm:ss').format(DateTime.parse(snapshot.data[exoIndex].startTime))}"),
-                                                const SizedBox(height: 7),
-                                                Text(
-                                                    "Se termine à ${DateFormat('HH:mm:ss').format(DateTime.parse(snapshot.data[exoIndex].endTime))}"),
                                               ],
                                             ),
                                           )

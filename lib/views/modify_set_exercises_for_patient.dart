@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_patients_sql/controllers/patientExercise_controller.dart';
 import 'package:my_patients_sql/models/patient.dart';
-import 'dart:developer' as developer show log;
 
 class ModifySetExercisesForPatient extends StatefulWidget {
   const ModifySetExercisesForPatient({super.key, required this.patient});
@@ -53,7 +52,6 @@ class _ModifySetExercisesForPatientState
             future:
                 patientExerciseController.getPatientExercises(widget.patient),
             builder: (context, snapshot) {
-              developer.log("snapshot data: ${snapshot.data}");
               if (snapshot.hasData) {
                 return ListView.builder(
                     itemCount: snapshot.data.length,

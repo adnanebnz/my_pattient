@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:my_patients_sql/db/db_helper.dart';
 import 'package:my_patients_sql/models/exercise.dart';
 import 'package:my_patients_sql/models/patient.dart';
-import "dart:developer" as developer show log;
 
 import 'package:my_patients_sql/models/patient_exercise.dart';
 
@@ -12,7 +11,6 @@ class PatientExerciseController extends GetxController {
   Future getPatientExercises(Patient? patient) async {
     final List<Map<String, dynamic>> patientExercisesData =
         await DbHelper.getPatientExercises(patient!.id!);
-    developer.log(patientExercisesData.toString());
     final List<PatientExercise> data = [];
     for (var patientExerciseData in patientExercisesData) {
       final PatientExercise patientExercise = PatientExercise(
@@ -53,6 +51,10 @@ class PatientExerciseController extends GetxController {
 
   Future setExerciseProgrammed(int? id, int? isProgrammed) async {
     await DbHelper.setExerciseIsProgrammed(id!, isProgrammed!);
+  }
+
+  Future setExerciseStartTime(int? id, DateTime? startTime) async {
+    await DbHelper.setExerciseStartTime(id!, startTime!);
   }
 
   Future setExerciseEndTime(int? id, DateTime? endTime) async {

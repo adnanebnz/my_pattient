@@ -21,7 +21,7 @@ class DbHelper {
     exercise_id INTEGER NOT NULL,
     isProgrammed INTEGER NOT NULL DEFAULT 0,
     isDone INTEGER NOT NULL DEFAULT 0,
-    startTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    startTime TIMESTAMP,
     endTime TIMESTAMP,
     FOREIGN KEY (patient_id) REFERENCES $_patientsTable (id),
     FOREIGN KEY (exercise_id) REFERENCES $_exercisesTable (id)
@@ -110,6 +110,15 @@ class DbHelper {
     return database.rawUpdate('''
       UPDATE $_patientExerciseTable
       SET isProgrammed = $isProgrammed
+      WHERE id = $id
+    ''');
+  }
+
+  static Future setExerciseStartTime(int id, DateTime? startTime) async {
+    final sql.Database database = await db();
+    return database.rawUpdate('''
+      UPDATE $_patientExerciseTable
+      SET startTime = '$startTime'
       WHERE id = $id
     ''');
   }

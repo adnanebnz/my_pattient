@@ -70,6 +70,14 @@ class _AddExerciceFormState extends State<AddExerciceForm> {
                     );
 
                     exerciseController.insertExercise(newExercise);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        behavior: SnackBarBehavior.floating,
+                        showCloseIcon: true,
+                        closeIconColor: Colors.white,
+                        content: Text('Exercice ajouté avec succès'),
+                      ),
+                    );
                     Navigator.of(context).pop();
                   }
                 },
