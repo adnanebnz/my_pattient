@@ -108,7 +108,8 @@ class _SetExerciseDurationPageState extends State<SetExerciseDurationPage> {
                             if (valueFuture) {
                               patientExerciseController.setExerciseProgrammed(
                                   widget.data.id, 1);
-
+                              patientExerciseController.setExerciseDone(
+                                  widget.data.id, 0);
                               patientExerciseController.setExerciseEndTime(
                                   widget.data.id, value);
                             }
