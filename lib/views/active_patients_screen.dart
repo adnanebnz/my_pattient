@@ -23,6 +23,7 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
   bool showDoneExercises = false;
   GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
+
   @override
   void initState() {
     super.initState();
@@ -97,241 +98,15 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                                   showDragHandle: true,
                                   context: context,
                                   builder: (_) {
-                                    return Container(
-                                      height: size.height * 0.65,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(10),
-                                        child: Column(
-                                          children: [
-                                            const Text(
-                                              "Programmer des exercises pour ce patient",
-                                              style: TextStyle(
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                            ),
-                                            const SizedBox(height: 3),
-                                            const Text(
-                                              "les exercises en vert sont déjà programmés pour ce patient",
-                                              style: TextStyle(
-                                                  fontSize: 13,
-                                                  color: Colors.black54),
-                                            ),
-                                            const SizedBox(height: 10),
-                                            Expanded(
-                                                child: RefreshIndicator(
-                                              key: refreshIndicatorKey,
-                                              onRefresh: () async {
-                                                setState(() {});
-                                                await patientExerciseController
-                                                    .getPatientExercises(controller
-                                                            .activePatientsList[
-                                                        index]);
-                                                refreshIndicatorKey.currentState
-                                                    ?.show();
-
-                                                return Future.value(true);
-                                              },
-                                              child: FutureBuilder(
-                                                future: patientExerciseController
-                                                    .getPatientExercises(controller
-                                                            .activePatientsList[
-                                                        index]),
-                                                builder: (context, snapshot) {
-                                                  if (snapshot
-                                                          .connectionState ==
-                                                      ConnectionState.waiting) {
-                                                    return const Center(
-                                                      child:
-                                                          CircularProgressIndicator(
-                                                              color:
-                                                                  Colors.green),
-                                                    );
-                                                  } else if (snapshot
-                                                      .hasError) {
-                                                    developer.log(
-                                                        "error: ${snapshot.error}");
-                                                    return const Center(
-                                                      child: Text(
-                                                          "Une erreur est survenue!"),
-                                                    );
-                                                  } else if (snapshot.hasData) {
-                                                    return ListView.builder(
-                                                      itemCount:
-                                                          snapshot.data.length,
-                                                      itemBuilder:
-                                                          (context, exoIndex) {
-                                                        return Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .only(
-                                                                  top: 12.0),
-                                                          child: Card(
-                                                            shape: RoundedRectangleBorder(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            10)),
-                                                            color: snapshot
-                                                                        .data[
-                                                                            exoIndex]
-                                                                        .isProgrammed ==
-                                                                    1
-                                                                ? Colors
-                                                                    .green[100]
-                                                                : Colors.white,
-                                                            elevation: 4,
-                                                            child: Column(
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .center,
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                ListTile(
-                                                                    shape: RoundedRectangleBorder(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(
-                                                                                10)),
-                                                                    title: Text(snapshot
-                                                                        .data[
-                                                                            exoIndex]
-                                                                        .exerciseName),
-                                                                    subtitle: Text(snapshot
-                                                                        .data[
-                                                                            exoIndex]
-                                                                        .exerciseDescription),
-                                                                    trailing: snapshot.data[exoIndex].isDone ==
-                                                                            1
-                                                                        ? const Text(
-                                                                            "status : Terminé",
-                                                                            style:
-                                                                                TextStyle(
-                                                                              color: Colors.green,
-                                                                              fontWeight: FontWeight.bold,
-                                                                            ),
-                                                                          )
-                                                                        : //if its programmed display the time
-                                                                        snapshot.data[exoIndex].isProgrammed ==
-                                                                                1
-                                                                            ? const Text(
-                                                                                "status : Exercise programée ",
-                                                                                style: TextStyle(
-                                                                                  color: Colors.green,
-                                                                                  fontWeight: FontWeight.bold,
-                                                                                ),
-                                                                              )
-                                                                            : const Text("status : non programée",
-                                                                                style: TextStyle(overflow: TextOverflow.ellipsis, fontSize: 14))),
-                                                                const Divider(
-                                                                  height: 0,
-                                                                  thickness: 1,
-                                                                ),
-                                                                Padding(
-                                                                  padding:
-                                                                      const EdgeInsets
-                                                                              .all(
-                                                                          8.0),
-                                                                  child: Row(
-                                                                      crossAxisAlignment:
-                                                                          CrossAxisAlignment
-                                                                              .center,
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .spaceEvenly,
-                                                                      children: [
-                                                                        Column(
-                                                                          children: [
-                                                                            IconButton(
-                                                                              tooltip: "Programmer l'exercise",
-                                                                              onPressed: () {
-                                                                                Navigator.push(
-                                                                                  context,
-                                                                                  MaterialPageRoute(
-                                                                                    builder: (context) => SetExerciseDurationPage(data: snapshot.data[exoIndex]),
-                                                                                  ),
-                                                                                );
-                                                                              },
-                                                                              icon: const Icon(
-                                                                                Icons.alarm,
-                                                                                size: 28,
-                                                                                color: Colors.green,
-                                                                              ),
-                                                                            ),
-                                                                            const Text("Programmer l'exercise",
-                                                                                style: TextStyle(fontSize: 11, overflow: TextOverflow.ellipsis)),
-                                                                          ],
-                                                                        ),
-                                                                        Column(
-                                                                          children: [
-                                                                            IconButton(
-                                                                                tooltip: "Arrêter l'exercise",
-                                                                                onPressed: () async {
-                                                                                  setState(() {});
-                                                                                  Alarm.stop(snapshot.data[exoIndex]!.patientId!);
-                                                                                  await patientExerciseController.setExerciseProgrammed(snapshot.data[exoIndex].id, 0);
-
-                                                                                  await patientExerciseController.setExerciseDone(snapshot.data[exoIndex].id, 0);
-
-                                                                                  await patientExerciseController.getPatientExercises(controller.activePatientsList[index]);
-                                                                                  setState(() {
-                                                                                    patientExerciseController.getPatientExercises(controller.activePatientsList[index]);
-                                                                                  });
-                                                                                },
-                                                                                icon: const Icon(
-                                                                                  Icons.alarm_off,
-                                                                                  color: Colors.red,
-                                                                                  size: 28,
-                                                                                )),
-                                                                            const Text("Annuler l'exercise",
-                                                                                style: TextStyle(fontSize: 11, overflow: TextOverflow.ellipsis)),
-                                                                          ],
-                                                                        ),
-                                                                        Column(
-                                                                          children: [
-                                                                            IconButton(
-                                                                              tooltip: "Marquer l'exercise comme terminé",
-                                                                              onPressed: () async {
-                                                                                setState(() {});
-                                                                                await patientExerciseController.setExerciseDone(snapshot.data[exoIndex].id, 1);
-                                                                                await patientExerciseController.getPatientExercises(controller.activePatientsList[index]);
-                                                                              },
-                                                                              icon: const Icon(
-                                                                                Icons.check_circle_outline,
-                                                                                color: Colors.green,
-                                                                                size: 28,
-                                                                              ),
-                                                                            ),
-                                                                            const Text("Marquer comme terminé",
-                                                                                style: TextStyle(fontSize: 11, overflow: TextOverflow.ellipsis)),
-                                                                          ],
-                                                                        )
-                                                                      ]),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        );
-                                                      },
-                                                    );
-                                                  } else {
-                                                    return const Center(
-                                                      child:
-                                                          CircularProgressIndicator(
-                                                        color: Colors.green,
-                                                      ),
-                                                    );
-                                                  }
-                                                },
-                                              ),
-                                            )),
-                                          ],
-                                        ),
-                                      ),
+                                    return _BottomSheetContent(
+                                      refreshData: (p0) async {
+                                        return await patientExerciseController
+                                            .getPatientExercises(controller
+                                                .activePatientsList[p0]);
+                                      },
+                                      size: size,
+                                      index: index,
+                                      key: refreshIndicatorKey,
                                     );
                                   });
                             },
@@ -358,6 +133,267 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
           }),
         ),
       ],
+    );
+  }
+}
+
+class _BottomSheetContent extends StatefulWidget {
+  final Size size;
+  final int index;
+  final Function(int) refreshData;
+
+  const _BottomSheetContent({
+    required this.size,
+    required this.index,
+    required this.refreshData,
+    required Key key,
+  });
+
+  @override
+  _BottomSheetContentState createState() => _BottomSheetContentState();
+}
+
+class _BottomSheetContentState extends State<_BottomSheetContent> {
+  PatientExerciseController patientExerciseController =
+      Get.find<PatientExerciseController>();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      widget.refreshData(widget.index);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: widget.size.height * 0.65,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          children: [
+            const Text(
+              "Programmer des exercises pour ce patient",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            const SizedBox(height: 3),
+            const Text(
+              "les exercises en vert sont déjà programmés pour ce patient",
+              style: TextStyle(fontSize: 13, color: Colors.black54),
+            ),
+            const SizedBox(height: 10),
+            Expanded(
+              child: RefreshIndicator(
+                key: widget.key,
+                onRefresh: () async {
+                  setState(() {});
+                  await widget.refreshData(widget.index);
+                },
+                child: GetX<PatientController>(builder: (controller) {
+                  return FutureBuilder(
+                    future: patientExerciseController.getPatientExercises(
+                        controller.activePatientsList[widget.index]),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                          child: CircularProgressIndicator(color: Colors.green),
+                        );
+                      } else if (snapshot.hasError) {
+                        developer.log("error: ${snapshot.error}");
+                        return const Center(
+                          child: Text("Une erreur est survenue!"),
+                        );
+                      } else if (snapshot.hasData) {
+                        return ListView.builder(
+                          itemCount: snapshot.data.length,
+                          itemBuilder: (context, exoIndex) {
+                            return Padding(
+                              padding: const EdgeInsets.only(top: 12.0),
+                              child: Card(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                                color: snapshot.data[exoIndex].isProgrammed == 1
+                                    ? Colors.green[100]
+                                    : Colors.white,
+                                elevation: 4,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    ListTile(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      title: Text(
+                                          snapshot.data[exoIndex].exerciseName),
+                                      subtitle: Text(snapshot
+                                          .data[exoIndex].exerciseDescription),
+                                      trailing: snapshot
+                                                  .data[exoIndex].isDone ==
+                                              1
+                                          ? const Text(
+                                              "status : Terminé",
+                                              style: TextStyle(
+                                                color: Colors.green,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            )
+                                          : snapshot.data[exoIndex]
+                                                      .isProgrammed ==
+                                                  1
+                                              ? const Text(
+                                                  "status : Exercise programée ",
+                                                  style: TextStyle(
+                                                    color: Colors.green,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                )
+                                              : const Text(
+                                                  "status : non programée",
+                                                  style: TextStyle(
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      fontSize: 14),
+                                                ),
+                                    ),
+                                    const Divider(
+                                      height: 0,
+                                      thickness: 1,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            Column(
+                                              children: [
+                                                IconButton(
+                                                  tooltip:
+                                                      "Programmer l'exercise",
+                                                  onPressed: () {
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            SetExerciseDurationPage(
+                                                                data: snapshot
+                                                                        .data[
+                                                                    exoIndex]),
+                                                      ),
+                                                    );
+                                                  },
+                                                  icon: const Icon(
+                                                    Icons.alarm,
+                                                    size: 28,
+                                                    color: Colors.green,
+                                                  ),
+                                                ),
+                                                const Text(
+                                                    "Programmer l'exercise",
+                                                    style: TextStyle(
+                                                        fontSize: 11,
+                                                        overflow: TextOverflow
+                                                            .ellipsis)),
+                                              ],
+                                            ),
+                                            Column(
+                                              children: [
+                                                IconButton(
+                                                    onPressed: () async {
+                                                      await Alarm.stop(snapshot
+                                                          .data[exoIndex]
+                                                          .patientId!);
+                                                      await patientExerciseController
+                                                          .setExerciseProgrammed(
+                                                              snapshot
+                                                                  .data[
+                                                                      exoIndex]
+                                                                  .id,
+                                                              0);
+                                                      await patientExerciseController
+                                                          .setExerciseDone(
+                                                              snapshot
+                                                                  .data[
+                                                                      exoIndex]
+                                                                  .id,
+                                                              0);
+                                                      widget.refreshData(
+                                                          widget.index);
+                                                    },
+                                                    icon: const Icon(
+                                                      Icons.alarm_off,
+                                                      color: Colors.red,
+                                                      size: 28,
+                                                    )),
+                                                const Text("Annuler l'exercise",
+                                                    style: TextStyle(
+                                                        fontSize: 11,
+                                                        overflow: TextOverflow
+                                                            .ellipsis)),
+                                              ],
+                                            ),
+                                            Column(
+                                              children: [
+                                                IconButton(
+                                                  tooltip:
+                                                      "Marquer l'exercise comme terminé",
+                                                  onPressed: () async {
+                                                    await patientExerciseController
+                                                        .setExerciseDone(
+                                                            snapshot
+                                                                .data[exoIndex]
+                                                                .id,
+                                                            1);
+                                                    widget.refreshData(
+                                                        widget.index);
+                                                  },
+                                                  icon: const Icon(
+                                                    Icons.check_circle_outline,
+                                                    color: Colors.green,
+                                                    size: 28,
+                                                  ),
+                                                ),
+                                                const Text(
+                                                    "Marquer comme terminé",
+                                                    style: TextStyle(
+                                                        fontSize: 11,
+                                                        overflow: TextOverflow
+                                                            .ellipsis)),
+                                              ],
+                                            )
+                                          ]),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      } else {
+                        return const Center(
+                          child: CircularProgressIndicator(
+                            color: Colors.green,
+                          ),
+                        );
+                      }
+                    },
+                  );
+                }),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
