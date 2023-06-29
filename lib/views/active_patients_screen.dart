@@ -211,17 +211,39 @@ class _BottomSheetContentState extends State<_BottomSheetContent> {
                           child: Text("Une erreur est survenue!"),
                         );
                       } else if (snapshot.hasData) {
+                        // Separate done exercises and programmable exercises
+                        List doneExercises = [];
+                        List programmableExercises = [];
+                        for (var exercise in snapshot.data) {
+                          if (exercise.isDone == 1) {
+                            doneExercises.add(exercise);
+                          } else {
+                            programmableExercises.add(exercise);
+                          }
+                        }
+                        // Sort done exercises by timestamp in descending order
+                        doneExercises.sort(
+                          (a, b) => b.timestamp.compareTo(a.timestamp),
+                        );
+                        // Combine done exercises and programmable exercises
+                        List combinedExercises = [
+                          ...doneExercises,
+                          ...programmableExercises
+                        ];
+
                         return ListView.builder(
-                          itemCount: snapshot.data.length,
+                          itemCount: combinedExercises.length,
                           itemBuilder: (context, exoIndex) {
                             return Padding(
                               padding: const EdgeInsets.only(top: 12.0),
                               child: Card(
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10)),
-                                color: snapshot.data[exoIndex].isProgrammed == 1
-                                    ? Colors.green[100]
-                                    : Colors.white,
+                                color:
+                                    combinedExercises[exoIndex].isProgrammed ==
+                                            1
+                                        ? Colors.green[100]
+                                        : Colors.white,
                                 elevation: 4,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -231,12 +253,12 @@ class _BottomSheetContentState extends State<_BottomSheetContent> {
                                       shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(10)),
-                                      title: Text(
-                                          snapshot.data[exoIndex].exerciseName),
-                                      subtitle: Text(snapshot
-                                          .data[exoIndex].exerciseDescription),
-                                      trailing: snapshot
-                                                  .data[exoIndex].isDone ==
+                                      title: Text(combinedExercises[exoIndex]
+                                          .exerciseName),
+                                      subtitle: Text(combinedExercises[exoIndex]
+                                          .exerciseDescription),
+                                      trailing: combinedExercises[exoIndex]
+                                                  .isDone ==
                                               1
                                           ? const Text(
                                               "status : Terminé",
@@ -245,7 +267,7 @@ class _BottomSheetContentState extends State<_BottomSheetContent> {
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             )
-                                          : snapshot.data[exoIndex]
+                                          : combinedExercises[exoIndex]
                                                       .isProgrammed ==
                                                   1
                                               ? const Text(
@@ -286,8 +308,7 @@ class _BottomSheetContentState extends State<_BottomSheetContent> {
                                                       MaterialPageRoute(
                                                         builder: (context) =>
                                                             SetExerciseDurationPage(
-                                                                data: snapshot
-                                                                        .data[
+                                                                data: combinedExercises[
                                                                     exoIndex]),
                                                       ),
                                                     );
@@ -310,20 +331,19 @@ class _BottomSheetContentState extends State<_BottomSheetContent> {
                                               children: [
                                                 IconButton(
                                                     onPressed: () async {
-                                                      await Alarm.stop(snapshot
-                                                          .data[exoIndex]
-                                                          .patientId!);
+                                                      await Alarm.stop(
+                                                          combinedExercises[
+                                                                  exoIndex]
+                                                              .patientId!);
                                                       await patientExerciseController
                                                           .setExerciseProgrammed(
-                                                              snapshot
-                                                                  .data[
+                                                              combinedExercises[
                                                                       exoIndex]
                                                                   .id,
                                                               0);
                                                       await patientExerciseController
                                                           .setExerciseDone(
-                                                              snapshot
-                                                                  .data[
+                                                              combinedExercises[
                                                                       exoIndex]
                                                                   .id,
                                                               0);
@@ -350,8 +370,8 @@ class _BottomSheetContentState extends State<_BottomSheetContent> {
                                                   onPressed: () async {
                                                     await patientExerciseController
                                                         .setExerciseDone(
-                                                            snapshot
-                                                                .data[exoIndex]
+                                                            combinedExercises[
+                                                                    exoIndex]
                                                                 .id,
                                                             1);
                                                     widget.refreshData(
