@@ -26,21 +26,4 @@ class PatientExercise {
     required this.startTime,
     required this.endTime,
   });
-
-  Map<String, dynamic> toMap() {
-    return {
-      "id": id,
-      "patientId": patientId,
-      "exerciseId": exerciseId,
-      "patientName": patientName,
-      "patientAge": patientAge,
-      "patientDisease": patientDisease,
-      "exerciseName": exerciseName,
-      "exerciseDescription": exerciseDescription,
-      "isProgrammed": isProgrammed,
-      "isDone": isDone,
-      "startTime": startTime,
-      "endTime": endTime,
-    };
-  }
 }

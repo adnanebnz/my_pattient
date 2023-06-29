@@ -19,8 +19,6 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
   ExerciseController exerciseController = Get.put(ExerciseController());
   PatientExerciseController patientExerciseController =
       Get.put(PatientExerciseController());
-  bool showProgrammableExercises = false;
-  bool showDoneExercises = false;
   GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
 

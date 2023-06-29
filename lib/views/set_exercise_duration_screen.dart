@@ -64,7 +64,7 @@ class _SetExerciseDurationPageState extends State<SetExerciseDurationPage> {
             const SizedBox(height: 50.0),
             Container(
               padding: const EdgeInsets.only(
-                bottom: 5, // Space between underline and text
+                bottom: 5,
               ),
               child: Center(
                 child: Text(

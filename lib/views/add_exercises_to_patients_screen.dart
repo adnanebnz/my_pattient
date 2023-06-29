@@ -1,13 +1,8 @@
-// ignore_for_file: unused_import
-
-import 'dart:developer' as developer show log;
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_patients_sql/controllers/exercise_controller.dart';
 import 'package:my_patients_sql/controllers/patientExercise_controller.dart';
 import 'package:my_patients_sql/controllers/patient_controller.dart';
-import 'package:my_patients_sql/models/exercise.dart';
 import 'package:my_patients_sql/models/patient.dart';
 
 class AddExercisesToPatientPage extends StatefulWidget {

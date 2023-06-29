@@ -95,7 +95,6 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                           ),
-                          // display the list of patients
                           Expanded(
                             child:
                                 GetX<PatientController>(builder: (controller) {
