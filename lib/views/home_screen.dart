@@ -96,10 +96,10 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                           Expanded(
-                            child:
-                                GetX<PatientController>(builder: (controller) {
+                            child: Obx(() {
                               return ListView.builder(
-                                  itemCount: controller.patientsList.length,
+                                  itemCount:
+                                      patientController.patientsList.length,
                                   itemBuilder: (context, index) {
                                     if (searchText.isEmpty ||
                                         patientController
@@ -145,8 +145,8 @@ class _HomePageState extends State<HomePage> {
                                                               'NON')),
                                                       TextButton(
                                                           onPressed: () => {
-                                                                patientController
-                                                                    .deletePatient(controller
+                                                                patientController.deletePatient(
+                                                                    patientController
                                                                         .patientsList[
                                                                             index]
                                                                         .id),
@@ -185,9 +185,10 @@ class _HomePageState extends State<HomePage> {
                                                     builder: (context) =>
                                                         UpdatePatientPage(
                                                             index: index,
-                                                            patient: controller
-                                                                    .patientsList[
-                                                                index])));
+                                                            patient:
+                                                                patientController
+                                                                        .patientsList[
+                                                                    index])));
                                             return false;
                                           }
                                         },
@@ -234,12 +235,12 @@ class _HomePageState extends State<HomePage> {
                                                               .spaceBetween,
                                                       children: [
                                                         Text(
-                                                          controller
+                                                          patientController
                                                                   .patientsList[
                                                                       index]
                                                                   .name +
                                                               " / " +
-                                                              controller
+                                                              patientController
                                                                   .patientsList[
                                                                       index]
                                                                   .age
@@ -270,7 +271,7 @@ class _HomePageState extends State<HomePage> {
                                                             Switch.adaptive(
                                                               activeColor:
                                                                   Colors.green,
-                                                              value: controller
+                                                              value: patientController
                                                                       .patientsList[
                                                                           index]
                                                                       .isActive ==
@@ -278,26 +279,26 @@ class _HomePageState extends State<HomePage> {
                                                               onChanged:
                                                                   (value) {
                                                                 setState(() {
-                                                                  controller
+                                                                  patientController
                                                                           .patientsList[
                                                                               index]
                                                                           .isActive =
                                                                       value
                                                                           ? 1
                                                                           : 0;
-                                                                  if (controller
+                                                                  if (patientController
                                                                           .patientsList[
                                                                               index]
                                                                           .isActive ==
                                                                       1) {
-                                                                    controller.setPatientActive(
-                                                                        controller
+                                                                    patientController.setPatientActive(
+                                                                        patientController
                                                                             .patientsList[index]
                                                                             .id,
                                                                         1);
                                                                   } else {
-                                                                    controller.setPatientActive(
-                                                                        controller
+                                                                    patientController.setPatientActive(
+                                                                        patientController
                                                                             .patientsList[index]
                                                                             .id,
                                                                         0);
@@ -318,7 +319,7 @@ class _HomePageState extends State<HomePage> {
                                                               .fromLTRB(
                                                           0.0, 12.0, 0.0, 12.0),
                                                       child: Text(
-                                                          "Maladie: ${controller.patientsList[index].disease}",
+                                                          "Maladie: ${patientController.patientsList[index].disease}",
                                                           style: const TextStyle(
                                                               fontSize: 16,
                                                               color: Colors
@@ -330,10 +331,10 @@ class _HomePageState extends State<HomePage> {
                                         ),
                                       );
                                     }
-                                    return null;
+                                    return const SizedBox();
                                   });
                             }),
-                          )
+                          ),
                         ],
                       ),
                       floatingActionButton: SpeedDial(

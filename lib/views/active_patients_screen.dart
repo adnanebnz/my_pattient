@@ -218,10 +218,7 @@ class _BottomSheetContentState extends State<_BottomSheetContent> {
                             programmableExercises.add(exercise);
                           }
                         }
-                        // Sort done exercises by timestamp in descending order
-                        doneExercises.sort(
-                          (a, b) => b.timestamp.compareTo(a.timestamp),
-                        );
+                      
                         // Combine done exercises and programmable exercises
                         List combinedExercises = [
                           ...doneExercises,
