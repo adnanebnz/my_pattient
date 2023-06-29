@@ -358,6 +358,11 @@ class _BottomSheetContentState extends State<_BottomSheetContent> {
                                                               0);
                                                       widget.refreshData(
                                                           widget.index);
+
+                                                      setState(() {
+                                                        widget.refreshData(
+                                                            widget.index);
+                                                      });
                                                     },
                                                     icon: const Icon(
                                                       Icons.alarm_off,
@@ -390,6 +395,10 @@ class _BottomSheetContentState extends State<_BottomSheetContent> {
                                                             0);
                                                     widget.refreshData(
                                                         widget.index);
+                                                    setState(() {
+                                                      widget.refreshData(
+                                                          widget.index);
+                                                    });
                                                   },
                                                   icon: const Icon(
                                                     Icons.check_circle_outline,
