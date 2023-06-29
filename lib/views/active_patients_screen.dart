@@ -296,11 +296,28 @@ class _BottomSheetContentState extends State<_BottomSheetContent> {
                                                   MainAxisAlignment.start,
                                               children: [
                                                 const SizedBox(height: 10),
-                                                Text(
-                                                  "Se termine à ${DateFormat('HH:mm:ss').format(DateTime.parse(snapshot.data[exoIndex].endTime))}",
-                                                  style: const TextStyle(
+                                                Container(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                    bottom:
+                                                        3, // Space between underline and text
+                                                  ),
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                          border: Border(
+                                                              bottom:
+                                                                  BorderSide(
+                                                    color: Colors.blue,
+                                                    width:
+                                                        1.0, // Underline thickness
+                                                  ))),
+                                                  child: Text(
+                                                    "Se termine à: ${DateFormat('HH:mm').format(DateTime.parse(snapshot.data[exoIndex].endTime))}",
+                                                    style: const TextStyle(
                                                       fontWeight:
-                                                          FontWeight.w500),
+                                                          FontWeight.w500,
+                                                    ),
+                                                  ),
                                                 ),
                                               ],
                                             ),
