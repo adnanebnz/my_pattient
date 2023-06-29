@@ -105,23 +105,21 @@ class DbHelper {
     ''');
   }
 
-  static Future setExerciseIsProgrammed(
-      int patientId, int exerciseId, int isProgrammed) async {
+  static Future setExerciseIsProgrammed(int id, int isProgrammed) async {
     final sql.Database database = await db();
     return database.rawUpdate('''
       UPDATE $_patientExerciseTable
       SET isProgrammed = $isProgrammed
-      WHERE patient_id = $patientId AND exercise_id = $exerciseId
+      WHERE id = $id
     ''');
   }
 
-  static Future setExerciseEndTime(
-      int exerciseId, int patientId, DateTime? endTime) async {
+  static Future setExerciseEndTime(int id, DateTime? endTime) async {
     final sql.Database database = await db();
     return database.rawUpdate('''
       UPDATE $_patientExerciseTable
       SET endTime = '$endTime'
-      WHERE patient_id = $patientId AND exercise_id = $exerciseId
+      WHERE id = $id
     ''');
   }
 

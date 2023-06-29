@@ -51,14 +51,11 @@ class PatientExerciseController extends GetxController {
     await DbHelper.setExerciseIsDone(id!, value);
   }
 
-  Future setExerciseProgrammed(
-      int? patientId, int? exerciseId, int? isProgrammed) async {
-    await DbHelper.setExerciseIsProgrammed(
-        patientId!, exerciseId!, isProgrammed!);
+  Future setExerciseProgrammed(int? id, int? isProgrammed) async {
+    await DbHelper.setExerciseIsProgrammed(id!, isProgrammed!);
   }
 
-  Future setExerciseEndTime(
-      int? exerciseId, int? patientId, DateTime? endTime) async {
-    await DbHelper.setExerciseEndTime(exerciseId!, patientId!, endTime!);
+  Future setExerciseEndTime(int? id, DateTime? endTime) async {
+    await DbHelper.setExerciseEndTime(id!, endTime!);
   }
 }

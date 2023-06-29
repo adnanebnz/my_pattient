@@ -100,6 +100,8 @@ class _SetExerciseDurationPageState extends State<SetExerciseDurationPage> {
                                       id: widget.data.patientId as int,
                                       dateTime: value,
                                       assetAudioPath: 'assets/alarm.mp3',
+                                      enableNotificationOnKill: true,
+                                      vibrate: true,
                                       notificationBody:
                                           '${widget.data.exerciseName} est terminé pour ${widget.data.patientName}',
                                       notificationTitle: 'Exercise terminé!'))
@@ -107,13 +109,9 @@ class _SetExerciseDurationPageState extends State<SetExerciseDurationPage> {
                             developer.log('THE VALUE IS $valueFuture');
                             if (valueFuture) {
                               patientExerciseController.setExerciseProgrammed(
-                                  widget.data.patientId,
-                                  widget.data.exerciseId,
-                                  1);
+                                  widget.data.id, 1);
                               patientExerciseController.setExerciseEndTime(
-                                  widget.data.exerciseId,
-                                  widget.data.patientId,
-                                  value);
+                                  widget.data.id, value);
                             }
                           });
                           Navigator.of(context).pop();

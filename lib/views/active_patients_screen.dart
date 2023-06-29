@@ -21,6 +21,8 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
       Get.put(PatientExerciseController());
   bool showProgrammableExercises = false;
   bool showDoneExercises = false;
+  GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
   @override
   void initState() {
     super.initState();
@@ -120,39 +122,44 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                                             ),
                                             const SizedBox(height: 10),
                                             Expanded(
-                                                child: FutureBuilder(
-                                              future: patientExerciseController
-                                                  .getPatientExercises(controller
-                                                          .activePatientsList[
-                                                      index]),
-                                              builder: (context, snapshot) {
-                                                if (snapshot.connectionState ==
-                                                    ConnectionState.waiting) {
-                                                  return const Center(
-                                                    child:
-                                                        CircularProgressIndicator(
-                                                            color:
-                                                                Colors.green),
-                                                  );
-                                                } else if (snapshot.hasError) {
-                                                  developer.log(
-                                                      "error: ${snapshot.error}");
-                                                  return const Center(
-                                                    child: Text(
-                                                        "Une erreur est survenue!"),
-                                                  );
-                                                } else if (snapshot.hasData) {
-                                                  return RefreshIndicator(
-                                                    onRefresh: () {
-                                                      setState(() {});
+                                                child: RefreshIndicator(
+                                              key: refreshIndicatorKey,
+                                              onRefresh: () async {
+                                                setState(() {});
+                                                await patientExerciseController
+                                                    .getPatientExercises(controller
+                                                            .activePatientsList[
+                                                        index]);
+                                                refreshIndicatorKey.currentState
+                                                    ?.show();
 
-                                                      return patientExerciseController
-                                                          .getPatientExercises(
-                                                              controller
-                                                                      .activePatientsList[
-                                                                  index]);
-                                                    },
-                                                    child: ListView.builder(
+                                                return Future.value(true);
+                                              },
+                                              child: FutureBuilder(
+                                                future: patientExerciseController
+                                                    .getPatientExercises(controller
+                                                            .activePatientsList[
+                                                        index]),
+                                                builder: (context, snapshot) {
+                                                  if (snapshot
+                                                          .connectionState ==
+                                                      ConnectionState.waiting) {
+                                                    return const Center(
+                                                      child:
+                                                          CircularProgressIndicator(
+                                                              color:
+                                                                  Colors.green),
+                                                    );
+                                                  } else if (snapshot
+                                                      .hasError) {
+                                                    developer.log(
+                                                        "error: ${snapshot.error}");
+                                                    return const Center(
+                                                      child: Text(
+                                                          "Une erreur est survenue!"),
+                                                    );
+                                                  } else if (snapshot.hasData) {
+                                                    return ListView.builder(
                                                       itemCount:
                                                           snapshot.data.length,
                                                       itemBuilder:
@@ -266,7 +273,7 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                                                                                 onPressed: () async {
                                                                                   setState(() {});
                                                                                   Alarm.stop(snapshot.data[exoIndex]!.patientId!);
-                                                                                  await patientExerciseController.setExerciseProgrammed(controller.activePatientsList[index].id, snapshot.data[exoIndex].patientId, 0);
+                                                                                  await patientExerciseController.setExerciseProgrammed(snapshot.data[exoIndex].id, 0);
 
                                                                                   await patientExerciseController.setExerciseDone(snapshot.data[exoIndex].id, 0);
 
@@ -310,17 +317,17 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                                                           ),
                                                         );
                                                       },
-                                                    ),
-                                                  );
-                                                } else {
-                                                  return const Center(
-                                                    child:
-                                                        CircularProgressIndicator(
-                                                      color: Colors.green,
-                                                    ),
-                                                  );
-                                                }
-                                              },
+                                                    );
+                                                  } else {
+                                                    return const Center(
+                                                      child:
+                                                          CircularProgressIndicator(
+                                                        color: Colors.green,
+                                                      ),
+                                                    );
+                                                  }
+                                                },
+                                              ),
                                             )),
                                           ],
                                         ),
