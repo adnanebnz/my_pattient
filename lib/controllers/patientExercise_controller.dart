@@ -60,4 +60,8 @@ class PatientExerciseController extends GetxController {
   Future setExerciseEndTime(int? id, DateTime? endTime) async {
     await DbHelper.setExerciseEndTime(id!, endTime!);
   }
+
+  Future getLatestPatientWithLatestEndTime() {
+    return DbHelper.getLatestPatientWithLatestEndTime();
+  }
 }

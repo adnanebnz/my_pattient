@@ -6,6 +6,8 @@ import 'package:my_patients_sql/controllers/exercise_controller.dart';
 import 'package:my_patients_sql/controllers/patientExercise_controller.dart';
 import 'package:my_patients_sql/controllers/patient_controller.dart';
 import 'set_exercise_duration_screen.dart';
+// ignore: unused_import
+import 'dart:developer' as developer show log;
 
 class ActivePatientsPage extends StatefulWidget {
   const ActivePatientsPage({super.key});
@@ -34,6 +36,7 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
     Size size = MediaQuery.of(context).size;
     return Column(
       children: [
+        //TODO vertical list of patients with latest endtime exercises with exercise name and patient name
         Expanded(
           child: GetX<PatientController>(builder: (controller) {
             return ListView.builder(

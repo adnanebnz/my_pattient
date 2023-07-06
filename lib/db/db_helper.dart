@@ -155,4 +155,18 @@ class DbHelper {
       WHERE $_patientExerciseTable.patient_id = $patientId ORDER BY $_patientExerciseTable.startTime DESC
     ''');
   }
+
+  static Future getLatestPatientWithLatestEndTime() async {
+    final sql.Database database = await db();
+    return database.rawQuery('''
+       SELECT  $_patientExerciseTable.id as id,$_patientsTable.id AS patientId, $_patientsTable.name AS patientName, $_patientsTable
+      .age AS patientAge, $_patientsTable.disease as patientDisease,$_exercisesTable.id AS exerciseId,  $_exercisesTable.name AS exerciseName, 
+      $_exercisesTable.description AS exerciseDescription, $_patientExerciseTable.isProgrammed, $_patientExerciseTable.isDone, $_patientExerciseTable.startTime, $_patientExerciseTable.endTime FROM $_patientsTable
+      INNER JOIN $_patientExerciseTable
+      ON $_patientsTable.id = $_patientExerciseTable.patient_id
+      INNER JOIN $_exercisesTable
+      ON $_exercisesTable.id = $_patientExerciseTable.exercise_id
+      WHERE $_patientExerciseTable.endTime = (SELECT MAX(endTime) FROM $_patientExerciseTable)
+    ''');
+  }
 }
