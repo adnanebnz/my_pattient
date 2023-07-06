@@ -31,6 +31,8 @@ class PatientExerciseController extends GetxController {
       );
       data.add(patientExercise);
     }
+    await getLatestPatientWithLatestEndTime();
+
     return data;
   }
 
@@ -40,27 +42,33 @@ class PatientExerciseController extends GetxController {
       'exercise_id': exercise!.id,
     };
     await DbHelper.insert('patient_exercise', patientExerciseData);
+    await getLatestPatientWithLatestEndTime();
   }
 
   Future deletePatientExercise(Patient? patient, int? exerciseId) async {
     await DbHelper.deletePatientExercise(patient!.id!, exerciseId!);
     await getPatientExercises(patient);
+    await getLatestPatientWithLatestEndTime();
   }
 
   Future setExerciseDone(int? id, int value) async {
     await DbHelper.setExerciseIsDone(id!, value);
+    await getLatestPatientWithLatestEndTime();
   }
 
   Future setExerciseProgrammed(int? id, int? isProgrammed) async {
     await DbHelper.setExerciseIsProgrammed(id!, isProgrammed!);
+    await getLatestPatientWithLatestEndTime();
   }
 
   Future setExerciseStartTime(int? id, DateTime? startTime) async {
     await DbHelper.setExerciseStartTime(id!, startTime!);
+    await getLatestPatientWithLatestEndTime();
   }
 
   Future setExerciseEndTime(int? id, DateTime? endTime) async {
     await DbHelper.setExerciseEndTime(id!, endTime!);
+    await getLatestPatientWithLatestEndTime();
   }
 
   Future getLatestPatientWithLatestEndTime() async {

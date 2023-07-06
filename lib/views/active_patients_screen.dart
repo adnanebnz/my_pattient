@@ -38,72 +38,70 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
     return Scaffold(
       body: Column(
         children: [
-          //TODO vertical list of patients with latest endtime exercises with exercise name and patient name
-          const SizedBox(
-            height: 12,
-          ),
-          const Text(
-            "Derniers patients programmés",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          SizedBox(
-            height: size.height * 0.2,
-            width: size.width,
-            child: GetX<PatientExerciseController>(builder: (controller) {
-              return ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: controller.patientExercises.length,
-                itemBuilder: ((context, index) {
-                  return SizedBox(
-                    width: 250,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        elevation: 4,
-                        child: Column(
-                          children: [
-                            ListTile(
-                              title: Text(controller
-                                  .patientExercises[index].patientName),
-                              subtitle: Text("exercise : " +
-                                  controller
-                                      .patientExercises[index].exerciseName),
-                            ),
-                            const Divider(
-                              height: 1,
-                              thickness: 1,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 12.0),
-                              child: Container(
-                                decoration: const BoxDecoration(
-                                    border: Border(
-                                        bottom: BorderSide(
-                                  color: Colors.blue,
-                                  width: 1.0,
-                                ))),
-                                child: Text(
-                                  "Se termine à: ${DateFormat('HH:mm').format(DateTime.parse(controller.patientExercises[index].endTime))}",
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w500,
+          // const Text(
+          //   "Derniers patients programmés",
+          //   style: TextStyle(
+          //     fontSize: 20,
+          //     fontWeight: FontWeight.w500,
+          //   ),
+          // )
+          patientExerciseController.patientExercises.isEmpty
+              ? const SizedBox()
+              : SizedBox(
+                  height: size.height * 0.2,
+                  width: size.width,
+                  child: GetX<PatientExerciseController>(builder: (controller) {
+                    return ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: controller.patientExercises.length,
+                      itemBuilder: ((context, index) {
+                        return SizedBox(
+                          width: 250,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              elevation: 4,
+                              child: Column(
+                                children: [
+                                  ListTile(
+                                    title: Text(controller
+                                        .patientExercises[index].patientName),
+                                    subtitle: Text("exercise : " +
+                                        controller.patientExercises[index]
+                                            .exerciseName),
                                   ),
-                                ),
+                                  const Divider(
+                                    height: 1,
+                                    thickness: 1,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 12.0),
+                                    child: Container(
+                                      decoration: const BoxDecoration(
+                                          border: Border(
+                                              bottom: BorderSide(
+                                        color: Colors.blue,
+                                        width: 1.0,
+                                      ))),
+                                      child: Text(
+                                        "Se termine à: ${DateFormat('HH:mm').format(DateTime.parse(controller.patientExercises[index].endTime))}",
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                }),
-              );
-            }),
-          ),
+                          ),
+                        );
+                      }),
+                    );
+                  }),
+                ),
           SizedBox(
             height: size.height * 0.02,
           ),

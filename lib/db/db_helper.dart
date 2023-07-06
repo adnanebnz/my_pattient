@@ -166,7 +166,8 @@ class DbHelper {
       ON $_patientsTable.id = $_patientExerciseTable.patient_id
       INNER JOIN $_exercisesTable
       ON $_exercisesTable.id = $_patientExerciseTable.exercise_id
-      WHERE $_patientExerciseTable.endTime = (SELECT MAX(endTime) FROM $_patientExerciseTable)
+      WHERE $_patientExerciseTable.endTime = (SELECT MAX(endTime) FROM $_patientExerciseTable) AND 
+      $_patientExerciseTable.isDone = 0 AND $_patientExerciseTable.isProgrammed = 1
     ''');
   }
 }
