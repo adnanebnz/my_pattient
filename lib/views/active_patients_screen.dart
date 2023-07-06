@@ -29,111 +29,191 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
     super.initState();
     patientController.getActivePatients();
     exerciseController.getExercises();
+    patientExerciseController.getLatestPatientWithLatestEndTime();
   }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Column(
-      children: [
-        //TODO vertical list of patients with latest endtime exercises with exercise name and patient name
-        Expanded(
-          child: GetX<PatientController>(builder: (controller) {
-            return ListView.builder(
-              itemCount: controller.activePatientsList.length,
-              itemBuilder: (context, index) {
-                if (controller.activePatientsList.isEmpty) {
-                  return const Center(
-                    child: Text("Auccun patient est présent!"),
-                  );
-                } else {
-                  return Padding(
-                    padding: const EdgeInsets.only(top: 8.0, left: 5, right: 5),
-                    child: Card(
-                      surfaceTintColor: Colors.green,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      elevation: 4,
-                      child: Column(
-                        children: [
-                          ListTile(
-                            trailing: Switch.adaptive(
-                              activeColor: Colors.green,
-                              value: controller
-                                      .activePatientsList[index].isActive ==
-                                  1,
-                              onChanged: (value) {
-                                setState(() {
-                                  controller.activePatientsList[index]
-                                      .isActive = value ? 1 : 0;
-                                  if (controller
-                                          .activePatientsList[index].isActive ==
-                                      1) {
-                                    controller.setPatientActive(
-                                        controller.patientsList[index].id, 1);
-                                  } else {
-                                    controller.setPatientActive(
-                                        controller.activePatientsList[index].id,
-                                        0);
-                                  }
-                                });
-                              },
+    return Scaffold(
+      body: Column(
+        children: [
+          //TODO vertical list of patients with latest endtime exercises with exercise name and patient name
+          const SizedBox(
+            height: 12,
+          ),
+          const Text(
+            "Derniers patients programmés",
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          SizedBox(
+            height: size.height * 0.2,
+            width: size.width,
+            child: GetX<PatientExerciseController>(builder: (controller) {
+              return ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: controller.patientExercises.length,
+                itemBuilder: ((context, index) {
+                  return SizedBox(
+                    width: 250,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                        elevation: 4,
+                        child: Column(
+                          children: [
+                            ListTile(
+                              title: Text(controller
+                                  .patientExercises[index].patientName),
+                              subtitle: Text("exercise : " +
+                                  controller
+                                      .patientExercises[index].exerciseName),
                             ),
-                            title:
-                                Text(controller.activePatientsList[index].name),
-                            subtitle: Text(
-                                "${controller.activePatientsList[index].age} ans"),
-                            onTap: () {
-                              showModalBottomSheet(
-                                  barrierColor: Colors.white70,
-                                  backgroundColor:
-                                      const Color.fromRGBO(226, 232, 240, 1),
-                                  isScrollControlled: true,
-                                  elevation: 1,
-                                  shape: const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(20),
-                                      topRight: Radius.circular(20),
-                                    ),
+                            const Divider(
+                              height: 1,
+                              thickness: 1,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 12.0),
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                    border: Border(
+                                        bottom: BorderSide(
+                                  color: Colors.blue,
+                                  width: 1.0,
+                                ))),
+                                child: Text(
+                                  "Se termine à: ${DateFormat('HH:mm').format(DateTime.parse(controller.patientExercises[index].endTime))}",
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w500,
                                   ),
-                                  showDragHandle: true,
-                                  context: context,
-                                  builder: (_) {
-                                    return _BottomSheetContent(
-                                      refreshData: (p0) async {
-                                        return await patientExerciseController
-                                            .getPatientExercises(controller
-                                                .activePatientsList[p0]);
-                                      },
-                                      size: size,
-                                      index: index,
-                                      key: refreshIndicatorKey,
-                                    );
-                                  });
-                            },
-                          ),
-                          const Divider(
-                            height: 0,
-                            thickness: 1,
-                          ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.fromLTRB(0.0, 12.0, 0.0, 12.0),
-                            child: Text(
-                                "Maladie: ${controller.patientsList[index].disease}",
-                                style: const TextStyle(
-                                    fontSize: 16, color: Colors.black87)),
-                          ),
-                        ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   );
-                }
-              },
-            );
-          }),
-        ),
-      ],
+                }),
+              );
+            }),
+          ),
+          SizedBox(
+            height: size.height * 0.02,
+          ),
+          const Text(
+            "Patients présents",
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          Expanded(
+            child: GetX<PatientController>(builder: (controller) {
+              return ListView.builder(
+                itemCount: controller.activePatientsList.length,
+                itemBuilder: (context, index) {
+                  if (controller.activePatientsList.isEmpty) {
+                    return const Center(
+                      child: Text("Auccun patient est présent!"),
+                    );
+                  } else {
+                    return Padding(
+                      padding:
+                          const EdgeInsets.only(top: 8.0, left: 5, right: 5),
+                      child: Card(
+                        surfaceTintColor: Colors.green,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                        elevation: 4,
+                        child: Column(
+                          children: [
+                            ListTile(
+                              trailing: Switch.adaptive(
+                                activeColor: Colors.green,
+                                value: controller
+                                        .activePatientsList[index].isActive ==
+                                    1,
+                                onChanged: (value) {
+                                  setState(() {
+                                    controller.activePatientsList[index]
+                                        .isActive = value ? 1 : 0;
+                                    if (controller.activePatientsList[index]
+                                            .isActive ==
+                                        1) {
+                                      controller.setPatientActive(
+                                          controller.patientsList[index].id, 1);
+                                    } else {
+                                      controller.setPatientActive(
+                                          controller
+                                              .activePatientsList[index].id,
+                                          0);
+                                    }
+                                  });
+                                },
+                              ),
+                              title: Text(
+                                  controller.activePatientsList[index].name),
+                              subtitle: Text(
+                                  "${controller.activePatientsList[index].age} ans"),
+                              onTap: () {
+                                showModalBottomSheet(
+                                    barrierColor: Colors.white70,
+                                    backgroundColor:
+                                        const Color.fromRGBO(226, 232, 240, 1),
+                                    isScrollControlled: true,
+                                    elevation: 1,
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(20),
+                                        topRight: Radius.circular(20),
+                                      ),
+                                    ),
+                                    showDragHandle: true,
+                                    context: context,
+                                    builder: (_) {
+                                      return _BottomSheetContent(
+                                        refreshData: (p0) async {
+                                          return await patientExerciseController
+                                              .getPatientExercises(controller
+                                                  .activePatientsList[p0]);
+                                        },
+                                        size: size,
+                                        index: index,
+                                        key: refreshIndicatorKey,
+                                      );
+                                    });
+                              },
+                            ),
+                            const Divider(
+                              height: 0,
+                              thickness: 1,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(
+                                  0.0, 12.0, 0.0, 12.0),
+                              child: Text(
+                                  "Maladie: ${controller.patientsList[index].disease}",
+                                  style: const TextStyle(
+                                      fontSize: 16, color: Colors.black87)),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  }
+                },
+              );
+            }),
+          ),
+        ],
+      ),
     );
   }
 }

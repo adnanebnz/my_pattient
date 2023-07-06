@@ -8,6 +8,8 @@ import 'package:my_patients_sql/models/patient.dart';
 import 'package:my_patients_sql/models/patient_exercise.dart';
 
 class PatientExerciseController extends GetxController {
+  RxList patientExercises = <PatientExercise>[].obs;
+
   Future getPatientExercises(Patient? patient) async {
     final List<Map<String, dynamic>> patientExercisesData =
         await DbHelper.getPatientExercises(patient!.id!);
@@ -61,7 +63,28 @@ class PatientExerciseController extends GetxController {
     await DbHelper.setExerciseEndTime(id!, endTime!);
   }
 
-  Future getLatestPatientWithLatestEndTime() {
-    return DbHelper.getLatestPatientWithLatestEndTime();
+  Future getLatestPatientWithLatestEndTime() async {
+    final List<Map<String, dynamic>> patientExercisesData =
+        await DbHelper.getLatestPatientWithLatestEndTime();
+    final List<PatientExercise> data = [];
+    for (var patientExerciseData in patientExercisesData) {
+      final PatientExercise patientExercise = PatientExercise(
+        id: patientExerciseData['id'],
+        patientId: patientExerciseData['patientId'],
+        exerciseId: patientExerciseData['exerciseId'],
+        patientName: patientExerciseData['patientName'],
+        patientAge: patientExerciseData['patientAge'],
+        patientDisease: patientExerciseData['patientDisease'],
+        exerciseName: patientExerciseData['exerciseName'],
+        exerciseDescription: patientExerciseData['exerciseDescription'],
+        isProgrammed: patientExerciseData['isProgrammed'],
+        isDone: patientExerciseData['isDone'],
+        startTime: patientExerciseData['startTime'],
+        endTime: patientExerciseData['endTime'],
+      );
+      data.add(patientExercise);
+    }
+    patientExercises.value = data;
+    return patientExercises;
   }
 }
