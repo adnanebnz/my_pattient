@@ -38,7 +38,10 @@ class _ModifySetExercisesForPatientState
               const Center(
                 child: Text(
                   "Supprimer des exercices a ce patient",
-                  style: TextStyle(fontSize: 18, fontFamily: 'Poppins'),
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontFamily: 'Poppins',
+                      overflow: TextOverflow.ellipsis),
                 ),
               )
             ],
