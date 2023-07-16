@@ -99,7 +99,7 @@ class _HomePageState extends State<HomePage> {
                             child: Obx(() {
                               if (patientController.patientsList.isEmpty) {
                                 return const Center(
-                                  child: Text("Aucun patient trouvé"),
+                                  child: Text("Aucun patient trouvé", style: TextStyle(fontFamily: 'Poppins')),
                                 );
                               } else {
                                 return ListView.builder(

@@ -207,7 +207,10 @@ class _BottomSheetContentState extends State<_BottomSheetContent> {
                     elevation: 4,
                     label: const Text(
                       "Exercises non terminés",
-                      style: TextStyle(fontFamily: 'Poppins', fontSize: 13),
+                      style: TextStyle(
+                          fontFamily: 'Poppins',
+                          fontSize: 11,
+                          overflow: TextOverflow.fade),
                     ),
                     labelStyle: showUncompleted
                         ? const TextStyle(
@@ -230,7 +233,10 @@ class _BottomSheetContentState extends State<_BottomSheetContent> {
                     selected: showCompleted,
                     label: const Text(
                       "Exercises terminés",
-                      style: TextStyle(fontFamily: 'Poppins', fontSize: 13),
+                      style: TextStyle(
+                          fontFamily: 'Poppins',
+                          fontSize: 11,
+                          overflow: TextOverflow.fade),
                     ),
                     labelStyle: showCompleted
                         ? const TextStyle(color: Colors.white)
