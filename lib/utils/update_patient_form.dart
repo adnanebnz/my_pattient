@@ -47,7 +47,9 @@ class _AddPersonFormState extends State<UpdatePersonForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Nom et prénom'),
+          const Text(
+            'Nom et prénom',
+          ),
           TextFormField(
             decoration: const InputDecoration(
               prefixIcon: Icon(Icons.person_2_outlined),
@@ -102,6 +104,7 @@ class _AddPersonFormState extends State<UpdatePersonForm> {
                 },
                 label: const Text(
                   "Ajouter des exercices",
+                  style: TextStyle(fontFamily: 'Poppins'),
                 ),
               ),
             ),

@@ -49,6 +49,7 @@ class _ExerciseListPageState extends State<ExerciseListPage> {
               hintStyle: MaterialStateProperty.resolveWith<TextStyle?>(
                 (states) {
                   return const TextStyle(
+                    fontFamily: 'Poppins',
                     color: Colors.grey,
                     fontSize: 14,
                   );
@@ -59,7 +60,9 @@ class _ExerciseListPageState extends State<ExerciseListPage> {
           Expanded(
             child: Obx(() {
               if (exerciseController.exercises.isEmpty) {
-                return const Center(child: Text('Aucun exercice trouvé'));
+                return const Center(
+                    child: Text('Aucun exercice trouvé',
+                        style: TextStyle(fontFamily: 'Poppins')));
               } else {
                 return ListView.builder(
                   itemCount: exerciseController.exercises.length,
@@ -85,14 +88,22 @@ class _ExerciseListPageState extends State<ExerciseListPage> {
                                     color: Colors.red,
                                     size: 30,
                                   ),
-                                  title: const Text('Supprimer'),
+                                  title: const Text(
+                                    'Supprimer',
+                                    style: TextStyle(fontFamily: 'Poppins'),
+                                  ),
                                   content: const Text(
-                                      'Voulez-vous supprimer cet exercice?'),
+                                    'Voulez-vous supprimer cet exercice?',
+                                    style: TextStyle(fontFamily: 'Poppins'),
+                                  ),
                                   actions: [
                                     TextButton(
                                       onPressed: () =>
                                           Navigator.pop(context, false),
-                                      child: const Text('NON'),
+                                      child: const Text(
+                                        'NON',
+                                        style: TextStyle(fontFamily: 'Poppins'),
+                                      ),
                                     ),
                                     TextButton(
                                       onPressed: () {
@@ -104,13 +115,20 @@ class _ExerciseListPageState extends State<ExerciseListPage> {
                                             showCloseIcon: true,
                                             behavior: SnackBarBehavior.floating,
                                             closeIconColor: Colors.white,
-                                            content: Text('Exercice supprimé'),
+                                            content: Text(
+                                              'Exercice supprimé',
+                                              style: TextStyle(
+                                                  fontFamily: 'Poppins'),
+                                            ),
                                             duration: Duration(seconds: 2),
                                           ),
                                         );
                                         Navigator.pop(context, true);
                                       },
-                                      child: const Text('OUI'),
+                                      child: const Text(
+                                        'OUI',
+                                        style: TextStyle(fontFamily: 'Poppins'),
+                                      ),
                                     ),
                                   ],
                                 );
@@ -156,9 +174,14 @@ class _ExerciseListPageState extends State<ExerciseListPage> {
                           child: Card(
                             elevation: 4,
                             child: ListTile(
-                              title: Text(exercise.name),
-                              subtitle:
-                                  Text("Description: ${exercise.description}"),
+                              title: Text(
+                                exercise.name,
+                                style: TextStyle(fontFamily: 'Poppins'),
+                              ),
+                              subtitle: Text(
+                                "Description: ${exercise.description}",
+                                style: TextStyle(fontFamily: 'Poppins'),
+                              ),
                             ),
                           ),
                         ),

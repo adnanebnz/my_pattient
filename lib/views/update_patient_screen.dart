@@ -17,6 +17,7 @@ class _AddPatientPageState extends State<UpdatePatientPage> {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
+          fontFamily: 'Poppins',
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.greenAccent),
           useMaterial3: true,
         ),

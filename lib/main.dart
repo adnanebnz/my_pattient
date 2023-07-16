@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
       title: 'MyPatients',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        fontFamily: 'Poppins',
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         useMaterial3: true,
       ),

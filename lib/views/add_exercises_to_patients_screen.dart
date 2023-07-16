@@ -87,8 +87,12 @@ class _AddExercisesToPatientPageState extends State<AddExercisesToPatientPage> {
                       tileColor: Colors.white,
                       title: Text(
                         controller.exercises[index].name,
+                        style: TextStyle(fontFamily: 'Poppins'),
                       ),
-                      subtitle: Text(controller.exercises[index].description),
+                      subtitle: Text(
+                        controller.exercises[index].description,
+                        style: TextStyle(fontFamily: 'Poppins'),
+                      ),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10)),
                       trailing: IconButton(
@@ -103,7 +107,10 @@ class _AddExercisesToPatientPageState extends State<AddExercisesToPatientPage> {
                           // ignore: use_build_context_synchronously
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
-                              content: Text("Exercice enregistré"),
+                              content: Text(
+                                "Exercice enregistré",
+                                style: TextStyle(fontFamily: 'Poppins'),
+                              ),
                             ),
                           );
                         },

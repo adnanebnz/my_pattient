@@ -52,6 +52,7 @@ class _SetExerciseDurationPageState extends State<SetExerciseDurationPage> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        fontFamily: 'Poppins',
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         useMaterial3: true,
       ),
@@ -65,6 +66,7 @@ class _SetExerciseDurationPageState extends State<SetExerciseDurationPage> {
               child: Text(
                 'Définir la durée de l\'exercice',
                 style: TextStyle(
+                  fontFamily: 'Poppins',
                   fontSize: 18.0,
                   fontWeight: FontWeight.w500,
                 ),
@@ -79,6 +81,7 @@ class _SetExerciseDurationPageState extends State<SetExerciseDurationPage> {
                 child: Text(
                   "Nom de l'exercice: ${widget.data.exerciseName}",
                   style: const TextStyle(
+                    fontFamily: 'Poppins',
                     color: Colors.black,
                     fontSize: 15.0,
                   ),
@@ -108,44 +111,45 @@ class _SetExerciseDurationPageState extends State<SetExerciseDurationPage> {
                       children: [
                         Center(
                           child: ElevatedButton(
-                              onPressed: () {
-                                if (_formKey.currentState!.validate()) {
-                                  patientExerciseController
-                                      .setExerciseStartTime(
-                                          widget.data.id, DateTime.now());
-                                  final DateTime value = DateTime.now().add(
-                                      Duration(
-                                          minutes: int.parse(
-                                              _durationController.text)));
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                patientExerciseController.setExerciseStartTime(
+                                    widget.data.id, DateTime.now());
+                                final DateTime value = DateTime.now().add(
+                                    Duration(
+                                        minutes: int.parse(
+                                            _durationController.text)));
 
-                                  Alarm.set(
-                                          alarmSettings: AlarmSettings(
-                                              id: widget.data.id as int,
-                                              dateTime: value,
-                                              assetAudioPath:
-                                                  'assets/alarm.mp3',
-                                              enableNotificationOnKill: true,
-                                              vibrate: true,
-                                              notificationBody:
-                                                  '${widget.data.exerciseName} est terminé pour ${widget.data.patientName}',
-                                              notificationTitle:
-                                                  'Exercise terminé!'))
-                                      .then((valueFuture) {
-                                    if (valueFuture) {
-                                      patientExerciseController
-                                          .setExerciseProgrammed(
-                                              widget.data.id, 1);
+                                Alarm.set(
+                                        alarmSettings: AlarmSettings(
+                                            id: widget.data.id as int,
+                                            dateTime: value,
+                                            assetAudioPath: 'assets/alarm.mp3',
+                                            enableNotificationOnKill: true,
+                                            vibrate: true,
+                                            notificationBody:
+                                                '${widget.data.exerciseName} est terminé pour ${widget.data.patientName}',
+                                            notificationTitle:
+                                                'Exercise terminé!'))
+                                    .then((valueFuture) {
+                                  if (valueFuture) {
+                                    patientExerciseController
+                                        .setExerciseProgrammed(
+                                            widget.data.id, 1);
 
-                                      patientExerciseController
-                                          .setExerciseEndTime(
-                                              widget.data.id, value);
-                                    }
-                                    Navigator.of(context).pop();
-                                  });
-                                }
-                              },
-                              child:
-                                  const Text('Lancer l\'exercice maintenant')),
+                                    patientExerciseController
+                                        .setExerciseEndTime(
+                                            widget.data.id, value);
+                                  }
+                                  Navigator.of(context).pop();
+                                });
+                              }
+                            },
+                            child: const Text(
+                              'Lancer l\'exercice maintenant',
+                              style: TextStyle(fontFamily: 'Poppins'),
+                            ),
+                          ),
                         ),
                         const SizedBox(height: 15.0),
                         Center(
@@ -188,7 +192,10 @@ class _SetExerciseDurationPageState extends State<SetExerciseDurationPage> {
                                   );
                                 }
                               },
-                              child: const Text('Définir l\'heure de début')),
+                              child: const Text(
+                                'Définir l\'heure de début',
+                                style: TextStyle(fontFamily: 'Poppins'),
+                              )),
                         ),
                       ],
                     ),

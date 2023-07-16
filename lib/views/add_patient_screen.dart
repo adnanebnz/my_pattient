@@ -15,7 +15,10 @@ class _AddPatientPageState extends State<AddPatientPage> {
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: const Text('Ajouter un patient'),
+          title: const Text(
+            'Ajouter un patient',
+            style: TextStyle(fontFamily: 'Poppins'),
+          ),
         ),
         body: const Padding(
           padding: EdgeInsets.all(15.0),

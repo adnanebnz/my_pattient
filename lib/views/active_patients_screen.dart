@@ -41,7 +41,10 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
             child: GetX<PatientController>(builder: (controller) {
               if (controller.activePatientsList.isEmpty) {
                 return const Center(
-                  child: Text("Auccun patient n'est présent!"),
+                  child: Text(
+                    "Auccun patient n'est présent!",
+                    style: TextStyle(fontFamily: 'Poppins'),
+                  ),
                 );
               } else {
                 return ListView.builder(
@@ -83,9 +86,13 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                                   },
                                 ),
                                 title: Text(
-                                    controller.activePatientsList[index].name),
+                                  controller.activePatientsList[index].name,
+                                  style: TextStyle(fontFamily: 'Poppins'),
+                                ),
                                 subtitle: Text(
-                                    "${controller.activePatientsList[index].age} ans"),
+                                  "${controller.activePatientsList[index].age} ans",
+                                  style: TextStyle(fontFamily: 'Poppins'),
+                                ),
                                 onTap: () {
                                   showModalBottomSheet(
                                       barrierColor: Colors.white70,
@@ -125,7 +132,9 @@ class _ActivePatientsPageState extends State<ActivePatientsPage> {
                                 child: Text(
                                     "Maladie: ${controller.patientsList[index].disease}",
                                     style: const TextStyle(
-                                        fontSize: 16, color: Colors.black87)),
+                                        fontFamily: 'Poppins',
+                                        fontSize: 16,
+                                        color: Colors.black87)),
                               ),
                             ],
                           ),
@@ -185,6 +194,7 @@ class _BottomSheetContentState extends State<_BottomSheetContent> {
             const Text(
               "Programmer des exercises pour ce patient",
               style: TextStyle(
+                fontFamily: 'Poppins',
                 fontSize: 18,
                 fontWeight: FontWeight.w500,
               ),
@@ -195,9 +205,14 @@ class _BottomSheetContentState extends State<_BottomSheetContent> {
                 children: [
                   FilterChip(
                     elevation: 4,
-                    label: const Text("Exercises non terminés"),
+                    label: const Text(
+                      "Exercises non terminés",
+                      style: TextStyle(fontFamily: 'Poppins', fontSize: 13),
+                    ),
                     labelStyle: showUncompleted
-                        ? const TextStyle(color: Colors.white)
+                        ? const TextStyle(
+                            color: Colors.white,
+                          )
                         : const TextStyle(color: Colors.black87),
                     checkmarkColor: Colors.white,
                     selectedColor: const Color.fromRGBO(34, 197, 94, 1),
@@ -213,7 +228,10 @@ class _BottomSheetContentState extends State<_BottomSheetContent> {
                   FilterChip(
                     elevation: 4,
                     selected: showCompleted,
-                    label: const Text("Exercises terminés"),
+                    label: const Text(
+                      "Exercises terminés",
+                      style: TextStyle(fontFamily: 'Poppins', fontSize: 13),
+                    ),
                     labelStyle: showCompleted
                         ? const TextStyle(color: Colors.white)
                         : const TextStyle(color: Colors.black87),
@@ -248,7 +266,10 @@ class _BottomSheetContentState extends State<_BottomSheetContent> {
                         );
                       } else if (snapshot.hasError) {
                         return const Center(
-                          child: Text("Une erreur est survenue!"),
+                          child: Text(
+                            "Une erreur est survenue!",
+                            style: TextStyle(fontFamily: 'Poppins'),
+                          ),
                         );
                       } else if (snapshot.hasData) {
                         List doneExercises = [];
@@ -262,18 +283,29 @@ class _BottomSheetContentState extends State<_BottomSheetContent> {
                         }
                         if (showCompleted && doneExercises.isEmpty) {
                           return const Center(
-                            child: Text("Aucun exercise terminé!"),
+                            child: Text(
+                              "Aucun exercise terminé!",
+                              style: TextStyle(
+                                fontFamily: 'Poppins',
+                              ),
+                            ),
                           );
                         }
                         if (showUncompleted && notDoneExercises.isEmpty) {
                           return const Center(
-                            child: Text("Aucun exercise non terminé!"),
+                            child: Text(
+                              "Aucun exercise non terminé!",
+                              style: TextStyle(fontFamily: 'Poppins'),
+                            ),
                           );
                         }
 
                         if (!showCompleted && !showUncompleted) {
                           return const Center(
-                            child: Text("Aucun exercise n'est affiché!"),
+                            child: Text(
+                              "Aucun exercise n'est affiché!",
+                              style: TextStyle(fontFamily: 'Poppins'),
+                            ),
                           );
                         }
 
@@ -297,16 +329,24 @@ class _BottomSheetContentState extends State<_BottomSheetContent> {
                                         shape: RoundedRectangleBorder(
                                             borderRadius:
                                                 BorderRadius.circular(10)),
-                                        title: Text(snapshot
-                                            .data[exoIndex].exerciseName),
-                                        subtitle: Text(snapshot.data[exoIndex]
-                                            .exerciseDescription),
+                                        title: Text(
+                                          snapshot.data[exoIndex].exerciseName,
+                                          style:
+                                              TextStyle(fontFamily: 'Poppins'),
+                                        ),
+                                        subtitle: Text(
+                                          snapshot.data[exoIndex]
+                                              .exerciseDescription,
+                                          style:
+                                              TextStyle(fontFamily: 'Poppins'),
+                                        ),
                                         trailing: snapshot
                                                     .data[exoIndex].isDone ==
                                                 1
                                             ? const Text(
                                                 "status : Terminé",
                                                 style: TextStyle(
+                                                  fontFamily: 'Poppins',
                                                   color: Colors.green,
                                                   fontWeight: FontWeight.bold,
                                                 ),
@@ -315,8 +355,9 @@ class _BottomSheetContentState extends State<_BottomSheetContent> {
                                                         .isProgrammed ==
                                                     1
                                                 ? const Text(
-                                                    "status : Exercise programée ",
+                                                    "status : Exercise programée",
                                                     style: TextStyle(
+                                                      fontFamily: 'Poppins',
                                                       color: Colors.green,
                                                       fontWeight:
                                                           FontWeight.bold,
@@ -325,6 +366,7 @@ class _BottomSheetContentState extends State<_BottomSheetContent> {
                                                 : const Text(
                                                     "status : non programée",
                                                     style: TextStyle(
+                                                        fontFamily: 'Poppins',
                                                         overflow: TextOverflow
                                                             .ellipsis,
                                                         fontSize: 14),
@@ -360,6 +402,7 @@ class _BottomSheetContentState extends State<_BottomSheetContent> {
                                                     child: Text(
                                                       "Se termine à: ${DateFormat('HH:mm').format(DateTime.parse(snapshot.data[exoIndex].endTime))}",
                                                       style: const TextStyle(
+                                                        fontFamily: 'Poppins',
                                                         fontWeight:
                                                             FontWeight.w500,
                                                       ),
@@ -405,6 +448,7 @@ class _BottomSheetContentState extends State<_BottomSheetContent> {
                                                   ),
                                                   const Text("Programmer",
                                                       style: TextStyle(
+                                                          fontFamily: 'Poppins',
                                                           fontSize: 11,
                                                           overflow: TextOverflow
                                                               .ellipsis)),
@@ -447,6 +491,7 @@ class _BottomSheetContentState extends State<_BottomSheetContent> {
                                                       )),
                                                   const Text("Annuler",
                                                       style: TextStyle(
+                                                          fontFamily: 'Poppins',
                                                           fontSize: 11,
                                                           overflow: TextOverflow
                                                               .ellipsis)),
@@ -487,6 +532,7 @@ class _BottomSheetContentState extends State<_BottomSheetContent> {
                                                   ),
                                                   const Text("Terminer",
                                                       style: TextStyle(
+                                                          fontFamily: 'Poppins',
                                                           fontSize: 11,
                                                           overflow: TextOverflow
                                                               .ellipsis)),
@@ -522,16 +568,26 @@ class _BottomSheetContentState extends State<_BottomSheetContent> {
                                         shape: RoundedRectangleBorder(
                                             borderRadius:
                                                 BorderRadius.circular(10)),
-                                        title: Text(snapshot
-                                            .data[exoIndex].exerciseName),
-                                        subtitle: Text(snapshot.data[exoIndex]
-                                            .exerciseDescription),
+                                        title: Text(
+                                          snapshot.data[exoIndex].exerciseName,
+                                          style: TextStyle(
+                                            fontFamily: 'Poppins',
+                                          ),
+                                        ),
+                                        subtitle: Text(
+                                          snapshot.data[exoIndex]
+                                              .exerciseDescription,
+                                          style: TextStyle(
+                                            fontFamily: 'Poppins',
+                                          ),
+                                        ),
                                         trailing: snapshot
                                                     .data[exoIndex].isDone ==
                                                 1
                                             ? const Text(
                                                 "status : Terminé",
                                                 style: TextStyle(
+                                                  fontFamily: 'Poppins',
                                                   color: Colors.green,
                                                   fontWeight: FontWeight.bold,
                                                 ),
@@ -542,6 +598,7 @@ class _BottomSheetContentState extends State<_BottomSheetContent> {
                                                 ? const Text(
                                                     "status : Exercise programée ",
                                                     style: TextStyle(
+                                                      fontFamily: 'Poppins',
                                                       color: Colors.green,
                                                       fontWeight:
                                                           FontWeight.bold,
@@ -550,6 +607,7 @@ class _BottomSheetContentState extends State<_BottomSheetContent> {
                                                 : const Text(
                                                     "status : non programée",
                                                     style: TextStyle(
+                                                        fontFamily: 'Poppins',
                                                         overflow: TextOverflow
                                                             .ellipsis,
                                                         fontSize: 14),
@@ -585,6 +643,7 @@ class _BottomSheetContentState extends State<_BottomSheetContent> {
                                                     child: Text(
                                                       "Se termine à: ${DateFormat('HH:mm').format(DateTime.parse(snapshot.data[exoIndex].endTime))}",
                                                       style: const TextStyle(
+                                                        fontFamily: 'Poppins',
                                                         fontWeight:
                                                             FontWeight.w500,
                                                       ),
@@ -630,6 +689,7 @@ class _BottomSheetContentState extends State<_BottomSheetContent> {
                                                   ),
                                                   const Text("Programmer",
                                                       style: TextStyle(
+                                                          fontFamily: 'Poppins',
                                                           fontSize: 11,
                                                           overflow: TextOverflow
                                                               .ellipsis)),
@@ -672,6 +732,7 @@ class _BottomSheetContentState extends State<_BottomSheetContent> {
                                                       )),
                                                   const Text("Annuler",
                                                       style: TextStyle(
+                                                          fontFamily: 'Poppins',
                                                           fontSize: 11,
                                                           overflow: TextOverflow
                                                               .ellipsis)),
@@ -712,6 +773,7 @@ class _BottomSheetContentState extends State<_BottomSheetContent> {
                                                   ),
                                                   const Text("Terminer",
                                                       style: TextStyle(
+                                                          fontFamily: 'Poppins',
                                                           fontSize: 11,
                                                           overflow: TextOverflow
                                                               .ellipsis)),

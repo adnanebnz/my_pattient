@@ -137,9 +137,17 @@ class _HomePageState extends State<HomePage> {
                                                         size: 30,
                                                       ),
                                                       title: const Text(
-                                                          'Supprimer'),
+                                                        'Supprimer',
+                                                        style: TextStyle(
+                                                            fontFamily:
+                                                                'Poppins'),
+                                                      ),
                                                       content: const Text(
-                                                          'Voulez-vous supprimer ce patient?'),
+                                                        'Voulez-vous supprimer ce patient?',
+                                                        style: TextStyle(
+                                                            fontFamily:
+                                                                'Poppins'),
+                                                      ),
                                                       actions: [
                                                         TextButton(
                                                             onPressed: () =>
@@ -147,7 +155,11 @@ class _HomePageState extends State<HomePage> {
                                                                     context,
                                                                     false),
                                                             child: const Text(
-                                                                'NON')),
+                                                              'NON',
+                                                              style: TextStyle(
+                                                                  fontFamily:
+                                                                      'Poppins'),
+                                                            )),
                                                         TextButton(
                                                             onPressed: () => {
                                                                   patientController.deletePatient(
@@ -167,8 +179,13 @@ class _HomePageState extends State<HomePage> {
                                                                     closeIconColor:
                                                                         Colors
                                                                             .white,
-                                                                    content: Text(
-                                                                        'Patient supprimé'),
+                                                                    content:
+                                                                        Text(
+                                                                      'Patient supprimé',
+                                                                      style: TextStyle(
+                                                                          fontFamily:
+                                                                              'Poppins'),
+                                                                    ),
                                                                     duration: Duration(
                                                                         seconds:
                                                                             2),
@@ -178,7 +195,11 @@ class _HomePageState extends State<HomePage> {
                                                                       true)
                                                                 },
                                                             child: const Text(
-                                                                'OUI')),
+                                                              'OUI',
+                                                              style: TextStyle(
+                                                                  fontFamily:
+                                                                      'Poppins'),
+                                                            )),
                                                       ],
                                                     );
                                                   });
@@ -252,6 +273,8 @@ class _HomePageState extends State<HomePage> {
                                                                     .toString() +
                                                                 " ans",
                                                             style: const TextStyle(
+                                                                fontFamily:
+                                                                    'Poppins',
                                                                 fontSize: 15,
                                                                 fontWeight:
                                                                     FontWeight
@@ -267,6 +290,8 @@ class _HomePageState extends State<HomePage> {
                                                                 child: Text(
                                                                   "Présent?",
                                                                   style: TextStyle(
+                                                                      fontFamily:
+                                                                          'Poppins',
                                                                       fontSize:
                                                                           14,
                                                                       fontWeight:
@@ -331,6 +356,8 @@ class _HomePageState extends State<HomePage> {
                                                         child: Text(
                                                             "Maladie: ${patientController.patientsList[index].disease}",
                                                             style: const TextStyle(
+                                                                fontFamily:
+                                                                    'Poppins',
                                                                 fontSize: 16,
                                                                 color: Colors
                                                                     .black87)),

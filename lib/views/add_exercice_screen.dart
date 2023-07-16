@@ -15,7 +15,10 @@ class _AddExercicePageState extends State<AddExercicePage> {
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: const Text('Ajouter un exercice'),
+          title: const Text(
+            'Ajouter un exercice',
+            style: TextStyle(fontFamily: 'Poppins'),
+          ),
         ),
         body: const Padding(
           padding: EdgeInsets.all(15.0),

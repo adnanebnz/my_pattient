@@ -17,7 +17,10 @@ class _IntroScreen extends State<IntroScreen> {
   Widget build(BuildContext context) {
     PageDecoration pageDecoration = const PageDecoration(
         titleTextStyle: TextStyle(
-            fontSize: 28.0, fontWeight: FontWeight.w400, color: Colors.black),
+            fontSize: 28.0,
+            fontWeight: FontWeight.w400,
+            color: Colors.black,
+            fontFamily: 'Poppins'),
         bodyTextStyle: TextStyle(fontSize: 19.0, color: Colors.black),
         imagePadding: EdgeInsets.all(20),
         boxDecoration: BoxDecoration(
@@ -72,12 +75,16 @@ class _IntroScreen extends State<IntroScreen> {
       nextFlex: 0,
       skip: const Text(
         'Passer',
-        style: TextStyle(color: Colors.green),
+        style: TextStyle(color: Colors.green, fontFamily: 'Poppins'),
       ),
       next: const Icon(Icons.arrow_forward, color: Colors.green),
       done: const Text(
         'Commencer',
-        style: TextStyle(color: Colors.lightGreen, fontWeight: FontWeight.w400),
+        style: TextStyle(
+          color: Colors.lightGreen,
+          fontWeight: FontWeight.w400,
+          fontFamily: 'Poppins',
+        ),
       ),
       dotsDecorator: const DotsDecorator(
         size: Size(10.0, 10.0),

@@ -18,6 +18,7 @@ class _UpdateExercisePageState extends State<UpdateExercisePage> {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
+          fontFamily: 'Poppins',
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.greenAccent),
           useMaterial3: true,
         ),

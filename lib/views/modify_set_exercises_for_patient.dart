@@ -38,7 +38,7 @@ class _ModifySetExercisesForPatientState
               const Center(
                 child: Text(
                   "Supprimer des exercices a ce patient",
-                  style: TextStyle(fontSize: 18),
+                  style: TextStyle(fontSize: 18, fontFamily: 'Poppins'),
                 ),
               )
             ],
@@ -63,9 +63,14 @@ class _ModifySetExercisesForPatientState
                           elevation: 4,
                           child: ListTile(
                             tileColor: Colors.white,
-                            title: Text(snapshot.data[index].exerciseName),
-                            subtitle:
-                                Text(snapshot.data[index].exerciseDescription),
+                            title: Text(
+                              snapshot.data[index].exerciseName,
+                              style: TextStyle(fontFamily: 'Poppins'),
+                            ),
+                            subtitle: Text(
+                              snapshot.data[index].exerciseDescription,
+                              style: TextStyle(fontFamily: 'Poppins'),
+                            ),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10)),
                             trailing: IconButton(
@@ -80,7 +85,10 @@ class _ModifySetExercisesForPatientState
                                 setState(() {});
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
-                                    content: Text('Exercice supprimé'),
+                                    content: Text(
+                                      'Exercice supprimé',
+                                      style: TextStyle(fontFamily: 'Poppins'),
+                                    ),
                                   ),
                                 );
                               },
